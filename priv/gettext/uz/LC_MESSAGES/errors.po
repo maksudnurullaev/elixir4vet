@@ -42,36 +42,54 @@ msgstr "hali ham ushbu yozuv bilan bog'liq"
 msgid "are still associated with this entry"
 msgstr "hali ham ushbu yozuv bilan bog'liq"
 
+msgid "should have %{count} item(s)"
+msgid_plural "should have %{count} item(s)"
+msgstr[0] "%{count} ta element bo'lishi kerak"
+msgstr[1] "%{count} ta element bo'lishi kerak"
+
 ## From Ecto.Changeset.validate_length/3
 msgid "should be %{count} character(s)"
 msgid_plural "should be %{count} character(s)"
 msgstr[0] "%{count} ta belgi bo'lishi kerak"
 msgstr[1] "%{count} ta belgi bo'lishi kerak"
 
-msgid "should have %{count} item(s)"
-msgid_plural "should have %{count} item(s)"
+#, fuzzy
+msgid "should be %{count} byte(s)"
+msgid_plural "should be %{count} byte(s)"
 msgstr[0] "%{count} ta element bo'lishi kerak"
 msgstr[1] "%{count} ta element bo'lishi kerak"
-
-msgid "should be at least %{count} character(s)"
-msgid_plural "should be at least %{count} character(s)"
-msgstr[0] "kamida %{count} ta belgi bo'lishi kerak"
-msgstr[1] "kamida %{count} ta belgi bo'lishi kerak"
 
 msgid "should have at least %{count} item(s)"
 msgid_plural "should have at least %{count} item(s)"
 msgstr[0] "kamida %{count} ta element bo'lishi kerak"
 msgstr[1] "kamida %{count} ta element bo'lishi kerak"
 
-msgid "should be at most %{count} character(s)"
-msgid_plural "should be at most %{count} character(s)"
-msgstr[0] "ko'pi bilan %{count} ta belgi bo'lishi kerak"
-msgstr[1] "ko'pi bilan %{count} ta belgi bo'lishi kerak"
+msgid "should be at least %{count} character(s)"
+msgid_plural "should be at least %{count} character(s)"
+msgstr[0] "kamida %{count} ta belgi bo'lishi kerak"
+msgstr[1] "kamida %{count} ta belgi bo'lishi kerak"
+
+#, fuzzy
+msgid "should be at least %{count} byte(s)"
+msgid_plural "should be at least %{count} byte(s)"
+msgstr[0] "kamida %{count} ta belgi bo'lishi kerak"
+msgstr[1] "kamida %{count} ta belgi bo'lishi kerak"
 
 msgid "should have at most %{count} item(s)"
 msgid_plural "should have at most %{count} item(s)"
 msgstr[0] "ko'pi bilan %{count} ta element bo'lishi kerak"
 msgstr[1] "ko'pi bilan %{count} ta element bo'lishi kerak"
+
+msgid "should be at most %{count} character(s)"
+msgid_plural "should be at most %{count} character(s)"
+msgstr[0] "ko'pi bilan %{count} ta belgi bo'lishi kerak"
+msgstr[1] "ko'pi bilan %{count} ta belgi bo'lishi kerak"
+
+#, fuzzy
+msgid "should be at most %{count} byte(s)"
+msgid_plural "should be at most %{count} byte(s)"
+msgstr[0] "ko'pi bilan %{count} ta belgi bo'lishi kerak"
+msgstr[1] "ko'pi bilan %{count} ta belgi bo'lishi kerak"
 
 ## From Ecto.Changeset.validate_number/3
 msgid "must be less than %{number}"

@@ -42,6 +42,12 @@ msgstr "все еще связано с этой записью"
 msgid "are still associated with this entry"
 msgstr "все еще связаны с этой записью"
 
+msgid "should have %{count} item(s)"
+msgid_plural "should have %{count} item(s)"
+msgstr[0] "должно содержать %{count} элемент"
+msgstr[1] "должно содержать %{count} элемента"
+msgstr[2] "должно содержать %{count} элементов"
+
 ## From Ecto.Changeset.validate_length/3
 msgid "should be %{count} character(s)"
 msgid_plural "should be %{count} character(s)"
@@ -49,17 +55,12 @@ msgstr[0] "должно быть %{count} символ"
 msgstr[1] "должно быть %{count} символа"
 msgstr[2] "должно быть %{count} символов"
 
-msgid "should have %{count} item(s)"
-msgid_plural "should have %{count} item(s)"
+#, fuzzy
+msgid "should be %{count} byte(s)"
+msgid_plural "should be %{count} byte(s)"
 msgstr[0] "должно содержать %{count} элемент"
 msgstr[1] "должно содержать %{count} элемента"
 msgstr[2] "должно содержать %{count} элементов"
-
-msgid "should be at least %{count} character(s)"
-msgid_plural "should be at least %{count} character(s)"
-msgstr[0] "должно быть не менее %{count} символа"
-msgstr[1] "должно быть не менее %{count} символов"
-msgstr[2] "должно быть не менее %{count} символов"
 
 msgid "should have at least %{count} item(s)"
 msgid_plural "should have at least %{count} item(s)"
@@ -67,17 +68,37 @@ msgstr[0] "должно содержать не менее %{count} элемен
 msgstr[1] "должно содержать не менее %{count} элементов"
 msgstr[2] "должно содержать не менее %{count} элементов"
 
-msgid "should be at most %{count} character(s)"
-msgid_plural "should be at most %{count} character(s)"
-msgstr[0] "должно быть не более %{count} символа"
-msgstr[1] "должно быть не более %{count} символов"
-msgstr[2] "должно быть не более %{count} символов"
+msgid "should be at least %{count} character(s)"
+msgid_plural "should be at least %{count} character(s)"
+msgstr[0] "должно быть не менее %{count} символа"
+msgstr[1] "должно быть не менее %{count} символов"
+msgstr[2] "должно быть не менее %{count} символов"
+
+#, fuzzy
+msgid "should be at least %{count} byte(s)"
+msgid_plural "should be at least %{count} byte(s)"
+msgstr[0] "должно быть не менее %{count} символа"
+msgstr[1] "должно быть не менее %{count} символов"
+msgstr[2] "должно быть не менее %{count} символов"
 
 msgid "should have at most %{count} item(s)"
 msgid_plural "should have at most %{count} item(s)"
 msgstr[0] "должно содержать не более %{count} элемента"
 msgstr[1] "должно содержать не более %{count} элементов"
 msgstr[2] "должно содержать не более %{count} элементов"
+
+msgid "should be at most %{count} character(s)"
+msgid_plural "should be at most %{count} character(s)"
+msgstr[0] "должно быть не более %{count} символа"
+msgstr[1] "должно быть не более %{count} символов"
+msgstr[2] "должно быть не более %{count} символов"
+
+#, fuzzy
+msgid "should be at most %{count} byte(s)"
+msgid_plural "should be at most %{count} byte(s)"
+msgstr[0] "должно быть не более %{count} символа"
+msgstr[1] "должно быть не более %{count} символов"
+msgstr[2] "должно быть не более %{count} символов"
 
 ## From Ecto.Changeset.validate_number/3
 msgid "must be less than %{number}"

@@ -1,0 +1,192 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: uz\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+
+#: lib/elixir4photos_web/components/core_components.ex:368
+#, elixir-autogen, elixir-format
+msgid "Actions"
+msgstr "Harakatlar"
+
+#: lib/elixir4photos_web/components/layouts.ex:99
+#: lib/elixir4photos_web/components/layouts.ex:111
+#, elixir-autogen, elixir-format
+msgid "Attempting to reconnect"
+msgstr "Qayta ulanishga harakat qilinmoqda"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:63
+#, elixir-autogen, elixir-format
+msgid "Back to Users"
+msgstr "Foydalanuvchilarga qaytish"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:75
+#, elixir-autogen, elixir-format
+msgid "Can view but not modify"
+msgstr "Ko'rish mumkin, lekin o'zgartirish mumkin emas"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:74
+#, elixir-autogen, elixir-format
+msgid "Cannot read or write"
+msgstr "O'qish yoki yozish mumkin emas"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:40
+#, elixir-autogen, elixir-format
+msgid "Failed to update permission."
+msgstr "Ruxsatni yangilash muvaffaqiyatsiz tugadi."
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:76
+#, elixir-autogen, elixir-format
+msgid "Full access"
+msgstr "To'liq kirish"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:74
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:155
+#, elixir-autogen, elixir-format
+msgid "No Access"
+msgstr "Kirish yo'q"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:205
+#, elixir-autogen, elixir-format
+msgid "No permissions"
+msgstr "Ruxsatlar yo'q"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:72
+#, elixir-autogen, elixir-format
+msgid "Permission Levels:"
+msgstr "Ruxsat darajalari:"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:20
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:61
+#, elixir-autogen, elixir-format
+msgid "Permission Matrix"
+msgstr "Ruxsatnomalar matritsasi"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:37
+#, elixir-autogen, elixir-format
+msgid "Permission updated successfully."
+msgstr "Ruxsat muvaffaqiyatli yangilandi."
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:75
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:161
+#, elixir-autogen, elixir-format
+msgid "Read Only"
+msgstr "Faqat o'qish"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:76
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:167
+#, elixir-autogen, elixir-format
+msgid "Read Write"
+msgstr "O'qish va yozish"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:87
+#, elixir-autogen, elixir-format
+msgid "Role"
+msgstr "Rol"
+
+#: lib/elixir4photos_web/components/layouts.ex:106
+#, elixir-autogen, elixir-format
+msgid "Something went wrong!"
+msgstr "Nimadir noto'g'ri ketdi!"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:106
+#, elixir-autogen, elixir-format
+msgid "System"
+msgstr "Tizim"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:162
+#, elixir-autogen, elixir-format
+msgid "User can view but cannot create, edit, or delete."
+msgstr "Foydalanuvchi ko'rishi mumkin, lekin yaratish, tahrirlash yoki o'chirish mumkin emas."
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:156
+#, elixir-autogen, elixir-format
+msgid "User cannot view or interact with this resource at all."
+msgstr "Foydalanuvchi bu resurs bilan umuman ko'rishi yoki muloqot qilishi mumkin emas."
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:168
+#, elixir-autogen, elixir-format
+msgid "User has full access to view, create, edit, and delete."
+msgstr "Foydalanuvchi ko'rish, yaratish, tahrirlash va o'chirish uchun to'liq kirishga ega."
+
+#: lib/elixir4photos_web/components/layouts.ex:94
+#, elixir-autogen, elixir-format
+msgid "We can't find the internet"
+msgstr "Internet topilmadi"
+
+#: lib/elixir4photos_web/components/core_components.ex:74
+#, elixir-autogen, elixir-format
+msgid "close"
+msgstr "yopish"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:216
+#, elixir-autogen, elixir-format
+msgid "Admin"
+msgstr "Administrator"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:210
+#, elixir-autogen, elixir-format
+msgid "Animals"
+msgstr "Hayvonlar"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:223
+#, elixir-autogen, elixir-format
+msgid "Can manage most resources"
+msgstr "Ko'pgina resurslarni boshqarishi mumkin"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:211
+#, elixir-autogen, elixir-format
+msgid "Events"
+msgstr "Hodisalar"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:222
+#, elixir-autogen, elixir-format
+msgid "Full system administrator"
+msgstr "To'liq tizim administratori"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:219
+#, elixir-autogen, elixir-format
+msgid "Guest"
+msgstr "Mehmon"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:217
+#, elixir-autogen, elixir-format
+msgid "Manager"
+msgstr "Menejer"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:209
+#, elixir-autogen, elixir-format
+msgid "Organizations"
+msgstr "Tashkilotlar"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:212
+#, elixir-autogen, elixir-format
+msgid "Photographs"
+msgstr "Fotosuratlar"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:225
+#, elixir-autogen, elixir-format
+msgid "Read-only access"
+msgstr "Faqat o'qish uchun kirish"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:224
+#, elixir-autogen, elixir-format
+msgid "Regular user with limited access"
+msgstr "Cheklangan kirishga ega oddiy foydalanuvchi"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:218
+#, elixir-autogen, elixir-format
+msgid "User"
+msgstr "Foydalanuvchi"
+
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:213
+#, elixir-autogen, elixir-format
+msgid "Users"
+msgstr "Foydalanuvchilar"

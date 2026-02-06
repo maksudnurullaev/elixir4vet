@@ -39,3 +39,4 @@ npm-debug.log
 /DATA/*.db
 /DATA/*.db-*
 
+/.claude/

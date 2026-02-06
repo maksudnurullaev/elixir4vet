@@ -246,7 +246,13 @@ defmodule Elixir4photosWeb.UserAuth do
   end
 
   defp mount_current_scope(socket, session) do
-    Phoenix.Component.assign_new(socket, :current_scope, fn ->
+    # Set locale from session if available
+    if locale = session["locale"] do
+      Gettext.put_locale(Elixir4photosWeb.Gettext, locale)
+    end
+
+    socket
+    |> Phoenix.Component.assign_new(:current_scope, fn ->
       {user, _} =
         if user_token = session["user_token"] do
           Accounts.get_user_by_session_token(user_token)
@@ -254,6 +260,7 @@ defmodule Elixir4photosWeb.UserAuth do
 
       Scope.for_user(user)
     end)
+    |> Phoenix.Component.assign_new(:locale, fn -> session["locale"] || "en" end)
   end
 
   @doc "Returns the path to redirect to after log in."

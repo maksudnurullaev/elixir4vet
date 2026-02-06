@@ -81,17 +81,17 @@
           </label>
           <ul tabindex="0" class="dropdown-content menu menu-compact p-2 shadow-lg bg-base-100 rounded-box w-32 mt-3 border border-base-300">
             <li>
-              <a href={"?locale=en"} class={if assigns[:locale] == "en", do: "active"}>
+              <a href="#" onclick="window.location.href = window.location.pathname + '?locale=en'; return false;" class={if assigns[:locale] == "en", do: "active"}>
                 English
               </a>
             </li>
             <li>
-              <a href={"?locale=ru"} class={if assigns[:locale] == "ru", do: "active"}>
+              <a href="#" onclick="window.location.href = window.location.pathname + '?locale=ru'; return false;" class={if assigns[:locale] == "ru", do: "active"}>
                 Русский
               </a>
             </li>
             <li>
-              <a href={"?locale=uz"} class={if assigns[:locale] == "uz", do: "active"}>
+              <a href="#" onclick="window.location.href = window.location.pathname + '?locale=uz'; return false;" class={if assigns[:locale] == "uz", do: "active"}>
                 O'zbekcha
               </a>
             </li>

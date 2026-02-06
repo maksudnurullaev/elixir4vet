@@ -17,7 +17,7 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
      |> assign(:roles, roles)
      |> assign(:resources, resources)
      |> assign(:matrix, matrix)
-     |> assign(:page_title, "Permission Matrix")}
+     |> assign(:page_title, gettext("Permission Matrix"))}
   end
 
   @impl true
@@ -34,10 +34,10 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
         {:noreply,
          socket
          |> assign(:matrix, matrix)
-         |> put_flash(:info, "Permission updated successfully.")}
+         |> put_flash(:info, gettext("Permission updated successfully."))}
 
       {:error, _} ->
-        {:noreply, put_flash(socket, :error, "Failed to update permission.")}
+        {:noreply, put_flash(socket, :error, gettext("Failed to update permission."))}
     end
   end
 
@@ -58,9 +58,9 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
     ~H"""
     <div class="container mx-auto px-4 py-8">
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">🔐 Permission Matrix</h1>
+        <h1 class="text-3xl font-bold"><%= gettext("Permission Matrix") %></h1>
         <.link navigate={~p"/admin/users"} class="btn btn-ghost">
-          ← Back to Users
+          ← <%= gettext("Back to Users") %>
         </.link>
       </div>
 
@@ -69,11 +69,11 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
         <div>
-          <h3 class="font-bold">Permission Levels:</h3>
+          <h3 class="font-bold"><%= gettext("Permission Levels:") %></h3>
           <ul class="text-sm mt-1">
-            <li><strong class="text-error">NA</strong> = No Access (❌ Cannot read or write)</li>
-            <li><strong class="text-warning">RO</strong> = Read Only (👁️ Can view but not modify)</li>
-            <li><strong class="text-success">RW</strong> = Read Write (✏️ Full access)</li>
+            <li><strong class="text-error">NA</strong> = <%= gettext("No Access") %> (<%= gettext("Cannot read or write") %>)</li>
+            <li><strong class="text-warning">RO</strong> = <%= gettext("Read Only") %> (<%= gettext("Can view but not modify") %>)</li>
+            <li><strong class="text-success">RW</strong> = <%= gettext("Read Write") %> (<%= gettext("Full access") %>)</li>
           </ul>
         </div>
       </div>
@@ -84,12 +84,11 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
             <table class="table table-zebra w-full">
               <thead>
                 <tr>
-                  <th class="sticky left-0 bg-base-200 z-10">Role</th>
+                  <th class="sticky left-0 bg-base-200 z-10"><%= gettext("Role") %></th>
                   <%= for resource <- @resources do %>
                     <th class="text-center min-w-[120px]">
                       <div class="flex flex-col items-center">
-                        <span class="font-bold"><%= format_resource(resource) %></span>
-                        <span class="text-xs opacity-60"><%= resource %></span>
+                        <span class="font-bold"><%= translate_resource(resource) %></span>
                       </div>
                     </th>
                   <% end %>
@@ -102,9 +101,9 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
                       <div class="flex items-center gap-2">
                         <%= role_icon(row.role.name) %>
                         <div class="flex flex-col">
-                          <span><%= row.role.name %></span>
+                          <span><%= translate_role(row.role.name) %></span>
                           <%= if row.role.is_system_role do %>
-                            <span class="badge badge-xs badge-ghost">System</span>
+                            <span class="badge badge-xs badge-ghost"><%= gettext("System") %></span>
                           <% end %>
                         </div>
                       </div>
@@ -138,11 +137,11 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
                 <div class="stat-figure text-2xl">
                   <%= role_icon(role.name) %>
                 </div>
-                <div class="stat-title"><%= role.name %></div>
+                <div class="stat-title"><%= translate_role(role.name) %></div>
                 <div class="stat-value text-sm">
                   <%= count_permissions(role, @matrix) %>
                 </div>
-                <div class="stat-desc"><%= role.description %></div>
+                <div class="stat-desc"><%= translate_role_description(role.name) %></div>
               </div>
             <% end %>
           </div>
@@ -153,20 +152,20 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
         <div class="card bg-error/10 border-2 border-error">
           <div class="card-body p-4">
-            <h3 class="card-title text-error text-sm">❌ NA - No Access</h3>
-            <p class="text-xs">User cannot view or interact with this resource at all.</p>
+            <h3 class="card-title text-error text-sm">NA - <%= gettext("No Access") %></h3>
+            <p class="text-xs"><%= gettext("User cannot view or interact with this resource at all.") %></p>
           </div>
         </div>
         <div class="card bg-warning/10 border-2 border-warning">
           <div class="card-body p-4">
-            <h3 class="card-title text-warning text-sm">👁️ RO - Read Only</h3>
-            <p class="text-xs">User can view but cannot create, edit, or delete.</p>
+            <h3 class="card-title text-warning text-sm">RO - <%= gettext("Read Only") %></h3>
+            <p class="text-xs"><%= gettext("User can view but cannot create, edit, or delete.") %></p>
           </div>
         </div>
         <div class="card bg-success/10 border-2 border-success">
           <div class="card-body p-4">
-            <h3 class="card-title text-success text-sm">✏️ RW - Read Write</h3>
-            <p class="text-xs">User has full access to view, create, edit, and delete.</p>
+            <h3 class="card-title text-success text-sm">RW - <%= gettext("Read Write") %></h3>
+            <p class="text-xs"><%= gettext("User has full access to view, create, edit, and delete.") %></p>
           </div>
         </div>
       </div>
@@ -203,7 +202,26 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
 
       "#{rw} RW, #{ro} RO, #{na} NA"
     else
-      "No permissions"
+      gettext("No permissions")
     end
   end
+
+  defp translate_resource("organizations"), do: gettext("Organizations")
+  defp translate_resource("animals"), do: gettext("Animals")
+  defp translate_resource("events"), do: gettext("Events")
+  defp translate_resource("photographs"), do: gettext("Photographs")
+  defp translate_resource("users"), do: gettext("Users")
+  defp translate_resource(resource), do: format_resource(resource)
+
+  defp translate_role("admin"), do: gettext("Admin")
+  defp translate_role("manager"), do: gettext("Manager")
+  defp translate_role("user"), do: gettext("User")
+  defp translate_role("guest"), do: gettext("Guest")
+  defp translate_role(role), do: role
+
+  defp translate_role_description("admin"), do: gettext("Full system administrator")
+  defp translate_role_description("manager"), do: gettext("Can manage most resources")
+  defp translate_role_description("user"), do: gettext("Regular user with limited access")
+  defp translate_role_description("guest"), do: gettext("Read-only access")
+  defp translate_role_description(_), do: ""
 end
