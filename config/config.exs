@@ -7,6 +7,19 @@
 # General application configuration
 import Config
 
+config :elixir4photos, :scopes,
+  user: [
+    default: true,
+    module: Elixir4photos.Accounts.Scope,
+    assign_key: :current_scope,
+    access_path: [:user, :id],
+    schema_key: :user_id,
+    schema_type: :id,
+    schema_table: :users,
+    test_data_fixture: Elixir4photos.AccountsFixtures,
+    test_setup_helper: :register_and_log_in_user
+  ]
+
 config :elixir4photos,
   ecto_repos: [Elixir4photos.Repo],
   generators: [timestamp_type: :utc_datetime]
@@ -59,6 +72,11 @@ config :logger, :default_formatter,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+# Configure Gettext for internationalization
+config :elixir4photos, Elixir4photosWeb.Gettext,
+  default_locale: "en",
+  locales: ~w(en ru uz)
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

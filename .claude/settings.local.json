@@ -2,7 +2,23 @@
   "permissions": {
     "allow": [
       "Bash(source ~/.asdf/asdf.sh)",
-      "Bash(mix deps.compile:*)"
+      "Bash(mix deps.compile:*)",
+      "Bash(mix deps.get:*)",
+      "Bash(mix ecto.migrate:*)",
+      "Bash(sudo apt-get:*)",
+      "Bash(sudo apt-get install:*)",
+      "Bash(mix deps.clean:*)",
+      "Bash(mix compile:*)",
+      "Bash(mix test:*)",
+      "Bash(mix ecto.gen.migration:*)",
+      "Bash(make_admin.exs << 'EOF'\n# Get the most recently logged in user \\(or specify email\\)\nalias Elixir4photos.{Accounts, Authorization, Repo}\n\n# Option A: Get user by email\nemail = IO.gets\\(\"Enter user email: \"\\) |> String.trim\\(\\)\nuser = Accounts.get_user_by_email\\(email\\)\n\nif user do\n  # Assign admin role via new RBAC system\n  admin_role = Authorization.get_role_by_name\\(\"admin\"\\)\n  \n  case Authorization.assign_role\\(user, admin_role\\) do\n    {:ok, _} ->\n      IO.puts\\(\"✅ Successfully made #{user.email} an administrator!\"\\)\n      IO.puts\\(\"User now has admin role with full permissions.\"\\)\n    {:error, _} ->\n      IO.puts\\(\"⚠️  User may already have admin role\"\\)\n  end\nelse\n  IO.puts\\(\"❌ User not found with email: #{email}\"\\)\nend\nEOF)",
+      "Bash(mix admin.make:*)",
+      "Bash(iex -S mix:*)",
+      "Bash(mix run:*)",
+      "Bash(mix xref unreachable:*)",
+      "Bash(mix clean:*)",
+      "Bash(mix ecto.rollback:*)",
+      "Bash(mix ecto.reset:*)"
     ]
   }
 }
