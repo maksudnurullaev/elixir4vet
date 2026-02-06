@@ -63,7 +63,13 @@ defmodule Elixir4photosWeb.Router do
   scope "/", Elixir4photosWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    get "/home", PageController, :home
+    post "/users/update-password", UserSessionController, :update_password
+  end
+
+  scope "/", Elixir4photosWeb do
+    pipe_through [:browser]
+
+    get "/", PageController, :home
 
     live_session :require_authenticated_user,
       on_mount: [{Elixir4photosWeb.UserAuth, :require_authenticated}] do
@@ -71,7 +77,7 @@ defmodule Elixir4photosWeb.Router do
       live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
     end
 
-    post "/users/update-password", UserSessionController, :update_password
+
   end
 
   scope "/", Elixir4photosWeb do
@@ -80,11 +86,11 @@ defmodule Elixir4photosWeb.Router do
     live_session :current_user,
       on_mount: [{Elixir4photosWeb.UserAuth, :mount_current_scope}] do
       live "/users/register", UserLive.Registration, :new
-      live "/", UserLive.Login, :new
+      live "/login", UserLive.Login, :new
       live "/users/log-in/:token", UserLive.Confirmation, :new
     end
 
-    post "/", UserSessionController, :create
+    post "/login", UserSessionController, :create
     delete "/users/log-out", UserSessionController, :delete
   end
 end

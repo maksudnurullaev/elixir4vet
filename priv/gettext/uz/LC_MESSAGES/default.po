@@ -48,15 +48,10 @@ msgid "Full access"
 msgstr "To'liq kirish"
 
 #: lib/elixir4photos_web/live/admin/permissions_live.ex:74
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:155
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:140
 #, elixir-autogen, elixir-format
 msgid "No Access"
 msgstr "Kirish yo'q"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:205
-#, elixir-autogen, elixir-format
-msgid "No permissions"
-msgstr "Ruxsatlar yo'q"
 
 #: lib/elixir4photos_web/live/admin/permissions_live.ex:72
 #, elixir-autogen, elixir-format
@@ -75,13 +70,13 @@ msgid "Permission updated successfully."
 msgstr "Ruxsat muvaffaqiyatli yangilandi."
 
 #: lib/elixir4photos_web/live/admin/permissions_live.ex:75
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:161
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:146
 #, elixir-autogen, elixir-format
 msgid "Read Only"
 msgstr "Faqat o'qish"
 
 #: lib/elixir4photos_web/live/admin/permissions_live.ex:76
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:167
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:152
 #, elixir-autogen, elixir-format
 msgid "Read Write"
 msgstr "O'qish va yozish"
@@ -101,17 +96,17 @@ msgstr "Nimadir noto'g'ri ketdi!"
 msgid "System"
 msgstr "Tizim"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:162
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:147
 #, elixir-autogen, elixir-format
 msgid "User can view but cannot create, edit, or delete."
 msgstr "Foydalanuvchi ko'rishi mumkin, lekin yaratish, tahrirlash yoki o'chirish mumkin emas."
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:156
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:141
 #, elixir-autogen, elixir-format
 msgid "User cannot view or interact with this resource at all."
 msgstr "Foydalanuvchi bu resurs bilan umuman ko'rishi yoki muloqot qilishi mumkin emas."
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:168
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:153
 #, elixir-autogen, elixir-format
 msgid "User has full access to view, create, edit, and delete."
 msgstr "Foydalanuvchi ko'rish, yaratish, tahrirlash va o'chirish uchun to'liq kirishga ega."
@@ -126,67 +121,169 @@ msgstr "Internet topilmadi"
 msgid "close"
 msgstr "yopish"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:216
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:189
 #, elixir-autogen, elixir-format
 msgid "Admin"
 msgstr "Administrator"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:210
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:183
 #, elixir-autogen, elixir-format
 msgid "Animals"
 msgstr "Hayvonlar"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:223
-#, elixir-autogen, elixir-format
-msgid "Can manage most resources"
-msgstr "Ko'pgina resurslarni boshqarishi mumkin"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:211
+#: lib/elixir4photos_web/components/layouts/root.html.heex:166
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:184
 #, elixir-autogen, elixir-format
 msgid "Events"
 msgstr "Hodisalar"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:222
-#, elixir-autogen, elixir-format
-msgid "Full system administrator"
-msgstr "To'liq tizim administratori"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:219
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:192
 #, elixir-autogen, elixir-format
 msgid "Guest"
 msgstr "Mehmon"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:217
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:190
 #, elixir-autogen, elixir-format
 msgid "Manager"
 msgstr "Menejer"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:209
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:182
 #, elixir-autogen, elixir-format
 msgid "Organizations"
 msgstr "Tashkilotlar"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:212
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:185
 #, elixir-autogen, elixir-format
 msgid "Photographs"
 msgstr "Fotosuratlar"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:225
-#, elixir-autogen, elixir-format
-msgid "Read-only access"
-msgstr "Faqat o'qish uchun kirish"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:224
-#, elixir-autogen, elixir-format
-msgid "Regular user with limited access"
-msgstr "Cheklangan kirishga ega oddiy foydalanuvchi"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:218
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:191
 #, elixir-autogen, elixir-format
 msgid "User"
 msgstr "Foydalanuvchi"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:213
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:186
 #, elixir-autogen, elixir-format
 msgid "Users"
 msgstr "Foydalanuvchilar"
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:71
+#, elixir-autogen, elixir-format
+msgid "\"Compassion for animals is intimately associated with goodness of character.\""
+msgstr "Hayvonlarga rahm-shafqat qilish inson xarakterining ezguligi bilan chambarchas bog'liqdir."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:45
+#, elixir-autogen, elixir-format
+msgid "\"The greatness of a nation and its moral progress can be judged by the way its animals are treated.\""
+msgstr "Millatning buyukligi va uning ma'naviy yuksalishiga qarab, u hayvonlarga qanday munosabatda bo'lishiga qarab baho berish mumkin."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:58
+#, elixir-autogen, elixir-format
+msgid "\"Until one has loved an animal, a part of one's soul remains unawakened.\""
+msgstr "Inson hayvonni sevmaguncha, uning ruhining bir qismi uyg'onmasdan qoladi."
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:158
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:9
+#, elixir-autogen, elixir-format
+msgid "Compassionate Care for Every Animal."
+msgstr "Har bir hayvonga mehrli g'amxo'rlik."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:13
+#, elixir-autogen, elixir-format
+msgid "Get Started"
+msgstr "Boshlash"
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Log In"
+msgstr "Kirish"
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:24
+#, elixir-autogen, elixir-format
+msgid "Our Mission"
+msgstr "Bizning missiyamiz"
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:29
+#, elixir-autogen, elixir-format
+msgid "Our mission is to connect veterinarians, shelters, and compassionate individuals to ensure that homeless animals receive the attention they desperately need. Join us in creating a world where every wagging tail and purring friend is cherished."
+msgstr "Bizning vazifamiz — uysiz hayvonlarga ular juda muhtoj bo'lgan e'tiborni taqdim etish uchun veterinar shifokorlar, boshpanalar va rahmdil insonlarni birlashtirishdir. Har bir dumini likillatgan va purrlaydigan do'st qadrlanadigan dunyoni yaratishda bizga qo'shiling."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:26
+#, elixir-autogen, elixir-format
+msgid "VetVision is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering."
+msgstr "VetVision shunchaki platforma emas; bu ovasizlarga bo'lgan sadoqatdir. Biz har bir hayvon mehribon uyga, to'g'ri tibbiy yordamga va azob-uqubatlardan holi hayotga loyiq deb hisoblaymiz."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:37
+#, elixir-autogen, elixir-format
+msgid "Voices of Compassion"
+msgstr "Rahm-shafqat ovozlari"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:171
+#, elixir-autogen, elixir-format
+msgid "About us"
+msgstr "Biz haqimizda"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:165
+#, elixir-autogen, elixir-format
+msgid "Adoption"
+msgstr "Asrab olish"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:164
+#, elixir-autogen, elixir-format
+msgid "Animal Shelter"
+msgstr "Hayvonlar boshpanasi"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:169
+#, elixir-autogen, elixir-format
+msgid "Company"
+msgstr "Kompaniya"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:172
+#, elixir-autogen, elixir-format
+msgid "Contact"
+msgstr "Aloqa"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:179
+#, elixir-autogen, elixir-format
+msgid "Cookie policy"
+msgstr "Cookie fayllar siyosati"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:170
+#, elixir-autogen, elixir-format
+msgid "Home"
+msgstr "Bosh sahifa"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:173
+#, elixir-autogen, elixir-format
+msgid "Jobs"
+msgstr "Ish o'rinlari"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:176
+#, elixir-autogen, elixir-format
+msgid "Legal"
+msgstr "Huquqiy ma'lumot"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:178
+#, elixir-autogen, elixir-format
+msgid "Privacy policy"
+msgstr "Maxfiylik siyosati"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:162
+#, elixir-autogen, elixir-format
+msgid "Services"
+msgstr "Xizmatlar"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:177
+#, elixir-autogen, elixir-format
+msgid "Terms of use"
+msgstr "Foydalanish shartlari"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:163
+#, elixir-autogen, elixir-format
+msgid "Veterinary Care"
+msgstr "Veterinariya yordami"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:184
+#, elixir-autogen, elixir-format
+msgid "© 2026 VetVision. All rights reserved."
+msgstr "© 2026 VetVision. Barcha huquqlar himoyalangan."

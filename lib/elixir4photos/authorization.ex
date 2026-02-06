@@ -213,4 +213,11 @@ defmodule Elixir4photos.Authorization do
       assign_role(user, admin_role)
     end
   end
+  @doc """
+  Check if a user acts in a specific role.
+  """
+  def user_has_role?(%User{} = user, role_name) do
+    roles = get_user_roles(user)
+    Enum.any?(roles, &(&1.name == role_name))
+  end
 end

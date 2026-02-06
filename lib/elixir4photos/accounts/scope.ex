@@ -31,7 +31,7 @@ defmodule Elixir4photos.Accounts.Scope do
     %__MODULE__{user: user, permissions: permissions}
   end
 
-  def for_user(nil), do: nil
+  def for_user(nil), do: %__MODULE__{user: nil, permissions: %{}}
 
   defp load_user_permissions(user) do
     resources = ["organizations", "animals", "events", "photographs", "users"]

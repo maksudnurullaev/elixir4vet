@@ -129,22 +129,7 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
             </table>
           </div>
 
-          <div class="divider"></div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <%= for role <- @roles do %>
-              <div class="stat bg-base-200 rounded-lg">
-                <div class="stat-figure text-2xl">
-                  <%= role_icon(role.name) %>
-                </div>
-                <div class="stat-title"><%= translate_role(role.name) %></div>
-                <div class="stat-value text-sm">
-                  <%= count_permissions(role, @matrix) %>
-                </div>
-                <div class="stat-desc"><%= translate_role_description(role.name) %></div>
-              </div>
-            <% end %>
-          </div>
         </div>
       </div>
 
@@ -192,19 +177,7 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
   defp role_icon("guest"), do: "👁️"
   defp role_icon(_), do: "🎭"
 
-  defp count_permissions(role, matrix) do
-    row = Enum.find(matrix, fn r -> r.role.id == role.id end)
 
-    if row do
-      rw = Enum.count(row.permissions, &(&1.permission == "RW"))
-      ro = Enum.count(row.permissions, &(&1.permission == "RO"))
-      na = Enum.count(row.permissions, &(&1.permission == "NA"))
-
-      "#{rw} RW, #{ro} RO, #{na} NA"
-    else
-      gettext("No permissions")
-    end
-  end
 
   defp translate_resource("organizations"), do: gettext("Organizations")
   defp translate_resource("animals"), do: gettext("Animals")
@@ -219,9 +192,5 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
   defp translate_role("guest"), do: gettext("Guest")
   defp translate_role(role), do: role
 
-  defp translate_role_description("admin"), do: gettext("Full system administrator")
-  defp translate_role_description("manager"), do: gettext("Can manage most resources")
-  defp translate_role_description("user"), do: gettext("Regular user with limited access")
-  defp translate_role_description("guest"), do: gettext("Read-only access")
-  defp translate_role_description(_), do: ""
+
 end

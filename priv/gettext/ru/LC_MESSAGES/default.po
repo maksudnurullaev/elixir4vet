@@ -48,15 +48,10 @@ msgid "Full access"
 msgstr "Полный доступ"
 
 #: lib/elixir4photos_web/live/admin/permissions_live.ex:74
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:155
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:140
 #, elixir-autogen, elixir-format
 msgid "No Access"
 msgstr "Нет доступа"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:205
-#, elixir-autogen, elixir-format
-msgid "No permissions"
-msgstr "Нет разрешений"
 
 #: lib/elixir4photos_web/live/admin/permissions_live.ex:72
 #, elixir-autogen, elixir-format
@@ -75,13 +70,13 @@ msgid "Permission updated successfully."
 msgstr "Разрешение успешно обновлено."
 
 #: lib/elixir4photos_web/live/admin/permissions_live.ex:75
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:161
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:146
 #, elixir-autogen, elixir-format
 msgid "Read Only"
 msgstr "Только чтение"
 
 #: lib/elixir4photos_web/live/admin/permissions_live.ex:76
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:167
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:152
 #, elixir-autogen, elixir-format
 msgid "Read Write"
 msgstr "Чтение и запись"
@@ -101,17 +96,17 @@ msgstr "Что-то пошло не так!"
 msgid "System"
 msgstr "Системная"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:162
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:147
 #, elixir-autogen, elixir-format
 msgid "User can view but cannot create, edit, or delete."
 msgstr "Пользователь может просматривать, но не может создавать, редактировать или удалять."
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:156
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:141
 #, elixir-autogen, elixir-format
 msgid "User cannot view or interact with this resource at all."
 msgstr "Пользователь не может просматривать или взаимодействовать с этим ресурсом."
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:168
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:153
 #, elixir-autogen, elixir-format
 msgid "User has full access to view, create, edit, and delete."
 msgstr "Пользователь имеет полный доступ для просмотра, создания, редактирования и удаления."
@@ -126,67 +121,169 @@ msgstr "Не удается найти интернет"
 msgid "close"
 msgstr "закрыть"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:216
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:189
 #, elixir-autogen, elixir-format
 msgid "Admin"
 msgstr "Администратор"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:210
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:183
 #, elixir-autogen, elixir-format
 msgid "Animals"
 msgstr "Животные"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:223
-#, elixir-autogen, elixir-format
-msgid "Can manage most resources"
-msgstr "Может управлять большинством ресурсов"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:211
+#: lib/elixir4photos_web/components/layouts/root.html.heex:166
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:184
 #, elixir-autogen, elixir-format
 msgid "Events"
 msgstr "События"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:222
-#, elixir-autogen, elixir-format
-msgid "Full system administrator"
-msgstr "Полный системный администратор"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:219
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:192
 #, elixir-autogen, elixir-format
 msgid "Guest"
 msgstr "Гость"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:217
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:190
 #, elixir-autogen, elixir-format
 msgid "Manager"
 msgstr "Менеджер"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:209
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:182
 #, elixir-autogen, elixir-format
 msgid "Organizations"
 msgstr "Организации"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:212
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:185
 #, elixir-autogen, elixir-format
 msgid "Photographs"
 msgstr "Фотографии"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:225
-#, elixir-autogen, elixir-format
-msgid "Read-only access"
-msgstr "Доступ только для чтения"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:224
-#, elixir-autogen, elixir-format
-msgid "Regular user with limited access"
-msgstr "Обычный пользователь с ограниченным доступом"
-
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:218
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:191
 #, elixir-autogen, elixir-format
 msgid "User"
 msgstr "Пользователь"
 
-#: lib/elixir4photos_web/live/admin/permissions_live.ex:213
+#: lib/elixir4photos_web/live/admin/permissions_live.ex:186
 #, elixir-autogen, elixir-format
 msgid "Users"
 msgstr "Пользователи"
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:71
+#, elixir-autogen, elixir-format
+msgid "\"Compassion for animals is intimately associated with goodness of character.\""
+msgstr "Сострадание к животным тесно связано с добротой характера."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:45
+#, elixir-autogen, elixir-format
+msgid "\"The greatness of a nation and its moral progress can be judged by the way its animals are treated.\""
+msgstr "О величии нации и ее моральном прогрессе можно судить по тому, как она обращается с животными."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:58
+#, elixir-autogen, elixir-format
+msgid "\"Until one has loved an animal, a part of one's soul remains unawakened.\""
+msgstr "Пока человек не полюбит животное, часть его души остается непробужденной."
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:158
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:9
+#, elixir-autogen, elixir-format
+msgid "Compassionate Care for Every Animal."
+msgstr "Заботливый уход за каждым животным."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:13
+#, elixir-autogen, elixir-format
+msgid "Get Started"
+msgstr "Начать"
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Log In"
+msgstr "Войти"
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:24
+#, elixir-autogen, elixir-format
+msgid "Our Mission"
+msgstr "Наша миссия"
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:29
+#, elixir-autogen, elixir-format
+msgid "Our mission is to connect veterinarians, shelters, and compassionate individuals to ensure that homeless animals receive the attention they desperately need. Join us in creating a world where every wagging tail and purring friend is cherished."
+msgstr "Наша миссия — объединить ветеринаров, приюты и неравнодушных людей, чтобы гарантировать бездомным животным внимание, в котором они отчаянно нуждаются. Присоединяйтесь к нам, чтобы создать мир, где ценят каждого виляющего хвостом и мурлыкающего друга."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:26
+#, elixir-autogen, elixir-format
+msgid "VetVision is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering."
+msgstr "VetVision — это больше, чем просто платформа; это обязательство перед теми, у кого нет голоса. Мы верим, что каждое животное заслуживает любящего дома, надлежащей медицинской помощи и жизни без страданий."
+
+#: lib/elixir4photos_web/controllers/page_html/home.html.heex:37
+#, elixir-autogen, elixir-format
+msgid "Voices of Compassion"
+msgstr "Голоса сострадания"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:171
+#, elixir-autogen, elixir-format
+msgid "About us"
+msgstr "О нас"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:165
+#, elixir-autogen, elixir-format
+msgid "Adoption"
+msgstr "Усыновление"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:164
+#, elixir-autogen, elixir-format
+msgid "Animal Shelter"
+msgstr "Приют для животных"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:169
+#, elixir-autogen, elixir-format
+msgid "Company"
+msgstr "Компания"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:172
+#, elixir-autogen, elixir-format
+msgid "Contact"
+msgstr "Контакты"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:179
+#, elixir-autogen, elixir-format
+msgid "Cookie policy"
+msgstr "Политика использования файлов cookie"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:170
+#, elixir-autogen, elixir-format
+msgid "Home"
+msgstr "Главная"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:173
+#, elixir-autogen, elixir-format
+msgid "Jobs"
+msgstr "Вакансии"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:176
+#, elixir-autogen, elixir-format
+msgid "Legal"
+msgstr "Правовая информация"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:178
+#, elixir-autogen, elixir-format
+msgid "Privacy policy"
+msgstr "Политика конфиденциальности"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:162
+#, elixir-autogen, elixir-format
+msgid "Services"
+msgstr "Услуги"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:177
+#, elixir-autogen, elixir-format
+msgid "Terms of use"
+msgstr "Условия использования"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:163
+#, elixir-autogen, elixir-format
+msgid "Veterinary Care"
+msgstr "Ветеринарная помощь"
+
+#: lib/elixir4photos_web/components/layouts/root.html.heex:184
+#, elixir-autogen, elixir-format
+msgid "© 2026 VetVision. All rights reserved."
+msgstr "© 2026 VetVision. Все права защищены."

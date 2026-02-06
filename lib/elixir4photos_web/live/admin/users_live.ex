@@ -75,7 +75,7 @@ defmodule Elixir4photosWeb.Admin.UsersLive do
           <.link navigate={~p"/admin/permissions"} class="btn btn-primary">
             🔐 Permission Matrix
           </.link>
-          <.link navigate={~p"/home"} class="btn btn-ghost">
+          <.link navigate={~p"/"} class="btn btn-ghost">
             ← Back to Home
           </.link>
         </div>

@@ -365,6 +365,7 @@ defmodule Elixir4photos.Accounts do
   @doc """
   Checks if a user is an admin.
   """
-  def admin?(%User{} = user), do: User.admin?(user)
+
+  def admin?(%User{} = user), do: Elixir4photos.Authorization.user_has_role?(user, "admin")
   def admin?(_), do: false
 end

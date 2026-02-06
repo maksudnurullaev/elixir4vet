@@ -20,20 +20,20 @@
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
-import {Socket} from "phoenix"
-import {LiveSocket} from "phoenix_live_view"
-import {hooks as colocatedHooks} from "phoenix-colocated/elixir4photos"
+import { Socket } from "phoenix"
+import { LiveSocket } from "phoenix_live_view"
+import { hooks as colocatedHooks } from "phoenix-colocated/elixir4photos"
 import topbar from "../vendor/topbar"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
-  params: {_csrf_token: csrfToken},
-  hooks: {...colocatedHooks},
+  params: { _csrf_token: csrfToken },
+  hooks: { ...colocatedHooks },
 })
 
 // Show progress bar on live navigation and form submits
-topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
+topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" })
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
 window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
 
@@ -46,6 +46,37 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+// Auto-close details/summary menus on mouse leave
+window.addEventListener("mouseover", (e) => {
+  const details = e.target.closest("details.submenu-details");
+  if (details) {
+    // If we re-enter the element, cancel any pending close action
+    if (details.dataset.timeoutId) {
+      clearTimeout(parseInt(details.dataset.timeoutId));
+      delete details.dataset.timeoutId;
+    }
+    if (!details.hasAttribute("open")) {
+      details.setAttribute("open", "true");
+    }
+  }
+});
+
+window.addEventListener("mouseout", (e) => {
+  const details = e.target.closest("details.submenu-details");
+  if (details) {
+    const relatedTarget = e.relatedTarget;
+    // Only schedule close if we are truly leaving the element tree
+    if (!details.contains(relatedTarget)) {
+      // Add delay to allow user to bridge gaps or move cursor intentionally
+      const timeoutId = setTimeout(() => {
+        details.removeAttribute("open");
+        delete details.dataset.timeoutId;
+      }, 500);
+      details.dataset.timeoutId = timeoutId.toString();
+    }
+  }
+});
+
 // The lines below enable quality of life phoenix_live_reload
 // development features:
 //
@@ -53,7 +84,7 @@ window.liveSocket = liveSocket
 //     2. click on elements to jump to their definitions in your code editor
 //
 if (process.env.NODE_ENV === "development") {
-  window.addEventListener("phx:live_reload:attached", ({detail: reloader}) => {
+  window.addEventListener("phx:live_reload:attached", ({ detail: reloader }) => {
     // Enable server log streaming to client.
     // Disable with reloader.disableServerLogs()
     reloader.enableServerLogs()
@@ -66,11 +97,11 @@ if (process.env.NODE_ENV === "development") {
     window.addEventListener("keydown", e => keyDown = e.key)
     window.addEventListener("keyup", _e => keyDown = null)
     window.addEventListener("click", e => {
-      if(keyDown === "c"){
+      if (keyDown === "c") {
         e.preventDefault()
         e.stopImmediatePropagation()
         reloader.openEditorAtCaller(e.target)
-      } else if(keyDown === "d"){
+      } else if (keyDown === "d") {
         e.preventDefault()
         e.stopImmediatePropagation()
         reloader.openEditorAtDef(e.target)

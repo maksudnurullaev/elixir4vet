@@ -151,12 +151,14 @@ defmodule Elixir4photos.Accounts.User do
   @doc """
   Check if user is an administrator.
   """
+  @deprecated "Use Elixir4photos.Accounts.admin?/1 instead"
   def admin?(%__MODULE__{role: "admin"}), do: true
   def admin?(_), do: false
 
   @doc """
   Check if user has a specific role.
   """
+  @deprecated "Use Elixir4photos.Authorization.user_has_role?/2 instead"
   def has_role?(%__MODULE__{role: role}, check_role) when role == check_role, do: true
   def has_role?(_, _), do: false
 end
