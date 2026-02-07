@@ -2,7 +2,7 @@ defmodule Elixir4photos.Animals.Animal do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Elixir4photos.People.Person
+  alias Elixir4photos.Accounts.User
   alias Elixir4photos.Animals.AnimalOwnership
   alias Elixir4photos.Events.Event
 
@@ -17,7 +17,7 @@ defmodule Elixir4photos.Animals.Animal do
     field :description, :string
     field :notes, :string
 
-    many_to_many :owners, Person, join_through: AnimalOwnership
+    many_to_many :owners, User, join_through: AnimalOwnership
     has_many :animal_ownerships, AnimalOwnership
     has_many :events, Event
 

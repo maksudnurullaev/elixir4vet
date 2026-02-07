@@ -31,6 +31,29 @@ defmodule Elixir4photosWeb.UserLive.Registration do
             required
             phx-mounted={JS.focus()}
           />
+          <.input
+            field={@form[:password]}
+            type="password"
+            label="Password"
+            autocomplete="new-password"
+            required
+          />
+          <.input
+            field={@form[:password_confirmation]}
+            type="password"
+            label="Confirm password"
+            autocomplete="new-password"
+            required
+          />
+          <.input
+            field={@form[:phone]}
+            type="tel"
+            label={gettext("Phone")}
+            placeholder="+998 (XX) XXX-XX-XX"
+            pattern="\+998 \(\d{2}\) \d{3}-\d{2}-\d{2}"
+            autocomplete="tel"
+            required
+          />
 
           <.button phx-disable-with="Creating account..." class="btn btn-primary w-full">
             Create an account
@@ -48,28 +71,22 @@ defmodule Elixir4photosWeb.UserLive.Registration do
   end
 
   def mount(_params, _session, socket) do
-    changeset = Accounts.change_user_email(%User{}, %{}, validate_unique: false)
+    changeset = Accounts.change_user_registration(%User{})
 
     {:ok, assign_form(socket, changeset), temporary_assigns: [form: nil]}
   end
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
-    case Accounts.register_user(user_params) do
-      {:ok, user} ->
-        {:ok, _} =
-          Accounts.deliver_login_instructions(
-            user,
-            &url(~p"/users/log-in/#{&1}")
-          )
-
+    case Accounts.register_user_with_password(user_params) do
+      {:ok, _user} ->
         {:noreply,
          socket
          |> put_flash(
            :info,
-           "An email was sent to #{user.email}, please access it to confirm your account."
+           "Account created successfully! Please log in with your credentials."
          )
-         |> push_navigate(to: ~p"/")}
+         |> push_navigate(to: ~p"/login")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -77,7 +94,7 @@ defmodule Elixir4photosWeb.UserLive.Registration do
   end
 
   def handle_event("validate", %{"user" => user_params}, socket) do
-    changeset = Accounts.change_user_email(%User{}, user_params, validate_unique: false)
+    changeset = Accounts.change_user_registration(%User{}, user_params)
     {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
   end
 

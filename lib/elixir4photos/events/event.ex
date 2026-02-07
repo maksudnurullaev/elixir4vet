@@ -3,7 +3,7 @@ defmodule Elixir4photos.Events.Event do
   import Ecto.Changeset
 
   alias Elixir4photos.Animals.Animal
-  alias Elixir4photos.People.Person
+  alias Elixir4photos.Accounts.User
   alias Elixir4photos.Organizations.Organization
   alias Elixir4photos.Photographs.Photograph
 
@@ -32,7 +32,7 @@ defmodule Elixir4photos.Events.Event do
     field :cost, :decimal
 
     belongs_to :animal, Animal
-    belongs_to :performed_by_person, Person
+    belongs_to :performed_by_user, User
     belongs_to :performed_by_organization, Organization
     has_many :photographs, Photograph
 
@@ -50,7 +50,7 @@ defmodule Elixir4photos.Events.Event do
       :event_date,
       :event_time,
       :location,
-      :performed_by_person_id,
+      :performed_by_user_id,
       :performed_by_organization_id,
       :description,
       :notes,
@@ -59,7 +59,7 @@ defmodule Elixir4photos.Events.Event do
     |> validate_required([:animal_id, :event_type, :event_date])
     |> validate_inclusion(:event_type, @event_types)
     |> foreign_key_constraint(:animal_id)
-    |> foreign_key_constraint(:performed_by_person_id)
+    |> foreign_key_constraint(:performed_by_user_id)
     |> foreign_key_constraint(:performed_by_organization_id)
     |> validate_number(:cost, greater_than_or_equal_to: 0)
   end

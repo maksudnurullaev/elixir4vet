@@ -63,7 +63,7 @@ defmodule Elixir4photos.Accounts do
   ## User registration
 
   @doc """
-  Registers a user.
+  Registers a user (email only, for magic link).
 
   ## Examples
 
@@ -90,6 +90,56 @@ defmodule Elixir4photos.Accounts do
       end
 
     Repo.insert(changeset)
+  end
+
+  @doc """
+  Registers a user with password and phone.
+
+  ## Examples
+
+      iex> register_user_with_password(%{email: ..., password: ..., phone: ...})
+      {:ok, %User{}}
+
+      iex> register_user_with_password(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def register_user_with_password(attrs) do
+    # Check if this is the first user
+    is_first_user = Repo.aggregate(User, :count, :id) == 0
+
+    changeset =
+      %User{}
+      |> User.email_changeset(attrs)
+      |> User.password_changeset(attrs)
+      |> Ecto.Changeset.cast(attrs, [:phone])
+      |> Ecto.Changeset.validate_required([:phone])
+      |> User.confirm_changeset()
+
+    changeset =
+      if is_first_user do
+        Ecto.Changeset.put_change(changeset, :role, "admin")
+      else
+        changeset
+      end
+
+    Repo.insert(changeset)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking user registration changes.
+
+  ## Examples
+
+      iex> change_user_registration(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def change_user_registration(user, attrs \\ %{}) do
+    user
+    |> User.email_changeset(attrs, validate_unique: false)
+    |> User.password_changeset(attrs, hash_password: false)
+    |> Ecto.Changeset.cast(attrs, [:phone])
   end
 
   ## Settings

@@ -48,9 +48,13 @@
       </div>
 
       <!-- Main Navigation Menu -->
+      <div class="flex-none mx-2">
+        <Layouts.theme_toggle />
+      </div>
       <div class="flex-1 hidden md:flex justify-end">
         <ul class="menu menu-horizontal px-1">
           <!-- Public Menus -->
+          <li><a href={~p"/"}><%= gettext("Home") %></a></li>
           <li>
             <details class="submenu-details">
               <summary><%= gettext("Services") %></summary>
@@ -66,13 +70,13 @@
             <details class="submenu-details">
               <summary><%= gettext("Company") %></summary>
               <ul class="p-2 bg-base-100 z-50">
-                <li><a href={~p"/"}><%= gettext("Home") %></a></li>
                 <li><a><%= gettext("About us") %></a></li>
                 <li><a><%= gettext("Contact") %></a></li>
                 <li><a><%= gettext("Jobs") %></a></li>
               </ul>
             </details>
           </li>
+<!-- NMK
           <li>
             <details class="submenu-details">
               <summary><%= gettext("Legal") %></summary>
@@ -83,20 +87,32 @@
               </ul>
             </details>
           </li>
-
+-->
           <!-- App Resources (Logged In Only) -->
           <%= if @current_scope && @current_scope.user do %>
-            <%= if Map.get(@current_scope.permissions, "organizations") in ["RO", "RW"] do %>
-              <li><a href="#organizations">Organizations</a></li>
-            <% end %>
-            <%= if Map.get(@current_scope.permissions, "animals") in ["RO", "RW"] do %>
-              <li><a href="#animals">Animals</a></li>
-            <% end %>
-            <%= if Map.get(@current_scope.permissions, "events") in ["RO", "RW"] do %>
-              <li><a href="#events">Events</a></li>
-            <% end %>
-            <%= if Map.get(@current_scope.permissions, "photographs") in ["RO", "RW"] do %>
-              <li><a href="#photographs">Photographs</a></li>
+            <%= if Map.get(@current_scope.permissions, "organizations") in ["RO", "RW"] or
+                   Map.get(@current_scope.permissions, "animals") in ["RO", "RW"] or
+                   Map.get(@current_scope.permissions, "events") in ["RO", "RW"] or
+                   Map.get(@current_scope.permissions, "photographs") in ["RO", "RW"] do %>
+              <li>
+                <details class="submenu-details">
+                  <summary>Resources</summary>
+                  <ul class="p-2 bg-base-100 z-50">
+                    <%= if Map.get(@current_scope.permissions, "organizations") in ["RO", "RW"] do %>
+                      <li><a href="#organizations">Organizations</a></li>
+                    <% end %>
+                    <%= if Map.get(@current_scope.permissions, "animals") in ["RO", "RW"] do %>
+                      <li><a href="#animals">Animals</a></li>
+                    <% end %>
+                    <%= if Map.get(@current_scope.permissions, "events") in ["RO", "RW"] do %>
+                      <li><a href="#events">Events</a></li>
+                    <% end %>
+                    <%= if Map.get(@current_scope.permissions, "photographs") in ["RO", "RW"] do %>
+                      <li><a href="#photographs">Photographs</a></li>
+                    <% end %>
+                  </ul>
+                </details>
+              </li>
             <% end %>
           <% end %>
         </ul>
@@ -155,7 +171,15 @@
               </label>
               <ul tabindex="0" class="dropdown-content menu menu-compact p-2 shadow-lg bg-base-100 rounded-box w-52 mt-3 border border-base-300">
                 <%= if @current_scope.user.role == "admin" do %>
-                  <li><.link navigate={~p"/admin/users"} class="text-warning font-semibold">Admin Panel</.link></li>
+                  <li>
+                    <details>
+                      <summary class="text-warning font-semibold">Admin</summary>
+                      <ul>
+                        <li><.link navigate={~p"/admin/users"}>Users Management</.link></li>
+                        <li><.link navigate={~p"/admin/permissions"}>Permissions</.link></li>
+                      </ul>
+                    </details>
+                  </li>
                 <% end %>
                 <li><.link navigate={~p"/users/settings"}>Settings</.link></li>
                 <li><.link href={~p"/users/log-out"} method="delete" class="text-error">Log out</.link></li>
@@ -168,7 +192,7 @@
             <.link navigate={~p"/users/register"} class="btn btn-ghost btn-sm">
               Register
             </.link>
-            <.link navigate={~p"/"} class="btn btn-primary btn-sm">
+            <.link navigate={~p"/login"} class="btn btn-primary btn-sm">
               Log in
             </.link>
           </div>

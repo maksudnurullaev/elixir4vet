@@ -11,6 +11,18 @@ defmodule Elixir4photos.Accounts.User do
     field :confirmed_at, :utc_datetime
     field :authenticated_at, :utc_datetime, virtual: true
     field :role, :string, default: "user"
+    
+    # Fields merged from People
+    field :first_name, :string
+    field :last_name, :string
+    field :phone, :string
+    field :address, :string
+    field :notes, :string
+
+    many_to_many :organizations, Elixir4photos.Organizations.Organization, join_through: Elixir4photos.Organizations.UserOrganization
+    has_many :user_organizations, Elixir4photos.Organizations.UserOrganization
+    many_to_many :animals, Elixir4photos.Animals.Animal, join_through: Elixir4photos.Animals.AnimalOwnership
+    has_many :animal_ownerships, Elixir4photos.Animals.AnimalOwnership
 
     timestamps(type: :utc_datetime)
   end

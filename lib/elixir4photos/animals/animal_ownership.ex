@@ -3,7 +3,7 @@ defmodule Elixir4photos.Animals.AnimalOwnership do
   import Ecto.Changeset
 
   alias Elixir4photos.Animals.Animal
-  alias Elixir4photos.People.Person
+  alias Elixir4photos.Accounts.User
 
   schema "animal_ownerships" do
     field :ownership_type, :string
@@ -11,7 +11,7 @@ defmodule Elixir4photos.Animals.AnimalOwnership do
     field :ended_at, :date
 
     belongs_to :animal, Animal
-    belongs_to :person, Person
+    belongs_to :user, User
 
     timestamps(type: :utc_datetime)
   end
@@ -19,11 +19,11 @@ defmodule Elixir4photos.Animals.AnimalOwnership do
   @doc false
   def changeset(animal_ownership, attrs) do
     animal_ownership
-    |> cast(attrs, [:animal_id, :person_id, :ownership_type, :started_at, :ended_at])
-    |> validate_required([:animal_id, :person_id, :started_at])
+    |> cast(attrs, [:animal_id, :user_id, :ownership_type, :started_at, :ended_at])
+    |> validate_required([:animal_id, :user_id, :started_at])
     |> validate_inclusion(:ownership_type, ["owner", "co-owner", "guardian", "foster"])
     |> foreign_key_constraint(:animal_id)
-    |> foreign_key_constraint(:person_id)
+    |> foreign_key_constraint(:user_id)
     |> validate_date_range()
   end
 

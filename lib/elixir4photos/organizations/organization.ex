@@ -2,8 +2,8 @@ defmodule Elixir4photos.Organizations.Organization do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Elixir4photos.People.Person
-  alias Elixir4photos.Organizations.PersonOrganization
+  alias Elixir4photos.Accounts.User
+  alias Elixir4photos.Organizations.UserOrganization
 
   schema "organizations" do
     field :name, :string
@@ -14,8 +14,8 @@ defmodule Elixir4photos.Organizations.Organization do
     field :website, :string
     field :notes, :string
 
-    many_to_many :people, Person, join_through: PersonOrganization
-    has_many :person_organizations, PersonOrganization
+    many_to_many :users, User, join_through: UserOrganization
+    has_many :user_organizations, UserOrganization
 
     timestamps(type: :utc_datetime)
   end

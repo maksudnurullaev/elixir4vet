@@ -39,7 +39,7 @@ defmodule Elixir4photosWeb.UserSessionController do
         conn
         |> put_flash(:error, "Invalid email or password")
         |> put_flash(:email, String.slice(email, 0, 160))
-        |> redirect(to: ~p"/")
+        |> redirect(to: ~p"/login")
 
       user = Accounts.get_user_by_email_and_password(email, password) ->
         conn
@@ -51,7 +51,7 @@ defmodule Elixir4photosWeb.UserSessionController do
         conn
         |> put_flash(:error, "Invalid email or password")
         |> put_flash(:email, String.slice(email, 0, 160))
-        |> redirect(to: ~p"/")
+        |> redirect(to: ~p"/login")
     end
   end
 
