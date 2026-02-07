@@ -64,17 +64,32 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
         </.link>
       </div>
 
-      <div class="alert alert-info mb-6">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <div>
-          <h3 class="font-bold"><%= gettext("Permission Levels:") %></h3>
-          <ul class="text-sm mt-1">
-            <li><strong class="text-error">NA</strong> = <%= gettext("No Access") %> (<%= gettext("Cannot read or write") %>)</li>
-            <li><strong class="text-warning">RO</strong> = <%= gettext("Read Only") %> (<%= gettext("Can view but not modify") %>)</li>
-            <li><strong class="text-success">RW</strong> = <%= gettext("Read Write") %> (<%= gettext("Full access") %>)</li>
-          </ul>
+      <div class="card bg-base-100 border border-base-300 shadow-sm mb-6">
+        <div class="card-body p-4">
+          <h3 class="font-semibold text-base mb-3"><%= gettext("Permission Levels:") %></h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-error/5 border border-error/20">
+              <div class="badge badge-error badge-lg font-bold">NA</div>
+              <div class="text-sm">
+                <div class="font-semibold"><%= gettext("No Access") %></div>
+                <div class="text-xs opacity-70"><%= gettext("Cannot read or write") %></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-warning/5 border border-warning/20">
+              <div class="badge badge-warning badge-lg font-bold">RO</div>
+              <div class="text-sm">
+                <div class="font-semibold"><%= gettext("Read Only") %></div>
+                <div class="text-xs opacity-70"><%= gettext("Can view but not modify") %></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 p-2 rounded-lg bg-success/5 border border-success/20">
+              <div class="badge badge-success badge-lg font-bold">RW</div>
+              <div class="text-sm">
+                <div class="font-semibold"><%= gettext("Read Write") %></div>
+                <div class="text-xs opacity-70"><%= gettext("Full access") %></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -130,28 +145,6 @@ defmodule Elixir4photosWeb.Admin.PermissionsLive do
           </div>
 
 
-        </div>
-      </div>
-
-      <!-- Quick Legend -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div class="card bg-error/10 border-2 border-error">
-          <div class="card-body p-4">
-            <h3 class="card-title text-error text-sm">NA - <%= gettext("No Access") %></h3>
-            <p class="text-xs"><%= gettext("User cannot view or interact with this resource at all.") %></p>
-          </div>
-        </div>
-        <div class="card bg-warning/10 border-2 border-warning">
-          <div class="card-body p-4">
-            <h3 class="card-title text-warning text-sm">RO - <%= gettext("Read Only") %></h3>
-            <p class="text-xs"><%= gettext("User can view but cannot create, edit, or delete.") %></p>
-          </div>
-        </div>
-        <div class="card bg-success/10 border-2 border-success">
-          <div class="card-body p-4">
-            <h3 class="card-title text-success text-sm">RW - <%= gettext("Read Write") %></h3>
-            <p class="text-xs"><%= gettext("User has full access to view, create, edit, and delete.") %></p>
-          </div>
         </div>
       </div>
     </div>
