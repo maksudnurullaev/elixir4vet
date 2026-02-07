@@ -1,4 +1,4 @@
-defmodule Elixir4photos.Repo.Migrations.CreateCoreTables do
+defmodule Elixir4vet.Repo.Migrations.CreateCoreTables do
   use Ecto.Migration
 
   def change do

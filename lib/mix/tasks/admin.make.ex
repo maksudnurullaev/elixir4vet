@@ -17,7 +17,7 @@ defmodule Mix.Tasks.Admin.Make do
   use Mix.Task
   import Ecto.Query
 
-  alias Elixir4photos.{Accounts, Authorization, Repo}
+  alias Elixir4vet.{Accounts, Authorization, Repo}
 
   @shortdoc "Make a user an administrator"
 
@@ -57,7 +57,7 @@ defmodule Mix.Tasks.Admin.Make do
   end
 
   defp make_first_user_admin do
-    case Repo.one(from u in Elixir4photos.Accounts.User, order_by: [asc: u.id], limit: 1) do
+    case Repo.one(from u in Elixir4vet.Accounts.User, order_by: [asc: u.id], limit: 1) do
       nil ->
         Mix.shell().error("❌ No users found in database")
 
@@ -68,7 +68,7 @@ defmodule Mix.Tasks.Admin.Make do
   end
 
   defp make_recent_user_admin do
-    case Repo.one(from u in Elixir4photos.Accounts.User, order_by: [desc: u.inserted_at], limit: 1) do
+    case Repo.one(from u in Elixir4vet.Accounts.User, order_by: [desc: u.inserted_at], limit: 1) do
       nil ->
         Mix.shell().error("❌ No users found in database")
 
@@ -133,7 +133,7 @@ defmodule Mix.Tasks.Admin.Make do
   defp list_users do
     import Ecto.Query
 
-    users = Repo.all(from u in Elixir4photos.Accounts.User, order_by: [desc: u.inserted_at], limit: 10)
+    users = Repo.all(from u in Elixir4vet.Accounts.User, order_by: [desc: u.inserted_at], limit: 10)
 
     if Enum.empty?(users) do
       Mix.shell().info("  (no users in database)")

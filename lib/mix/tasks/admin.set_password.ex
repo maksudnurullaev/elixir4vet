@@ -17,7 +17,7 @@ defmodule Mix.Tasks.Admin.SetPassword do
 
   use Mix.Task
 
-  alias Elixir4photos.Accounts
+  alias Elixir4vet.Accounts
 
   @requirements ["app.start"]
 

@@ -1,4 +1,4 @@
-defmodule Elixir4photos.Repo.Migrations.CreateRbacSystem do
+defmodule Elixir4vet.Repo.Migrations.CreateRbacSystem do
   use Ecto.Migration
 
   def change do

@@ -1,12 +1,12 @@
-defmodule Elixir4photosWeb do
+defmodule Elixir4vetWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use Elixir4photosWeb, :controller
-      use Elixir4photosWeb, :html
+      use Elixir4vetWeb, :controller
+      use Elixir4vetWeb, :html
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -40,7 +40,7 @@ defmodule Elixir4photosWeb do
     quote do
       use Phoenix.Controller, formats: [:html, :json]
 
-      use Gettext, backend: Elixir4photosWeb.Gettext
+      use Gettext, backend: Elixir4vetWeb.Gettext
 
       import Plug.Conn
 
@@ -80,16 +80,16 @@ defmodule Elixir4photosWeb do
   defp html_helpers do
     quote do
       # Translation
-      use Gettext, backend: Elixir4photosWeb.Gettext
+      use Gettext, backend: Elixir4vetWeb.Gettext
 
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components
-      import Elixir4photosWeb.CoreComponents
+      import Elixir4vetWeb.CoreComponents
 
       # Common modules used in templates
       alias Phoenix.LiveView.JS
-      alias Elixir4photosWeb.Layouts
+      alias Elixir4vetWeb.Layouts
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
@@ -99,9 +99,9 @@ defmodule Elixir4photosWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: Elixir4photosWeb.Endpoint,
-        router: Elixir4photosWeb.Router,
-        statics: Elixir4photosWeb.static_paths()
+        endpoint: Elixir4vetWeb.Endpoint,
+        router: Elixir4vetWeb.Router,
+        statics: Elixir4vetWeb.static_paths()
     end
   end
 

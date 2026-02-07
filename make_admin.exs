@@ -1,5 +1,5 @@
 # Get the most recently logged in user (or specify email)
-alias Elixir4photos.{Accounts, Authorization, Repo}
+alias Elixir4vet.{Accounts, Authorization, Repo}
 
 # Option A: Get user by email
 email = IO.gets("Enter user email: ") |> String.trim()

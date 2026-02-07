@@ -1,4 +1,4 @@
-defmodule Elixir4photos.Repo.Migrations.MergePeopleIntoUsers do
+defmodule Elixir4vet.Repo.Migrations.MergePeopleIntoUsers do
   use Ecto.Migration
 
   def up do

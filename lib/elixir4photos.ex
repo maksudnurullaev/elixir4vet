@@ -1,6 +1,6 @@
-defmodule Elixir4photos do
+defmodule Elixir4vet do
   @moduledoc """
-  Elixir4photos keeps the contexts that define your domain
+  Elixir4vet keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

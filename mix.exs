@@ -1,9 +1,9 @@
-defmodule Elixir4photos.MixProject do
+defmodule Elixir4vet.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :elixir4photos,
+      app: :elixir4vet,
       version: "0.1.0",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -20,7 +20,7 @@ defmodule Elixir4photos.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Elixir4photos.Application, []},
+      mod: {Elixir4vet.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -83,10 +83,10 @@ defmodule Elixir4photos.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["compile", "tailwind elixir4photos", "esbuild elixir4photos"],
+      "assets.build": ["compile", "tailwind elixir4vet", "esbuild elixir4vet"],
       "assets.deploy": [
-        "tailwind elixir4photos --minify",
-        "esbuild elixir4photos --minify",
+        "tailwind elixir4vet --minify",
+        "esbuild elixir4vet --minify",
         "phx.digest"
       ],
       precommit: ["compile --warnings-as-errors", "deps.unlock --unused", "format", "test"]

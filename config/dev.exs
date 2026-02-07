@@ -1,8 +1,8 @@
 import Config
 
 # Configure your database
-config :elixir4photos, Elixir4photos.Repo,
-  database: Path.expand("../DATA/elixir4photos_dev.db", __DIR__),
+config :elixir4vet, Elixir4vet.Repo,
+  database: Path.expand("../DATA/elixir4vet_dev.db", __DIR__),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -13,7 +13,7 @@ config :elixir4photos, Elixir4photos.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
-config :elixir4photos, Elixir4photosWeb.Endpoint,
+config :elixir4vet, Elixir4vetWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}],
@@ -22,8 +22,8 @@ config :elixir4photos, Elixir4photosWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "2SYCCgertttIzRFqRuVunzTfPHibywa26TsOgisWq685RqoueEXAMSH7fP+a8yFG",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:elixir4photos, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:elixir4photos, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:elixir4vet, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:elixir4vet, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -50,7 +50,7 @@ config :elixir4photos, Elixir4photosWeb.Endpoint,
 # different ports.
 
 # Reload browser tabs when matching files change.
-config :elixir4photos, Elixir4photosWeb.Endpoint,
+config :elixir4vet, Elixir4vetWeb.Endpoint,
   live_reload: [
     web_console_logger: true,
     patterns: [
@@ -59,13 +59,13 @@ config :elixir4photos, Elixir4photosWeb.Endpoint,
       # Gettext translations
       ~r"priv/gettext/.*\.po$"E,
       # Router, Controllers, LiveViews and LiveComponents
-      ~r"lib/elixir4photos_web/router\.ex$"E,
-      ~r"lib/elixir4photos_web/(controllers|live|components)/.*\.(ex|heex)$"E
+      ~r"lib/elixir4vet_web/router\.ex$"E,
+      ~r"lib/elixir4vet_web/(controllers|live|components)/.*\.(ex|heex)$"E
     ]
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :elixir4photos, dev_routes: true
+config :elixir4vet, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"

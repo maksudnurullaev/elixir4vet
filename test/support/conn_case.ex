@@ -1,4 +1,4 @@
-defmodule Elixir4photosWeb.ConnCase do
+defmodule Elixir4vetWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule Elixir4photosWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use Elixir4photosWeb.ConnCase, async: true`, although
+  by setting `use Elixir4vetWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -20,19 +20,19 @@ defmodule Elixir4photosWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint Elixir4photosWeb.Endpoint
+      @endpoint Elixir4vetWeb.Endpoint
 
-      use Elixir4photosWeb, :verified_routes
+      use Elixir4vetWeb, :verified_routes
 
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import Elixir4photosWeb.ConnCase
+      import Elixir4vetWeb.ConnCase
     end
   end
 
   setup tags do
-    Elixir4photos.DataCase.setup_sandbox(tags)
+    Elixir4vet.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
@@ -45,8 +45,8 @@ defmodule Elixir4photosWeb.ConnCase do
   test context.
   """
   def register_and_log_in_user(%{conn: conn} = context) do
-    user = Elixir4photos.AccountsFixtures.user_fixture()
-    scope = Elixir4photos.Accounts.Scope.for_user(user)
+    user = Elixir4vet.AccountsFixtures.user_fixture()
+    scope = Elixir4vet.Accounts.Scope.for_user(user)
 
     opts =
       context
@@ -62,7 +62,7 @@ defmodule Elixir4photosWeb.ConnCase do
   It returns an updated `conn`.
   """
   def log_in_user(conn, user, opts \\ []) do
-    token = Elixir4photos.Accounts.generate_user_session_token(user)
+    token = Elixir4vet.Accounts.generate_user_session_token(user)
 
     maybe_set_token_authenticated_at(token, opts[:token_authenticated_at])
 
@@ -74,6 +74,6 @@ defmodule Elixir4photosWeb.ConnCase do
   defp maybe_set_token_authenticated_at(_token, nil), do: nil
 
   defp maybe_set_token_authenticated_at(token, authenticated_at) do
-    Elixir4photos.AccountsFixtures.override_token_authenticated_at(token, authenticated_at)
+    Elixir4vet.AccountsFixtures.override_token_authenticated_at(token, authenticated_at)
   end
 end

@@ -1,4 +1,4 @@
-defmodule Elixir4photos.Repo.Migrations.AddRoleToUsers do
+defmodule Elixir4vet.Repo.Migrations.AddRoleToUsers do
   use Ecto.Migration
 
   def change do

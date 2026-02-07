@@ -1,6 +1,6 @@
 
-alias Elixir4photos.{Repo, Accounts, Authorization}
-alias Elixir4photos.Accounts.User
+alias Elixir4vet.{Repo, Accounts, Authorization}
+alias Elixir4vet.Accounts.User
 import Ecto.Query
 
 email = "maksud.nurullaev@gmail.com"

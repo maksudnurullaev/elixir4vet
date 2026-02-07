@@ -12,23 +12,23 @@ import Config
 # If you use `mix release`, you need to explicitly enable the server
 # by passing the PHX_SERVER=true when you start it:
 #
-#     PHX_SERVER=true bin/elixir4photos start
+#     PHX_SERVER=true bin/elixir4vet start
 #
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
 if System.get_env("PHX_SERVER") do
-  config :elixir4photos, Elixir4photosWeb.Endpoint, server: true
+  config :elixir4vet, Elixir4vetWeb.Endpoint, server: true
 end
 
-config :elixir4photos, Elixir4photosWeb.Endpoint,
+config :elixir4vet, Elixir4vetWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "4000"))]
 
 if config_env() == :prod do
   database_path =
     System.get_env("DATABASE_PATH") ||
-      Application.app_dir(:elixir4photos, "DATA/elixir4photos_prod.db")
+      Application.app_dir(:elixir4vet, "DATA/elixir4vet_prod.db")
 
-  config :elixir4photos, Elixir4photos.Repo,
+  config :elixir4vet, Elixir4vet.Repo,
     database: database_path,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
@@ -46,9 +46,9 @@ if config_env() == :prod do
 
   host = System.get_env("PHX_HOST") || "example.com"
 
-  config :elixir4photos, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
+  config :elixir4vet, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
-  config :elixir4photos, Elixir4photosWeb.Endpoint,
+  config :elixir4vet, Elixir4vetWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
     http: [
       # Enable IPv6 and bind on all interfaces.
@@ -64,7 +64,7 @@ if config_env() == :prod do
   # To get SSL working, you will need to add the `https` key
   # to your endpoint configuration:
   #
-  #     config :elixir4photos, Elixir4photosWeb.Endpoint,
+  #     config :elixir4vet, Elixir4vetWeb.Endpoint,
   #       https: [
   #         ...,
   #         port: 443,
@@ -86,7 +86,7 @@ if config_env() == :prod do
   # We also recommend setting `force_ssl` in your config/prod.exs,
   # ensuring no data is ever sent via http, always redirecting to https:
   #
-  #     config :elixir4photos, Elixir4photosWeb.Endpoint,
+  #     config :elixir4vet, Elixir4vetWeb.Endpoint,
   #       force_ssl: [hsts: true]
   #
   # Check `Plug.SSL` for all available options in `force_ssl`.
@@ -96,7 +96,7 @@ if config_env() == :prod do
   # In production you need to configure the mailer to use a different adapter.
   # Here is an example configuration for Mailgun:
   #
-  #     config :elixir4photos, Elixir4photos.Mailer,
+  #     config :elixir4vet, Elixir4vet.Mailer,
   #       adapter: Swoosh.Adapters.Mailgun,
   #       api_key: System.get_env("MAILGUN_API_KEY"),
   #       domain: System.get_env("MAILGUN_DOMAIN")

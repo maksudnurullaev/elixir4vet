@@ -1,4 +1,4 @@
-# Elixir4photos
+# Elixir4vet
 
 To start your Phoenix server:
 

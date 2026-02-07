@@ -1,4 +1,4 @@
-defmodule Elixir4photos.Repo.Migrations.CreateUsersAuthTables do
+defmodule Elixir4vet.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do

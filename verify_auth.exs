@@ -1,6 +1,6 @@
 
-alias Elixir4photos.{Accounts, Authorization}
-alias Elixir4photos.AccountsFixtures
+alias Elixir4vet.{Accounts, Authorization}
+alias Elixir4vet.AccountsFixtures
 
 # 1. Create a user
 user = AccountsFixtures.user_fixture()
