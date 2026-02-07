@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="VetVision" suffix=" · Phoenix Framework">
+    <.live_title default="VetVision.UZ" suffix=" · Phoenix Framework">
       {assigns[:page_title]}
     </.live_title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -38,11 +38,11 @@
       <div class="flex-none">
         <%= if @current_scope && @current_scope.user do %>
           <.link navigate={~p"/"} class="btn btn-ghost normal-case text-xl">
-            VetVision
+            VetVision.UZ
           </.link>
         <% else %>
           <div class="font-bold text-xl px-4">
-            VetVision
+            VetVision.UZ
           </div>
         <% end %>
       </div>
@@ -207,7 +207,7 @@
 
     <footer class="footer px-10 py-4 border-t bg-base-200 text-base-content border-base-300 flex justify-between items-center">
       <div class="items-center grid-flow-col">
-        <p><%= gettext("© 2026 VetVision. All rights reserved.") %></p>
+        <p><%= gettext("© 2026 VetVision.UZ. All rights reserved.") %></p>
       </div>
       <div class="grid grid-flow-col gap-4">
         <a>

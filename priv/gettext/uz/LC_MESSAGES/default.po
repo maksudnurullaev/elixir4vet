@@ -210,8 +210,8 @@ msgstr "Bizning vazifamiz — uysiz hayvonlarga ular juda muhtoj bo'lgan e'tibor
 
 #: lib/elixir4photos_web/controllers/page_html/home.html.heex:26
 #, elixir-autogen, elixir-format
-msgid "VetVision is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering."
-msgstr "VetVision shunchaki platforma emas; bu ovasizlarga bo'lgan sadoqatdir. Biz har bir hayvon mehribon uyga, to'g'ri tibbiy yordamga va azob-uqubatlardan holi hayotga loyiq deb hisoblaymiz."
+msgid "VetVision.UZ is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering."
+msgstr "VetVision.UZ shunchaki platforma emas; bu ovasizlarga bo'lgan sadoqatdir. Biz har bir hayvon mehribon uyga, to'g'ri tibbiy yordamga va azob-uqubatlardan holi hayotga loyiq deb hisoblaymiz."
 
 #: lib/elixir4photos_web/controllers/page_html/home.html.heex:37
 #, elixir-autogen, elixir-format
@@ -285,5 +285,5 @@ msgstr "Veterinariya yordami"
 
 #: lib/elixir4photos_web/components/layouts/root.html.heex:184
 #, elixir-autogen, elixir-format
-msgid "© 2026 VetVision. All rights reserved."
-msgstr "© 2026 VetVision. Barcha huquqlar himoyalangan."
+msgid "© 2026 VetVision.UZ. All rights reserved."
+msgstr "© 2026 VetVision.UZ. Barcha huquqlar himoyalangan."
