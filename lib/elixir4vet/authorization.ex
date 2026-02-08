@@ -106,6 +106,34 @@ defmodule Elixir4vet.Authorization do
     Repo.all(query)
   end
 
+  @doc """
+  Changes a user's role atomically. Removes all existing roles and assigns the new one in a transaction.
+  Returns :ok on success or {:error, reason} on failure.
+  """
+  def change_user_role(%User{id: user_id}, %Role{id: role_id}) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:delete_old_roles, fn repo, _changes ->
+      {_count, _} =
+        repo.delete_all(from ur in UserRole, where: ur.user_id == ^user_id)
+
+      {:ok, nil}
+    end)
+    |> Ecto.Multi.insert(:assign_new_role, fn _changes ->
+      %UserRole{}
+      |> UserRole.changeset(%{user_id: user_id, role_id: role_id})
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, _} -> 
+        :ok
+      {:error, _step, changeset, _changes} -> 
+        {:error, changeset}
+      error ->
+        IO.inspect(error, label: "Unexpected transaction error")
+        {:error, error}
+    end
+  end
+
   ## Permissions
 
   @doc """

@@ -27,46 +27,71 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
   end
 
   @impl true
-  def handle_event("change_role", %{"user-id" => user_id, "role" => role_name}, socket) do
-    user = Accounts.get_user!(String.to_integer(user_id))
-    current_user = socket.assigns.current_scope.user
+  def handle_event("change_role", params, socket) do
+    # Handle both nested and flat parameter formats
+    # Nested: {"role-form-123" => {"user_id" => "123", "role" => "admin"}}
+    # Flat: {"user_id" => "123", "role" => "admin"}
+    form_data = 
+      case params do
+        data when is_map(data) and map_size(data) == 1 ->
+          case Map.values(data) do
+            [nested_map] when is_map(nested_map) -> nested_map
+            _ -> data
+          end
+        data -> data
+      end
 
-    cond do
-      user.id == current_user.id ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "You cannot change your own role.")
-         |> refresh_users()}
+    user_id_str = form_data["user_id"]
+    role_name = form_data["role"]
 
-      true ->
-        # Get the role from the database
-        case Authorization.get_role_by_name(role_name) do
-          nil ->
-            {:noreply, put_flash(socket, :error, "Invalid role.")}
+    # Validate parameters more strictly
+    with true <- is_binary(user_id_str) and byte_size(user_id_str) > 0,
+         true <- is_binary(role_name) and byte_size(role_name) > 0,
+         {user_id_int, ""} <- Integer.parse(user_id_str) do
+      user = Accounts.get_user!(user_id_int)
+      current_user = socket.assigns.current_scope.user
 
-          role ->
-            # Remove all existing roles for this user
-            current_roles = Authorization.get_user_roles(user)
+      cond do
+        user.id == current_user.id ->
+          {:noreply,
+           socket
+           |> put_flash(:error, "You cannot change your own role.")
+           |> refresh_users()}
 
-            Enum.each(current_roles, fn current_role ->
-              Authorization.remove_role(user.id, current_role.id)
-            end)
+        true ->
+          case Authorization.get_role_by_name(role_name) do
+            nil ->
+              {:noreply, put_flash(socket, :error, "Invalid role.")}
 
-            # Assign the new role
-            case Authorization.assign_role(user, role) do
-              {:ok, _user_role} ->
+            role ->
+              current_roles = Authorization.get_user_roles(user)
+              current_role_names = Enum.map(current_roles, & &1.name)
+
+              if role_name in current_role_names do
                 {:noreply,
                  socket
-                 |> put_flash(:info, "User role updated successfully.")
+                 |> put_flash(:info, "User already has this role.")
                  |> refresh_users()}
+              else
+                case Authorization.change_user_role(user, role) do
+                  :ok ->
+                    {:noreply,
+                     socket
+                     |> put_flash(:info, "User role updated successfully.")
+                     |> refresh_users()}
 
-              {:error, _changeset} ->
-                {:noreply,
-                 socket
-                 |> put_flash(:error, "Failed to update user role.")
-                 |> refresh_users()}
-            end
-        end
+                  {:error, _error} ->
+                    {:noreply,
+                     socket
+                     |> put_flash(:error, "Failed to update user role. Please try again.")
+                     |> refresh_users()}
+                end
+              end
+          end
+      end
+    else
+      _ ->
+        {:noreply, put_flash(socket, :error, "Invalid parameters received")}
     end
   end
 
@@ -167,25 +192,31 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
                     <td>
                       <% user_role_names = Map.get(@user_roles_map, user.id, [])
                       primary_role = List.first(user_role_names) || "user" %>
-                      <select
-                        class={[
-                          "select select-sm",
-                          primary_role == "admin" && "select-success",
-                          primary_role == "manager" && "select-info",
-                          primary_role == "user" && "select-ghost",
-                          primary_role == "guest" && "select-warning"
-                        ]}
+                      <form
+                        id={"role-form-#{user.id}"}
+                        class="inline"
                         phx-change="change_role"
-                        phx-value-user-id={user.id}
-                        name="role"
-                        disabled={user.id == @current_scope.user.id}
                       >
-                        <%= for role <- @roles do %>
-                          <option value={role.name} selected={role.name in user_role_names}>
-                            {role_icon(role.name)} {role_display_name(role.name)}
-                          </option>
-                        <% end %>
-                      </select>
+                        <input type="hidden" name="user_id" value={to_string(user.id)} />
+                        <select
+                          id={"role-select-#{user.id}"}
+                          class={[
+                            "select select-sm",
+                            primary_role == "admin" && "select-success",
+                            primary_role == "manager" && "select-info",
+                            primary_role == "user" && "select-ghost",
+                            primary_role == "guest" && "select-warning"
+                          ]}
+                          name="role"
+                          disabled={user.id == @current_scope.user.id}
+                        >
+                          <%= for role <- @roles do %>
+                            <option value={role.name} selected={role.name in user_role_names}>
+                              {role_icon(role.name)} {role_display_name(role.name)}
+                            </option>
+                          <% end %>
+                        </select>
+                      </form>
                     </td>
                     <td>
                       <%= if user.confirmed_at do %>
