@@ -249,6 +249,22 @@ defmodule Elixir4vetWeb.UserAuth do
     end
   end
 
+  def on_mount(:require_admin, _params, session, socket) do
+    socket = mount_current_scope(socket, session)
+
+    if socket.assigns.current_scope && socket.assigns.current_scope.user &&
+         Accounts.admin?(socket.assigns.current_scope.user) do
+      {:cont, socket}
+    else
+      socket =
+        socket
+        |> Phoenix.LiveView.put_flash(:error, "You do not have permission to access this page.")
+        |> Phoenix.LiveView.redirect(to: ~p"/")
+
+      {:halt, socket}
+    end
+  end
+
   defp mount_current_scope(socket, session) do
     # Set locale from session if available
     if locale = session["locale"] do
@@ -273,7 +289,7 @@ defmodule Elixir4vetWeb.UserAuth do
     ~p"/users/settings"
   end
 
-  def signed_in_path(_), do: ~p"/home"
+  def signed_in_path(_), do: ~p"/"
 
   @doc """
   Plug for routes that require the user to be authenticated.

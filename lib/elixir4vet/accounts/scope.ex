@@ -34,11 +34,27 @@ defmodule Elixir4vet.Accounts.Scope do
   def for_user(nil), do: nil
 
   defp load_user_permissions(user) do
+    roles = Authorization.get_user_roles(user)
     resources = ["organizations", "animals", "events", "photographs", "users"]
 
     Enum.reduce(resources, %{}, fn resource, acc ->
-      permission = Authorization.get_user_permission(user, resource)
+      permission = get_permission_from_roles(roles, resource)
       Map.put(acc, resource, permission)
     end)
+  end
+
+  defp get_permission_from_roles(roles, resource) do
+    permissions =
+      roles
+      |> Enum.flat_map(fn role ->
+        Enum.filter(role.permissions, &(&1.resource == resource))
+      end)
+      |> Enum.map(& &1.permission)
+
+    cond do
+      "RW" in permissions -> "RW"
+      "RO" in permissions -> "RO"
+      true -> "NA"
+    end
   end
 end

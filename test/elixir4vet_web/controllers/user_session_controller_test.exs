@@ -18,10 +18,10 @@ defmodule Elixir4vetWeb.UserSessionControllerTest do
         })
 
       assert get_session(conn, :user_token)
-      assert redirected_to(conn) == ~p"/home"
+      assert redirected_to(conn) == ~p"/"
 
       # Now do a logged in request and assert on the menu
-      conn = get(conn, ~p"/home")
+      conn = get(conn, ~p"/")
       response = html_response(conn, 200)
       # Check for user initials (first 3 characters of email username)
       initials =
@@ -45,7 +45,7 @@ defmodule Elixir4vetWeb.UserSessionControllerTest do
         })
 
       assert conn.resp_cookies["_elixir4vet_web_user_remember_me"]
-      assert redirected_to(conn) == ~p"/home"
+      assert redirected_to(conn) == ~p"/"
     end
 
     test "logs the user in with return to", %{conn: conn, user: user} do
@@ -106,10 +106,10 @@ defmodule Elixir4vetWeb.UserSessionControllerTest do
         })
 
       assert get_session(conn, :user_token)
-      assert redirected_to(conn) == ~p"/home"
+      assert redirected_to(conn) == ~p"/"
 
       # Now do a logged in request and assert on the menu
-      conn = get(conn, ~p"/home")
+      conn = get(conn, ~p"/")
       response = html_response(conn, 200)
       # Check for user initials (first 3 characters of email username)
       initials =
@@ -131,13 +131,13 @@ defmodule Elixir4vetWeb.UserSessionControllerTest do
         })
 
       assert get_session(conn, :user_token)
-      assert redirected_to(conn) == ~p"/home"
+      assert redirected_to(conn) == ~p"/"
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "User confirmed successfully."
 
       assert Accounts.get_user!(user.id).confirmed_at
 
       # Now do a logged in request and assert on the menu
-      conn = get(conn, ~p"/home")
+      conn = get(conn, ~p"/")
       response = html_response(conn, 200)
       # Check for user initials (first 3 characters of email username)
       initials =

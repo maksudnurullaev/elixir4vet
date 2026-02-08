@@ -52,7 +52,7 @@ defmodule Elixir4vetWeb.Router do
     pipe_through [:browser, :require_authenticated_user, :admin]
 
     live_session :require_admin,
-      on_mount: [{Elixir4vetWeb.UserAuth, :require_authenticated}] do
+      on_mount: [{Elixir4vetWeb.UserAuth, :require_admin}] do
       live "/users", UsersLive, :index
       live "/permissions", PermissionsLive, :index
     end
@@ -70,7 +70,6 @@ defmodule Elixir4vetWeb.Router do
     pipe_through [:browser]
 
     get "/", PageController, :home
-    get "/home", PageController, :home
 
     live_session :require_authenticated_user,
       on_mount: [{Elixir4vetWeb.UserAuth, :require_authenticated}] do
