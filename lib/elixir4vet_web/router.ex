@@ -55,6 +55,16 @@ defmodule Elixir4vetWeb.Router do
       on_mount: [{Elixir4vetWeb.UserAuth, :require_admin}] do
       live "/users", UsersLive, :index
       live "/permissions", PermissionsLive, :index
+
+      live "/organizations", OrganizationLive.Index, :index
+      live "/organizations/new", OrganizationLive.Form, :new
+      live "/organizations/:id", OrganizationLive.Show, :show
+      live "/organizations/:id/edit", OrganizationLive.Form, :edit
+
+      live "/animals", AnimalLive.Index, :index
+      live "/animals/new", AnimalLive.Form, :new
+      live "/animals/:id", AnimalLive.Show, :show
+      live "/animals/:id/edit", AnimalLive.Form, :edit
     end
   end
 

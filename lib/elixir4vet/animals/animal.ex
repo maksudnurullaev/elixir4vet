@@ -1,6 +1,7 @@
 defmodule Elixir4vet.Animals.Animal do
   use Ecto.Schema
   import Ecto.Changeset
+  @type t :: %__MODULE__{}
 
   alias Elixir4vet.Accounts.User
   alias Elixir4vet.Animals.AnimalOwnership
@@ -13,7 +14,7 @@ defmodule Elixir4vet.Animals.Animal do
     field :date_of_birth, :date
     field :microchip_number, :string
     field :color, :string
-    field :gender, :string
+    field :gender, :string, default: "male"
     field :description, :string
     field :notes, :string
 
@@ -23,6 +24,8 @@ defmodule Elixir4vet.Animals.Animal do
 
     timestamps(type: :utc_datetime)
   end
+
+  def genders, do: ["male", "female"]
 
   @doc false
   def changeset(animal, attrs) do
@@ -40,7 +43,7 @@ defmodule Elixir4vet.Animals.Animal do
     ])
     |> validate_required([:name, :species])
     |> validate_length(:name, min: 1, max: 255)
-    |> validate_inclusion(:gender, ["male", "female", "unknown"])
+    |> validate_inclusion(:gender, genders())
     |> validate_length(:microchip_number, max: 50)
   end
 end

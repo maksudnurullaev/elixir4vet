@@ -99,10 +99,10 @@
                   <summary>Resources</summary>
                   <ul class="p-2 bg-base-100 z-50">
                     <%= if Map.get(@current_scope.permissions, "organizations") in ["RO", "RW"] do %>
-                      <li><a href="#organizations">Organizations</a></li>
+                      <li><.link navigate={~p"/admin/organizations"}>Organizations</.link></li>
                     <% end %>
                     <%= if Map.get(@current_scope.permissions, "animals") in ["RO", "RW"] do %>
-                      <li><a href="#animals">Animals</a></li>
+                      <li><.link navigate={~p"/admin/animals"}>Animals</.link></li>
                     <% end %>
                     <%= if Map.get(@current_scope.permissions, "events") in ["RO", "RW"] do %>
                       <li><a href="#events">Events</a></li>
