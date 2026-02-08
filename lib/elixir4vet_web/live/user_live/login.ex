@@ -101,7 +101,8 @@ defmodule Elixir4vetWeb.UserLive.Login do
     magic_form = to_form(%{"email" => email || ""}, as: "user")
     password_form = to_form(%{"email" => email}, as: "user")
 
-    {:ok, assign(socket, magic_form: magic_form, password_form: password_form, trigger_submit: false)}
+    {:ok,
+     assign(socket, magic_form: magic_form, password_form: password_form, trigger_submit: false)}
   end
 
   @impl true

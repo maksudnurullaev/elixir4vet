@@ -37,7 +37,6 @@ defmodule Elixir4vetWeb.UserLive.SettingsTest do
     end
   end
 
-
   describe "update password form" do
     setup %{conn: conn} do
       user = user_fixture() |> set_password()

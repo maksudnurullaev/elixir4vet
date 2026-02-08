@@ -6,10 +6,11 @@ defmodule Elixir4vetWeb.Plugs.SetLocale do
   def init(default), do: default
 
   def call(conn, _default) do
-    locale = get_locale_from_params(conn) ||
-             get_locale_from_session(conn) ||
-             get_locale_from_header(conn) ||
-             Gettext.get_locale(Elixir4vetWeb.Gettext)
+    locale =
+      get_locale_from_params(conn) ||
+        get_locale_from_session(conn) ||
+        get_locale_from_header(conn) ||
+        Gettext.get_locale(Elixir4vetWeb.Gettext)
 
     if locale in @supported_locales do
       Gettext.put_locale(Elixir4vetWeb.Gettext, locale)
@@ -48,13 +49,15 @@ defmodule Elixir4vetWeb.Plugs.SetLocale do
   end
 
   defp parse_language_option(string) do
-    captures = ~r/^(?<tag>[\w\-]+)(?:;q=(?<quality>[\d\.]+))?$/i
-               |> Regex.named_captures(String.trim(string))
+    captures =
+      ~r/^(?<tag>[\w\-]+)(?:;q=(?<quality>[\d\.]+))?$/i
+      |> Regex.named_captures(String.trim(string))
 
-    quality = case Float.parse(captures["quality"] || "1.0") do
-      {val, _} -> val
-      _ -> 1.0
-    end
+    quality =
+      case Float.parse(captures["quality"] || "1.0") do
+        {val, _} -> val
+        _ -> 1.0
+      end
 
     %{tag: captures["tag"], quality: quality}
   end

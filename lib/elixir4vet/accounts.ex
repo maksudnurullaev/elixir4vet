@@ -64,6 +64,8 @@ defmodule Elixir4vet.Accounts do
 
   @doc """
   Registers a user (email only, for magic link).
+  New users start as "guest" role until they confirm their email.
+  First user gets "admin" role immediately.
 
   ## Examples
 
@@ -82,18 +84,27 @@ defmodule Elixir4vet.Accounts do
       %User{}
       |> User.email_changeset(attrs)
 
-    changeset =
-      if is_first_user do
-        Ecto.Changeset.put_change(changeset, :role, "admin")
-      else
-        changeset
-      end
+    case Repo.insert(changeset) do
+      {:ok, user} = result ->
+        # Assign role in RBAC system
+        role_name = if is_first_user, do: "admin", else: "guest"
 
-    Repo.insert(changeset)
+        case Elixir4vet.Authorization.get_role_by_name(role_name) do
+          nil -> result
+          role -> Elixir4vet.Authorization.assign_role(user, role)
+        end
+
+        result
+
+      error ->
+        error
+    end
   end
 
   @doc """
   Registers a user with password and phone.
+  Users with password are auto-confirmed and get "user" role.
+  First user gets "admin" role.
 
   ## Examples
 
@@ -120,10 +131,25 @@ defmodule Elixir4vet.Accounts do
       if is_first_user do
         Ecto.Changeset.put_change(changeset, :role, "admin")
       else
-        changeset
+        # Password users are auto-confirmed, so they get "user" role
+        Ecto.Changeset.put_change(changeset, :role, "user")
       end
 
-    Repo.insert(changeset)
+    case Repo.insert(changeset) do
+      {:ok, user} = result ->
+        # Assign role in RBAC system
+        role_name = if is_first_user, do: "admin", else: "user"
+
+        case Elixir4vet.Authorization.get_role_by_name(role_name) do
+          nil -> result
+          role -> Elixir4vet.Authorization.assign_role(user, role)
+        end
+
+        result
+
+      error ->
+        error
+    end
   end
 
   @doc """
@@ -305,6 +331,7 @@ defmodule Elixir4vet.Accounts do
      In this case, the user gets confirmed, logged in, and all tokens -
      including session ones - are expired. In theory, no other tokens
      exist but we delete all of them for best security practices.
+     Additionally, the user is upgraded from "guest" to "user" role.
 
   3. The user has not confirmed their email but a password is set.
      This cannot happen in the default implementation but may be the
@@ -326,9 +353,33 @@ defmodule Elixir4vet.Accounts do
         """
 
       {%User{confirmed_at: nil} = user, _token} ->
-        user
-        |> User.confirm_changeset()
-        |> update_user_and_delete_all_tokens()
+        result =
+          user
+          |> User.confirm_changeset()
+          |> update_user_and_delete_all_tokens()
+
+        # Update RBAC system - upgrade guest to user role upon confirmation
+        case result do
+          {:ok, {confirmed_user, _tokens}} ->
+            # Remove guest role and assign user role
+            guest_roles = Elixir4vet.Authorization.get_user_roles(confirmed_user)
+
+            Enum.each(guest_roles, fn role ->
+              if role.name == "guest" do
+                Elixir4vet.Authorization.remove_role(confirmed_user.id, role.id)
+              end
+            end)
+
+            case Elixir4vet.Authorization.get_role_by_name("user") do
+              nil -> :ok
+              user_role -> Elixir4vet.Authorization.assign_role(confirmed_user, user_role)
+            end
+
+            result
+
+          _ ->
+            result
+        end
 
       {user, token} ->
         Repo.delete!(token)
@@ -421,15 +472,6 @@ defmodule Elixir4vet.Accounts do
   end
 
   @doc """
-  Changes a user's role (admin only).
-  """
-  def change_user_role(user, role) when role in ["user", "admin"] do
-    user
-    |> User.role_changeset(%{role: role})
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a user (admin only).
   """
   def delete_user(%User{} = user) do
@@ -437,16 +479,8 @@ defmodule Elixir4vet.Accounts do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking user role changes.
-  """
-  def change_user_role(user) do
-    User.role_changeset(user, %{})
-  end
-
-  @doc """
   Checks if a user is an admin.
   """
-
   def admin?(%User{} = user), do: Elixir4vet.Authorization.user_has_role?(user, "admin")
   def admin?(_), do: false
 end

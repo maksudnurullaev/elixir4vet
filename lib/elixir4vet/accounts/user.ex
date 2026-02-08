@@ -2,16 +2,13 @@ defmodule Elixir4vet.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @roles ["user", "admin"]
-
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :utc_datetime
     field :authenticated_at, :utc_datetime, virtual: true
-    field :role, :string, default: "user"
-    
+
     # Fields merged from People
     field :first_name, :string
     field :last_name, :string
@@ -19,18 +16,18 @@ defmodule Elixir4vet.Accounts.User do
     field :address, :string
     field :notes, :string
 
-    many_to_many :organizations, Elixir4vet.Organizations.Organization, join_through: Elixir4vet.Organizations.UserOrganization
+    many_to_many :organizations, Elixir4vet.Organizations.Organization,
+      join_through: Elixir4vet.Organizations.UserOrganization
+
     has_many :user_organizations, Elixir4vet.Organizations.UserOrganization
-    many_to_many :animals, Elixir4vet.Animals.Animal, join_through: Elixir4vet.Animals.AnimalOwnership
+
+    many_to_many :animals, Elixir4vet.Animals.Animal,
+      join_through: Elixir4vet.Animals.AnimalOwnership
+
     has_many :animal_ownerships, Elixir4vet.Animals.AnimalOwnership
 
     timestamps(type: :utc_datetime)
   end
-
-  @doc """
-  Returns the list of valid roles.
-  """
-  def roles, do: @roles
 
   @doc """
   A user changeset for registering or changing the email.
@@ -172,34 +169,10 @@ defmodule Elixir4vet.Accounts.User do
   end
 
   @doc """
-  A changeset for changing the user role (admin only).
-  """
-  def role_changeset(user, attrs) do
-    user
-    |> cast(attrs, [:role])
-    |> validate_required([:role])
-    |> validate_inclusion(:role, @roles)
-  end
-
-  @doc """
   A changeset for changing the user profile.
   """
   def profile_changeset(user, attrs) do
     user
     |> cast(attrs, [:first_name, :last_name, :phone, :address, :notes])
   end
-
-  @doc """
-  Check if user is an administrator.
-  """
-  @deprecated "Use Elixir4vet.Accounts.admin?/1 instead"
-  def admin?(%__MODULE__{role: "admin"}), do: true
-  def admin?(_), do: false
-
-  @doc """
-  Check if user has a specific role.
-  """
-  @deprecated "Use Elixir4vet.Authorization.user_has_role?/2 instead"
-  def has_role?(%__MODULE__{role: role}, check_role) when role == check_role, do: true
-  def has_role?(_, _), do: false
 end

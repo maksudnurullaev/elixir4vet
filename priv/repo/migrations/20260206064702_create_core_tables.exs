@@ -38,7 +38,8 @@ defmodule Elixir4vet.Repo.Migrations.CreateCoreTables do
     create table(:people_organizations) do
       add :person_id, references(:people, on_delete: :delete_all), null: false
       add :organization_id, references(:organizations, on_delete: :delete_all), null: false
-      add :role, :string, null: false  # "owner", "representative", etc.
+      # "owner", "representative", etc.
+      add :role, :string, null: false
       add :started_at, :date
       add :ended_at, :date
 
@@ -47,19 +48,22 @@ defmodule Elixir4vet.Repo.Migrations.CreateCoreTables do
 
     create index(:people_organizations, [:person_id])
     create index(:people_organizations, [:organization_id])
+
     create unique_index(:people_organizations, [:person_id, :organization_id, :role],
-      name: :people_organizations_unique_role
-    )
+             name: :people_organizations_unique_role
+           )
 
     # ANIMALS table
     create table(:animals) do
       add :name, :string, null: false
-      add :species, :string, null: false  # "dog", "cat", "bird", etc.
+      # "dog", "cat", "bird", etc.
+      add :species, :string, null: false
       add :breed, :string
       add :date_of_birth, :date
       add :microchip_number, :string
       add :color, :string
-      add :gender, :string  # "male", "female", "unknown"
+      # "male", "female", "unknown"
+      add :gender, :string
       add :description, :text
       add :notes, :text
 
@@ -74,7 +78,8 @@ defmodule Elixir4vet.Repo.Migrations.CreateCoreTables do
     create table(:animal_ownerships) do
       add :animal_id, references(:animals, on_delete: :delete_all), null: false
       add :person_id, references(:people, on_delete: :delete_all), null: false
-      add :ownership_type, :string, default: "owner"  # "owner", "co-owner", "guardian", etc.
+      # "owner", "co-owner", "guardian", etc.
+      add :ownership_type, :string, default: "owner"
       add :started_at, :date, null: false
       add :ended_at, :date
 

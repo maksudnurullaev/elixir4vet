@@ -14,7 +14,10 @@ defmodule Elixir4vet.Repo.Migrations.MergePeopleIntoUsers do
     # Drop and recreate user_organizations (formerly people_organizations) with user_id
     drop_if_exists index(:people_organizations, [:person_id])
     drop_if_exists index(:people_organizations, [:organization_id])
-    drop_if_exists index(:people_organizations, [:person_id, :organization_id, :role], name: :people_organizations_unique_role)
+
+    drop_if_exists index(:people_organizations, [:person_id, :organization_id, :role],
+                     name: :people_organizations_unique_role
+                   )
 
     create table(:user_organizations) do
       add :user_id, references(:users, on_delete: :delete_all), null: false
@@ -28,9 +31,10 @@ defmodule Elixir4vet.Repo.Migrations.MergePeopleIntoUsers do
 
     create index(:user_organizations, [:user_id])
     create index(:user_organizations, [:organization_id])
+
     create unique_index(:user_organizations, [:user_id, :organization_id, :role],
-      name: :user_organizations_unique_role
-    )
+             name: :user_organizations_unique_role
+           )
 
     drop table(:people_organizations)
 
@@ -166,7 +170,10 @@ defmodule Elixir4vet.Repo.Migrations.MergePeopleIntoUsers do
     # Recreate people_organizations
     drop_if_exists index(:user_organizations, [:user_id])
     drop_if_exists index(:user_organizations, [:organization_id])
-    drop_if_exists index(:user_organizations, [:user_id, :organization_id, :role], name: :user_organizations_unique_role)
+
+    drop_if_exists index(:user_organizations, [:user_id, :organization_id, :role],
+                     name: :user_organizations_unique_role
+                   )
 
     create table(:people_organizations) do
       add :person_id, references(:people, on_delete: :delete_all), null: false
@@ -180,9 +187,10 @@ defmodule Elixir4vet.Repo.Migrations.MergePeopleIntoUsers do
 
     create index(:people_organizations, [:person_id])
     create index(:people_organizations, [:organization_id])
+
     create unique_index(:people_organizations, [:person_id, :organization_id, :role],
-      name: :people_organizations_unique_role
-    )
+             name: :people_organizations_unique_role
+           )
 
     drop table(:user_organizations)
 

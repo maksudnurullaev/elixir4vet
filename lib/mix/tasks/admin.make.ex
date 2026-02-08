@@ -133,7 +133,8 @@ defmodule Mix.Tasks.Admin.Make do
   defp list_users do
     import Ecto.Query
 
-    users = Repo.all(from u in Elixir4vet.Accounts.User, order_by: [desc: u.inserted_at], limit: 10)
+    users =
+      Repo.all(from u in Elixir4vet.Accounts.User, order_by: [desc: u.inserted_at], limit: 10)
 
     if Enum.empty?(users) do
       Mix.shell().info("  (no users in database)")

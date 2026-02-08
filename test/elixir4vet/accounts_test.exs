@@ -209,10 +209,12 @@ defmodule Elixir4vet.AccountsTest do
 
     test "validates password", %{user: user} do
       {:error, changeset} =
-        Accounts.update_user_password(user, %{
-          password: "short",
-          password_confirmation: "another"
-        }, validate_current_password: false)
+        Accounts.update_user_password(
+          user,
+          %{
+            password: "short",
+            password_confirmation: "another"
+          }, validate_current_password: false)
 
       assert %{
                password: ["should be at least 8 character(s)"],
@@ -224,16 +226,20 @@ defmodule Elixir4vet.AccountsTest do
       too_long = String.duplicate("db", 100)
 
       {:error, changeset} =
-        Accounts.update_user_password(user, %{password: too_long}, validate_current_password: false)
+        Accounts.update_user_password(user, %{password: too_long},
+          validate_current_password: false
+        )
 
       assert "should be at most 72 character(s)" in errors_on(changeset).password
     end
 
     test "updates the password", %{user: user} do
       {:ok, {user, expired_tokens}} =
-        Accounts.update_user_password(user, %{
-          password: "new valid password"
-        }, validate_current_password: false)
+        Accounts.update_user_password(
+          user,
+          %{
+            password: "new valid password"
+          }, validate_current_password: false)
 
       assert expired_tokens == []
       assert is_nil(user.password)
@@ -244,9 +250,11 @@ defmodule Elixir4vet.AccountsTest do
       _ = Accounts.generate_user_session_token(user)
 
       {:ok, {_, _}} =
-        Accounts.update_user_password(user, %{
-          password: "new valid password"
-        }, validate_current_password: false)
+        Accounts.update_user_password(
+          user,
+          %{
+            password: "new valid password"
+          }, validate_current_password: false)
 
       refute Repo.get_by(UserToken, user_id: user.id)
     end

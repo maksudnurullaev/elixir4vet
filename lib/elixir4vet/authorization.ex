@@ -213,6 +213,7 @@ defmodule Elixir4vet.Authorization do
       assign_role(user, admin_role)
     end
   end
+
   @doc """
   Check if a user acts in a specific role.
   """

@@ -24,7 +24,9 @@ defmodule Elixir4vetWeb.UserSessionControllerTest do
       conn = get(conn, ~p"/home")
       response = html_response(conn, 200)
       # Check for user initials (first 3 characters of email username)
-      initials = user.email |> String.split("@") |> List.first() |> String.slice(0, 3) |> String.upcase()
+      initials =
+        user.email |> String.split("@") |> List.first() |> String.slice(0, 3) |> String.upcase()
+
       assert response =~ initials
       assert response =~ ~p"/users/settings"
       assert response =~ ~p"/users/log-out"
@@ -110,7 +112,9 @@ defmodule Elixir4vetWeb.UserSessionControllerTest do
       conn = get(conn, ~p"/home")
       response = html_response(conn, 200)
       # Check for user initials (first 3 characters of email username)
-      initials = user.email |> String.split("@") |> List.first() |> String.slice(0, 3) |> String.upcase()
+      initials =
+        user.email |> String.split("@") |> List.first() |> String.slice(0, 3) |> String.upcase()
+
       assert response =~ initials
       assert response =~ ~p"/users/settings"
       assert response =~ ~p"/users/log-out"
@@ -136,7 +140,9 @@ defmodule Elixir4vetWeb.UserSessionControllerTest do
       conn = get(conn, ~p"/home")
       response = html_response(conn, 200)
       # Check for user initials (first 3 characters of email username)
-      initials = user.email |> String.split("@") |> List.first() |> String.slice(0, 3) |> String.upcase()
+      initials =
+        user.email |> String.split("@") |> List.first() |> String.slice(0, 3) |> String.upcase()
+
       assert response =~ initials
       assert response =~ ~p"/users/settings"
       assert response =~ ~p"/users/log-out"

@@ -2,20 +2,33 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
   use Elixir4vetWeb, :live_view
 
   alias Elixir4vet.Accounts
+  alias Elixir4vet.Authorization
 
   @impl true
   def mount(_params, _session, socket) do
     users = Accounts.list_users()
+    roles = Authorization.list_roles()
+
+    # Build a map of user_id => list of role names for efficient lookup
+    user_roles_map =
+      users
+      |> Enum.map(fn user ->
+        user_roles = Authorization.get_user_roles(user)
+        {user.id, Enum.map(user_roles, & &1.name)}
+      end)
+      |> Map.new()
 
     {:ok,
      socket
      |> assign(:users, users)
+     |> assign(:roles, roles)
+     |> assign(:user_roles_map, user_roles_map)
      |> assign(:page_title, "User Management")}
   end
 
   @impl true
-  def handle_event("change_role", %{"user-id" => user_id, "role" => role}, socket) do
-    user = Accounts.get_user!(user_id)
+  def handle_event("change_role", %{"user-id" => user_id, "role" => role_name}, socket) do
+    user = Accounts.get_user!(String.to_integer(user_id))
     current_user = socket.assigns.current_scope.user
 
     cond do
@@ -23,30 +36,42 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
         {:noreply,
          socket
          |> put_flash(:error, "You cannot change your own role.")
-         |> assign(:users, Accounts.list_users())}
-
-      role in ["user", "admin"] ->
-        case Accounts.change_user_role(user, role) do
-          {:ok, _user} ->
-            {:noreply,
-             socket
-             |> put_flash(:info, "User role updated successfully.")
-             |> assign(:users, Accounts.list_users())}
-
-          {:error, _changeset} ->
-            {:noreply,
-             socket
-             |> put_flash(:error, "Failed to update user role.")
-             |> assign(:users, Accounts.list_users())}
-        end
+         |> refresh_users()}
 
       true ->
-        {:noreply, put_flash(socket, :error, "Invalid role.")}
+        # Get the role from the database
+        case Authorization.get_role_by_name(role_name) do
+          nil ->
+            {:noreply, put_flash(socket, :error, "Invalid role.")}
+
+          role ->
+            # Remove all existing roles for this user
+            current_roles = Authorization.get_user_roles(user)
+
+            Enum.each(current_roles, fn current_role ->
+              Authorization.remove_role(user.id, current_role.id)
+            end)
+
+            # Assign the new role
+            case Authorization.assign_role(user, role) do
+              {:ok, _user_role} ->
+                {:noreply,
+                 socket
+                 |> put_flash(:info, "User role updated successfully.")
+                 |> refresh_users()}
+
+              {:error, _changeset} ->
+                {:noreply,
+                 socket
+                 |> put_flash(:error, "Failed to update user role.")
+                 |> refresh_users()}
+            end
+        end
     end
   end
 
   def handle_event("delete_user", %{"user-id" => user_id}, socket) do
-    user = Accounts.get_user!(user_id)
+    user = Accounts.get_user!(String.to_integer(user_id))
     current_user = socket.assigns.current_scope.user
 
     if user.id == current_user.id do
@@ -57,11 +82,50 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
           {:noreply,
            socket
            |> put_flash(:info, "User deleted successfully.")
-           |> assign(:users, Accounts.list_users())}
+           |> refresh_users()}
 
         {:error, _changeset} ->
           {:noreply, put_flash(socket, :error, "Failed to delete user.")}
       end
+    end
+  end
+
+  # Helper function to refresh users and their roles
+  defp refresh_users(socket) do
+    users = Accounts.list_users()
+
+    user_roles_map =
+      users
+      |> Enum.map(fn user ->
+        user_roles = Authorization.get_user_roles(user)
+        {user.id, Enum.map(user_roles, & &1.name)}
+      end)
+      |> Map.new()
+
+    socket
+    |> assign(:users, users)
+    |> assign(:user_roles_map, user_roles_map)
+  end
+
+  # Helper function to get role icon
+  defp role_icon(role_name) do
+    case role_name do
+      "admin" -> "👑"
+      "manager" -> "📊"
+      "user" -> "👤"
+      "guest" -> "👁️"
+      _ -> "❓"
+    end
+  end
+
+  # Helper function to get role display name
+  defp role_display_name(role_name) do
+    case role_name do
+      "admin" -> "Admin"
+      "manager" -> "Manager"
+      "user" -> "User"
+      "guest" -> "Guest"
+      _ -> String.capitalize(role_name)
     end
   end
 
@@ -98,18 +162,29 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
               <tbody>
                 <%= for user <- @users do %>
                   <tr>
-                    <td><%= user.id %></td>
-                    <td class="font-mono"><%= user.email %></td>
+                    <td>{user.id}</td>
+                    <td class="font-mono">{user.email}</td>
                     <td>
+                      <% user_role_names = Map.get(@user_roles_map, user.id, [])
+                      primary_role = List.first(user_role_names) || "user" %>
                       <select
-                        class={"select select-sm " <> if user.role == "admin", do: "select-success", else: "select-ghost"}
+                        class={[
+                          "select select-sm",
+                          primary_role == "admin" && "select-success",
+                          primary_role == "manager" && "select-info",
+                          primary_role == "user" && "select-ghost",
+                          primary_role == "guest" && "select-warning"
+                        ]}
                         phx-change="change_role"
                         phx-value-user-id={user.id}
                         name="role"
                         disabled={user.id == @current_scope.user.id}
                       >
-                        <option value="user" selected={user.role == "user"}>👤 User</option>
-                        <option value="admin" selected={user.role == "admin"}>👑 Admin</option>
+                        <%= for role <- @roles do %>
+                          <option value={role.name} selected={role.name in user_role_names}>
+                            {role_icon(role.name)} {role_display_name(role.name)}
+                          </option>
+                        <% end %>
                       </select>
                     </td>
                     <td>
@@ -120,7 +195,7 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
                       <% end %>
                     </td>
                     <td class="text-sm opacity-70">
-                      <%= Calendar.strftime(user.inserted_at, "%Y-%m-%d %H:%M") %>
+                      {Calendar.strftime(user.inserted_at, "%Y-%m-%d %H:%M")}
                     </td>
                     <td>
                       <%= if user.id != @current_scope.user.id do %>
@@ -145,18 +220,25 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
           <div class="stats stats-vertical lg:stats-horizontal shadow mt-6">
             <div class="stat">
               <div class="stat-title">Total Users</div>
-              <div class="stat-value"><%= length(@users) %></div>
+              <div class="stat-value">{length(@users)}</div>
             </div>
-            <div class="stat">
-              <div class="stat-title">Administrators</div>
-              <div class="stat-value text-success">
-                <%= Enum.count(@users, &(&1.role == "admin")) %>
+            <%= for role <- @roles do %>
+              <% count =
+                Enum.count(@users, fn user ->
+                  user_role_names = Map.get(@user_roles_map, user.id, [])
+                  role.name in user_role_names
+                end) %>
+              <div class="stat">
+                <div class="stat-title">{role_icon(role.name)} {role_display_name(role.name)}s</div>
+                <div class={[
+                  "stat-value",
+                  role.name == "admin" && "text-success",
+                  role.name == "manager" && "text-info"
+                ]}>
+                  {count}
+                </div>
               </div>
-            </div>
-            <div class="stat">
-              <div class="stat-title">Regular Users</div>
-              <div class="stat-value"><%= Enum.count(@users, &(&1.role == "user")) %></div>
-            </div>
+            <% end %>
           </div>
         </div>
       </div>

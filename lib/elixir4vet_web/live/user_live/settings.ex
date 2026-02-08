@@ -36,7 +36,12 @@ defmodule Elixir4vetWeb.UserLive.Settings do
 
       <div class="divider" />
 
-      <.form for={@profile_form} id="profile_form" phx-submit="update_profile" phx-change="validate_profile">
+      <.form
+        for={@profile_form}
+        id="profile_form"
+        phx-submit="update_profile"
+        phx-change="validate_profile"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <.input field={@profile_form[:first_name]} type="text" label="First Name" />
           <.input field={@profile_form[:last_name]} type="text" label="Last Name" />
@@ -166,7 +171,7 @@ defmodule Elixir4vetWeb.UserLive.Settings do
     case Accounts.update_user_profile(user, user_params) do
       {:ok, updated_user} ->
         put_flash(socket, :info, "Profile updated successfully.")
-        
+
         # update the user in current_scope if it's stored there
         current_scope = socket.assigns.current_scope
         new_scope = %{current_scope | user: updated_user}

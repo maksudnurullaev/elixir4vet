@@ -2,56 +2,77 @@
   <!-- Mission Section -->
   <div class="py-20 px-4 bg-base-100">
     <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-8 text-primary"><%= gettext("Our Mission") %></h2>
+      <h2 class="text-3xl font-bold mb-8 text-primary">{gettext("Our Mission")}</h2>
       <p class="text-lg leading-relaxed text-base-content/80 mb-6">
-        <%= gettext("VetVision.UZ is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering.") %>
+        {gettext(
+          "VetVision.UZ is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering."
+        )}
       </p>
       <p class="text-lg leading-relaxed text-base-content/80">
-        <%= gettext("Our mission is to connect veterinarians, shelters, and compassionate individuals to ensure that homeless animals receive the attention they desperately need. Join us in creating a world where every wagging tail and purring friend is cherished.") %>
+        {gettext(
+          "Our mission is to connect veterinarians, shelters, and compassionate individuals to ensure that homeless animals receive the attention they desperately need. Join us in creating a world where every wagging tail and purring friend is cherished."
+        )}
       </p>
     </div>
   </div>
-
-  <!-- Quotes Section -->
+  
+<!-- Quotes Section -->
   <div class="py-20 bg-base-200 px-4">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-12"><%= gettext("Voices of Compassion") %></h2>
+      <h2 class="text-3xl font-bold text-center mb-12">{gettext("Voices of Compassion")}</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Quote 1 -->
         <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all">
           <div class="card-body">
             <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path>
+              <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z">
+              </path>
             </svg>
-            <p class="italic text-lg"><%= gettext("\"The greatness of a nation and its moral progress can be judged by the way its animals are treated.\"") %></p>
+            <p class="italic text-lg">
+              {gettext(
+                "\"The greatness of a nation and its moral progress can be judged by the way its animals are treated.\""
+              )}
+            </p>
             <div class="card-actions justify-end mt-4">
               <span class="font-bold text-sm uppercase tracking-wider">— Mahatma Gandhi</span>
             </div>
           </div>
         </div>
-
-        <!-- Quote 2 -->
+        
+<!-- Quote 2 -->
         <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all">
           <div class="card-body">
             <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path>
+              <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z">
+              </path>
             </svg>
-            <p class="italic text-lg"><%= gettext("\"Until one has loved an animal, a part of one's soul remains unawakened.\"") %></p>
+            <p class="italic text-lg">
+              {gettext(
+                "\"Until one has loved an animal, a part of one's soul remains unawakened.\""
+              )}
+            </p>
             <div class="card-actions justify-end mt-4">
               <span class="font-bold text-sm uppercase tracking-wider">— Anatole France</span>
             </div>
           </div>
         </div>
-
-        <!-- Quote 3 -->
+        
+<!-- Quote 3 -->
         <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all">
           <div class="card-body">
             <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path>
+              <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z">
+              </path>
             </svg>
-            <p class="italic text-lg"><%= gettext("\"Compassion for animals is intimately associated with goodness of character.\"") %></p>
+            <p class="italic text-lg">
+              {gettext(
+                "\"Compassion for animals is intimately associated with goodness of character.\""
+              )}
+            </p>
             <div class="card-actions justify-end mt-4">
-              <span class="font-bold text-sm uppercase tracking-wider">— Arthur Schopenhauer</span>
+              <span class="font-bold text-sm uppercase tracking-wider">
+                — Arthur Schopenhauer
+              </span>
             </div>
           </div>
         </div>
