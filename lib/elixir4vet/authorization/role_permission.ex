@@ -1,6 +1,7 @@
 defmodule Elixir4vet.Authorization.RolePermission do
   use Ecto.Schema
   import Ecto.Changeset
+  @type t :: %__MODULE__{}
 
   alias Elixir4vet.Authorization.Role
 
