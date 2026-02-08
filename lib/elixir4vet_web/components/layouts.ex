@@ -37,6 +37,7 @@ defmodule Elixir4vetWeb.Layouts do
     ~H"""
     <main class="px-4 py-20 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl space-y-4">
+        <.flash_group flash={@flash} />
         {render_slot(@inner_block)}
       </div>
     </main>
@@ -54,17 +55,21 @@ defmodule Elixir4vetWeb.Layouts do
   attr :id, :string, default: "flash-group", doc: "the optional id of flash container"
 
   def flash_group(assigns) do
+    assigns = assign_new(assigns, :id, fn -> "flash-group" end)
+
     ~H"""
     <div id={@id} aria-live="polite">
-      <.flash kind={:info} flash={@flash} />
-      <.flash kind={:error} flash={@flash} />
+      <.flash id={"#{@id}-info"} kind={:info} flash={@flash} />
+      <.flash id={"#{@id}-error"} kind={:error} flash={@flash} />
 
       <.flash
-        id="client-error"
+        id={"#{@id}-client-error"}
         kind={:error}
         title={gettext("We can't find the internet")}
-        phx-disconnected={show(".phx-client-error #client-error") |> JS.remove_attribute("hidden")}
-        phx-connected={hide("#client-error") |> JS.set_attribute({"hidden", ""})}
+        phx-disconnected={
+          show(".phx-client-error ##{@id}-client-error") |> JS.remove_attribute("hidden")
+        }
+        phx-connected={hide("##{@id}-client-error") |> JS.set_attribute({"hidden", ""})}
         hidden
       >
         {gettext("Attempting to reconnect")}
@@ -72,11 +77,13 @@ defmodule Elixir4vetWeb.Layouts do
       </.flash>
 
       <.flash
-        id="server-error"
+        id={"#{@id}-server-error"}
         kind={:error}
         title={gettext("Something went wrong!")}
-        phx-disconnected={show(".phx-server-error #server-error") |> JS.remove_attribute("hidden")}
-        phx-connected={hide("#server-error") |> JS.set_attribute({"hidden", ""})}
+        phx-disconnected={
+          show(".phx-server-error ##{@id}-server-error") |> JS.remove_attribute("hidden")
+        }
+        phx-connected={hide("##{@id}-server-error") |> JS.set_attribute({"hidden", ""})}
         hidden
       >
         {gettext("Attempting to reconnect")}

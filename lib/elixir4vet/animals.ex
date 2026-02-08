@@ -6,6 +6,8 @@ defmodule Elixir4vet.Animals do
   import Ecto.Query, warn: false
   alias Elixir4vet.Repo
   alias Elixir4vet.Animals.Animal
+  alias Elixir4vet.Animals.AnimalOwnership
+  alias Elixir4vet.Accounts.User
   alias Elixir4vet.Accounts.Scope
 
   @pubsub Elixir4vet.PubSub
@@ -36,22 +38,68 @@ defmodule Elixir4vet.Animals do
   def get_animal!(id), do: Repo.get!(Animal, id)
 
   @doc """
-  Creates a animal.
+  Creates a animal and assigns an owner.
   """
   def create_animal(%Scope{permissions: %{"animals" => "RW"}}, attrs) do
-    %Animal{}
-    |> Animal.changeset(attrs)
-    |> Repo.insert()
-    |> broadcast(:created)
+    owner_id = Map.get(attrs, "owner_id") || Map.get(attrs, :owner_id)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:animal, Animal.changeset(%Animal{}, attrs))
+    |> Ecto.Multi.insert(:ownership, fn %{animal: animal} ->
+      AnimalOwnership.changeset(%AnimalOwnership{}, %{
+        animal_id: animal.id,
+        user_id: owner_id,
+        ownership_type: "owner",
+        started_at: Date.utc_today()
+      })
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{animal: animal}} ->
+        broadcast({:ok, animal}, :created)
+
+      {:error, :animal, changeset, _} ->
+        {:error, changeset}
+
+      {:error, :ownership, _changeset, _} ->
+        # If ownership fails (e.g. missing owner_id), add error to animal changeset
+        changeset =
+          Ecto.Changeset.add_error(Animal.changeset(%Animal{}, attrs), :owner_id, "is required")
+
+        {:error, changeset}
+    end
   end
 
   def create_animal(%Scope{}, _attrs), do: {:error, :unauthorized}
 
   def create_animal(attrs \\ %{}) do
-    %Animal{}
-    |> Animal.changeset(attrs)
-    |> Repo.insert()
-    |> broadcast(:created)
+    # Fallback for unauthenticated/unscoped calls if needed, though mostly used via Scope
+    owner_id = Map.get(attrs, "owner_id") || Map.get(attrs, :owner_id)
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:animal, Animal.changeset(%Animal{}, attrs))
+    |> Ecto.Multi.insert(:ownership, fn %{animal: animal} ->
+      AnimalOwnership.changeset(%AnimalOwnership{}, %{
+        animal_id: animal.id,
+        user_id: owner_id,
+        ownership_type: "owner",
+        started_at: Date.utc_today()
+      })
+    end)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{animal: animal}} ->
+        broadcast({:ok, animal}, :created)
+
+      {:error, :animal, changeset, _} ->
+        {:error, changeset}
+
+      {:error, :ownership, _, _} ->
+        changeset =
+          Ecto.Changeset.add_error(Animal.changeset(%Animal{}, attrs), :owner_id, "is required")
+
+        {:error, changeset}
+    end
   end
 
   @doc """
@@ -106,6 +154,78 @@ defmodule Elixir4vet.Animals do
   def change_animal(%Animal{} = animal) do
     change_animal(animal, %{})
   end
+
+  ## Ownership
+
+  @doc """
+  Lists all owners of an animal.
+  """
+  def list_animal_owners(%Scope{} = _scope, %Animal{} = animal) do
+    query =
+      from u in User,
+        join: ao in AnimalOwnership,
+        on: ao.user_id == u.id,
+        where: ao.animal_id == ^animal.id,
+        select: {u, ao.ownership_type}
+
+    Repo.all(query)
+  end
+
+  @doc """
+  Adds an owner to an animal.
+  """
+  def add_animal_owner(scope, animal_id, user_id, ownership_type \\ "owner")
+
+  def add_animal_owner(
+        %Scope{permissions: %{"animals" => "RW"}},
+        animal_id,
+        user_id,
+        ownership_type
+      ) do
+    %AnimalOwnership{}
+    |> AnimalOwnership.changeset(%{
+      animal_id: animal_id,
+      user_id: user_id,
+      ownership_type: ownership_type,
+      started_at: Date.utc_today()
+    })
+    |> Repo.insert()
+    |> broadcast_ownership(:owner_added)
+  end
+
+  def add_animal_owner(%Scope{}, _, _, _), do: {:error, :unauthorized}
+
+  @doc """
+  Removes an owner from an animal.
+  """
+  def remove_animal_owner(
+        %Scope{permissions: %{"animals" => "RW"}},
+        animal_id,
+        user_id,
+        ownership_type
+      ) do
+    case Repo.get_by(AnimalOwnership,
+           animal_id: animal_id,
+           user_id: user_id,
+           ownership_type: ownership_type
+         ) do
+      nil ->
+        {:error, :not_found}
+
+      ao ->
+        Repo.delete(ao)
+        |> broadcast_ownership(:owner_removed)
+    end
+  end
+
+  def remove_animal_owner(%Scope{}, _, _, _), do: {:error, :unauthorized}
+
+  defp broadcast_ownership({:ok, %AnimalOwnership{} = ao} = result, event) do
+    Phoenix.PubSub.broadcast(@pubsub, @topic, {event, ao})
+    result
+  end
+
+  defp broadcast_ownership(result, _), do: result
 
   defp broadcast({:ok, %Animal{} = animal} = result, event) do
     Phoenix.PubSub.broadcast(@pubsub, @topic, {event, animal})

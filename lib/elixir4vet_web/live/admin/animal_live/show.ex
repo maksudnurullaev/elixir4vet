@@ -2,6 +2,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
   use Elixir4vetWeb, :live_view
 
   alias Elixir4vet.Animals
+  alias Elixir4vet.Accounts
 
   @impl true
   def render(assigns) do
@@ -31,6 +32,49 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
         <:item title="Description">{@animal.description}</:item>
         <:item title="Notes">{@animal.notes}</:item>
       </.list>
+
+      <div class="divider"></div>
+
+      <.header>
+        Owners
+        <:actions>
+          <div class="flex gap-2 items-center">
+            <form id="add-owner-form" phx-submit="add_owner" class="flex gap-2">
+              <select name="user_id" class="select select-bordered select-sm">
+                <option value="" disabled selected>Select User</option>
+                <%= for user <- @users do %>
+                  <option value={user.id}>{user.email}</option>
+                <% end %>
+              </select>
+              <select name="ownership_type" class="select select-bordered select-sm">
+                <option value="owner">Owner</option>
+                <option value="co-owner">Co-owner</option>
+                <option value="guardian">Guardian</option>
+                <option value="foster">Foster</option>
+              </select>
+              <.button type="submit" variant="primary" phx-disable-with="Adding...">
+                Add Owner
+              </.button>
+            </form>
+          </div>
+        </:actions>
+      </.header>
+
+      <.table id="owners" rows={@owners}>
+        <:col :let={{user, _type}} label="User">{user.email}</:col>
+        <:col :let={{_user, type}} label="Type">{type}</:col>
+        <:action :let={{user, type}}>
+          <.link
+            phx-click="remove_owner"
+            phx-value-user_id={user.id}
+            phx-value-ownership_type={type}
+            data-confirm="Are you sure you want to remove this owner?"
+            class="text-error"
+          >
+            Remove
+          </.link>
+        </:action>
+      </.table>
     </Layouts.app>
     """
   end
@@ -41,10 +85,54 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
       Animals.subscribe_animals(socket.assigns.current_scope)
     end
 
+    animal = Animals.get_animal!(socket.assigns.current_scope, id)
+    owners = Animals.list_animal_owners(socket.assigns.current_scope, animal)
+    users = Accounts.list_users()
+
     {:ok,
      socket
      |> assign(:page_title, "Show Animal")
-     |> assign(:animal, Animals.get_animal!(socket.assigns.current_scope, id))}
+     |> assign(:animal, animal)
+     |> assign(:owners, owners)
+     |> assign(:users, users)}
+  end
+
+  @impl true
+  def handle_event("add_owner", %{"user_id" => user_id, "ownership_type" => type}, socket) do
+    case Animals.add_animal_owner(
+           socket.assigns.current_scope,
+           socket.assigns.animal.id,
+           String.to_integer(user_id),
+           type
+         ) do
+      {:ok, _ao} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Owner added successfully")
+         |> refresh_owners()}
+
+      {:error, _changeset} ->
+        {:noreply, put_flash(socket, :error, "Failed to add owner")}
+    end
+  end
+
+  @impl true
+  def handle_event("remove_owner", %{"user_id" => user_id, "ownership_type" => type}, socket) do
+    case Animals.remove_animal_owner(
+           socket.assigns.current_scope,
+           socket.assigns.animal.id,
+           String.to_integer(user_id),
+           type
+         ) do
+      {:ok, _ao} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Owner removed successfully")
+         |> refresh_owners()}
+
+      {:error, _reason} ->
+        {:noreply, put_flash(socket, :error, "Failed to remove owner")}
+    end
   end
 
   @impl true
@@ -65,8 +153,17 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
      |> push_navigate(to: ~p"/admin/animals")}
   end
 
+  def handle_info({event, _data}, socket) when event in [:owner_added, :owner_removed] do
+    {:noreply, refresh_owners(socket)}
+  end
+
   def handle_info({type, %Elixir4vet.Animals.Animal{}}, socket)
       when type in [:created, :updated, :deleted] do
     {:noreply, socket}
+  end
+
+  defp refresh_owners(socket) do
+    owners = Animals.list_animal_owners(socket.assigns.current_scope, socket.assigns.animal)
+    assign(socket, :owners, owners)
   end
 end

@@ -57,6 +57,24 @@ defmodule Elixir4vetWeb.ConnCase do
   end
 
   @doc """
+  Setup helper that registers and logs in admin users.
+  """
+  def register_and_log_in_admin(%{conn: conn} = context) do
+    user = Elixir4vet.AccountsFixtures.user_fixture()
+    admin_role = Elixir4vet.AuthorizationFixtures.admin_role_fixture()
+    Elixir4vet.AuthorizationFixtures.assign_role_fixture(user, admin_role)
+
+    scope = Elixir4vet.Accounts.Scope.for_user(user)
+
+    opts =
+      context
+      |> Map.take([:token_authenticated_at])
+      |> Enum.into([])
+
+    %{conn: log_in_user(conn, user, opts), user: user, scope: scope}
+  end
+
+  @doc """
   Logs the given `user` into the `conn`.
 
   It returns an updated `conn`.

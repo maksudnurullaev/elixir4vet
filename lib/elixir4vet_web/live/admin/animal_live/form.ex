@@ -3,6 +3,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
 
   alias Elixir4vet.Animals
   alias Elixir4vet.Animals.Animal
+  alias Elixir4vet.Accounts
 
   @impl true
   def render(assigns) do
@@ -26,6 +27,17 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
           label="Gender"
           options={Animal.genders()}
         />
+
+        <%= if @live_action == :new do %>
+          <.input
+            field={@form[:owner_id]}
+            type="select"
+            label="Owner"
+            options={Enum.map(@users, &{&1.email, &1.id})}
+            prompt="Select an owner"
+          />
+        <% end %>
+
         <.input field={@form[:description]} type="text" label="Description" />
         <.input field={@form[:notes]} type="text" label="Notes" />
         <footer>
@@ -42,6 +54,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
     {:ok,
      socket
      |> assign(:return_to, return_to(params["return_to"]))
+     |> assign(:users, Accounts.list_users())
      |> apply_action(socket.assigns.live_action, params)}
   end
 

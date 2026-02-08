@@ -4,11 +4,35 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
   import Phoenix.LiveViewTest
   import Elixir4vet.OrganizationsFixtures
 
-  @create_attrs %{name: "some name", address: "some address", registration_number: "some registration_number", phone: "some phone", email: "some email", website: "some website", notes: "some notes"}
-  @update_attrs %{name: "some updated name", address: "some updated address", registration_number: "some updated registration_number", phone: "some updated phone", email: "some updated email", website: "some updated website", notes: "some updated notes"}
-  @invalid_attrs %{name: nil, address: nil, registration_number: nil, phone: nil, email: nil, website: nil, notes: nil}
+  @create_attrs %{
+    name: "some name",
+    address: "some address",
+    registration_number: "some registration_number",
+    phone: "some phone",
+    email: "some email",
+    website: "some website",
+    notes: "some notes"
+  }
+  @update_attrs %{
+    name: "some updated name",
+    address: "some updated address",
+    registration_number: "some updated registration_number",
+    phone: "some updated phone",
+    email: "some updated email",
+    website: "some updated website",
+    notes: "some updated notes"
+  }
+  @invalid_attrs %{
+    name: nil,
+    address: nil,
+    registration_number: nil,
+    phone: nil,
+    email: nil,
+    website: nil,
+    notes: nil
+  }
 
-  setup :register_and_log_in_user
+  setup :register_and_log_in_admin
 
   defp create_organization(%{scope: scope}) do
     organization = organization_fixture(scope)
@@ -20,20 +44,20 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
     setup [:create_organization]
 
     test "lists all organizations", %{conn: conn, organization: organization} do
-      {:ok, _index_live, html} = live(conn, ~p"/organizations")
+      {:ok, _index_live, html} = live(conn, ~p"/admin/organizations")
 
       assert html =~ "Listing Organizations"
       assert html =~ organization.name
     end
 
     test "saves new organization", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/organizations")
+      {:ok, index_live, _html} = live(conn, ~p"/admin/organizations")
 
       assert {:ok, form_live, _} =
                index_live
                |> element("a", "New Organization")
                |> render_click()
-               |> follow_redirect(conn, ~p"/organizations/new")
+               |> follow_redirect(conn, ~p"/admin/organizations/new")
 
       assert render(form_live) =~ "New Organization"
 
@@ -45,7 +69,7 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
                form_live
                |> form("#organization-form", organization: @create_attrs)
                |> render_submit()
-               |> follow_redirect(conn, ~p"/organizations")
+               |> follow_redirect(conn, ~p"/admin/organizations")
 
       html = render(index_live)
       assert html =~ "Organization created successfully"
@@ -53,13 +77,13 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
     end
 
     test "updates organization in listing", %{conn: conn, organization: organization} do
-      {:ok, index_live, _html} = live(conn, ~p"/organizations")
+      {:ok, index_live, _html} = live(conn, ~p"/admin/organizations")
 
       assert {:ok, form_live, _html} =
                index_live
                |> element("#organizations-#{organization.id} a", "Edit")
                |> render_click()
-               |> follow_redirect(conn, ~p"/organizations/#{organization}/edit")
+               |> follow_redirect(conn, ~p"/admin/organizations/#{organization}/edit")
 
       assert render(form_live) =~ "Edit Organization"
 
@@ -71,7 +95,7 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
                form_live
                |> form("#organization-form", organization: @update_attrs)
                |> render_submit()
-               |> follow_redirect(conn, ~p"/organizations")
+               |> follow_redirect(conn, ~p"/admin/organizations")
 
       html = render(index_live)
       assert html =~ "Organization updated successfully"
@@ -79,9 +103,12 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
     end
 
     test "deletes organization in listing", %{conn: conn, organization: organization} do
-      {:ok, index_live, _html} = live(conn, ~p"/organizations")
+      {:ok, index_live, _html} = live(conn, ~p"/admin/organizations")
 
-      assert index_live |> element("#organizations-#{organization.id} a", "Delete") |> render_click()
+      assert index_live
+             |> element("#organizations-#{organization.id} a", "Delete")
+             |> render_click()
+
       refute has_element?(index_live, "#organizations-#{organization.id}")
     end
   end
@@ -90,20 +117,23 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
     setup [:create_organization]
 
     test "displays organization", %{conn: conn, organization: organization} do
-      {:ok, _show_live, html} = live(conn, ~p"/organizations/#{organization}")
+      {:ok, _show_live, html} = live(conn, ~p"/admin/organizations/#{organization}")
 
       assert html =~ "Show Organization"
       assert html =~ organization.name
     end
 
     test "updates organization and returns to show", %{conn: conn, organization: organization} do
-      {:ok, show_live, _html} = live(conn, ~p"/organizations/#{organization}")
+      {:ok, show_live, _html} = live(conn, ~p"/admin/organizations/#{organization}")
 
       assert {:ok, form_live, _} =
                show_live
                |> element("a", "Edit")
                |> render_click()
-               |> follow_redirect(conn, ~p"/organizations/#{organization}/edit?return_to=show")
+               |> follow_redirect(
+                 conn,
+                 ~p"/admin/organizations/#{organization}/edit?return_to=show"
+               )
 
       assert render(form_live) =~ "Edit Organization"
 
@@ -115,7 +145,7 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
                form_live
                |> form("#organization-form", organization: @update_attrs)
                |> render_submit()
-               |> follow_redirect(conn, ~p"/organizations/#{organization}")
+               |> follow_redirect(conn, ~p"/admin/organizations/#{organization}")
 
       html = render(show_live)
       assert html =~ "Organization updated successfully"
