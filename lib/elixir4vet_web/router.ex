@@ -66,6 +66,11 @@ defmodule Elixir4vetWeb.Router do
       live "/animals/new", AnimalLive.Form, :new
       live "/animals/:id", AnimalLive.Show, :show
       live "/animals/:id/edit", AnimalLive.Form, :edit
+
+      live "/events", EventLive.Index, :index
+      live "/events/new", EventLive.Form, :new
+      live "/events/:id", EventLive.Show, :show
+      live "/events/:id/edit", EventLive.Form, :edit
     end
   end
 

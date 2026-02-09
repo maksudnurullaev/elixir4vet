@@ -1,6 +1,7 @@
 defmodule Elixir4vet.Events.Event do
   use Ecto.Schema
   import Ecto.Changeset
+  @type t :: %__MODULE__{}
 
   alias Elixir4vet.Animals.Animal
   alias Elixir4vet.Accounts.User
@@ -19,7 +20,8 @@ defmodule Elixir4vet.Events.Event do
     "iv",
     "lost",
     "found",
-    "rip"
+    "rip",
+    "other"
   ]
 
   schema "events" do
