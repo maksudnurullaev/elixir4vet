@@ -1,4 +1,4 @@
-defmodule Elixir4vetWeb.Admin.UsersLive do
+defmodule Elixir4vetWeb.Admin.UserLive.Index do
   use Elixir4vetWeb, :live_view
 
   alias Elixir4vet.Accounts
@@ -31,14 +31,16 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
     # Handle both nested and flat parameter formats
     # Nested: {"role-form-123" => {"user_id" => "123", "role" => "admin"}}
     # Flat: {"user_id" => "123", "role" => "admin"}
-    form_data = 
+    form_data =
       case params do
         data when is_map(data) and map_size(data) == 1 ->
           case Map.values(data) do
             [nested_map] when is_map(nested_map) -> nested_map
             _ -> data
           end
-        data -> data
+
+        data ->
+          data
       end
 
     user_id_str = form_data["user_id"]
@@ -157,15 +159,15 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="container mx-auto px-4 py-8">
+    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">👥 User Management</h1>
         <div class="flex gap-2">
           <.link navigate={~p"/admin/permissions"} class="btn btn-primary">
-            🔐 Permission Matrix
+            <.icon name="hero-key" /> Permission Matrix
           </.link>
           <.link navigate={~p"/"} class="btn btn-ghost">
-            ← Back to Home
+            <.icon name="hero-arrow-left" /> Back to Home
           </.link>
         </div>
       </div>
@@ -229,18 +231,23 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
                       {Calendar.strftime(user.inserted_at, "%Y-%m-%d %H:%M")}
                     </td>
                     <td>
-                      <%= if user.id != @current_scope.user.id do %>
-                        <button
-                          phx-click="delete_user"
-                          phx-value-user-id={user.id}
-                          data-confirm="Are you sure you want to delete this user?"
-                          class="btn btn-error btn-xs"
-                        >
-                          🗑️ Delete
-                        </button>
-                      <% else %>
-                        <span class="text-xs opacity-50">(You)</span>
-                      <% end %>
+                      <div class="flex gap-2">
+                        <.link navigate={~p"/admin/users/#{user}/edit"} class="btn btn-primary btn-xs">
+                          <.icon name="hero-pencil-square" /> Edit
+                        </.link>
+                        <%= if user.id != @current_scope.user.id do %>
+                          <button
+                            phx-click="delete_user"
+                            phx-value-user-id={user.id}
+                            data-confirm="Are you sure you want to delete this user?"
+                            class="btn btn-error btn-xs"
+                          >
+                            🗑️ Delete
+                          </button>
+                        <% else %>
+                          <span class="text-xs opacity-50 self-center">(You)</span>
+                        <% end %>
+                      </div>
                     </td>
                   </tr>
                 <% end %>
@@ -273,7 +280,7 @@ defmodule Elixir4vetWeb.Admin.UsersLive do
           </div>
         </div>
       </div>
-    </div>
+    </Layouts.app>
     """
   end
 end

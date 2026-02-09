@@ -16,7 +16,12 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
 
       <.form for={@form} id="animal-form" phx-change="validate" phx-submit="save">
         <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:species]} type="text" label="Species" />
+        <.input
+          field={@form[:species]}
+          type="select"
+          label="Species"
+          options={Animal.species_options()}
+        />
         <.input field={@form[:breed]} type="text" label="Breed" />
         <.input field={@form[:date_of_birth]} type="date" label="Date of birth" />
         <.input field={@form[:microchip_number]} type="text" label="Microchip number" />

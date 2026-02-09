@@ -32,6 +32,20 @@ defmodule Elixir4vet.Animals do
   end
 
   @doc """
+  Lists all animals owned by a specific user.
+  """
+  def list_animals_by_owner(user_id) do
+    query =
+      from a in Animal,
+        join: ao in AnimalOwnership,
+        on: ao.animal_id == a.id,
+        where: ao.user_id == ^user_id,
+        order_by: [desc: a.inserted_at]
+
+    Repo.all(query)
+  end
+
+  @doc """
   Gets a single animal.
   """
   def get_animal!(%Scope{} = _scope, id), do: Repo.get!(Animal, id)
@@ -58,14 +72,7 @@ defmodule Elixir4vet.Animals do
       {:ok, %{animal: animal}} ->
         broadcast({:ok, animal}, :created)
 
-      {:error, :animal, changeset, _} ->
-        {:error, changeset}
-
-      {:error, :ownership, _changeset, _} ->
-        # If ownership fails (e.g. missing owner_id), add error to animal changeset
-        changeset =
-          Ecto.Changeset.add_error(Animal.changeset(%Animal{}, attrs), :owner_id, "is required")
-
+      {:error, _failed_operation, changeset, _changes_so_far} ->
         {:error, changeset}
     end
   end
@@ -91,13 +98,7 @@ defmodule Elixir4vet.Animals do
       {:ok, %{animal: animal}} ->
         broadcast({:ok, animal}, :created)
 
-      {:error, :animal, changeset, _} ->
-        {:error, changeset}
-
-      {:error, :ownership, _, _} ->
-        changeset =
-          Ecto.Changeset.add_error(Animal.changeset(%Animal{}, attrs), :owner_id, "is required")
-
+      {:error, _failed_operation, changeset, _changes_so_far} ->
         {:error, changeset}
     end
   end

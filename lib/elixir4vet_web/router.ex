@@ -53,7 +53,8 @@ defmodule Elixir4vetWeb.Router do
 
     live_session :require_admin,
       on_mount: [{Elixir4vetWeb.UserAuth, :require_admin}] do
-      live "/users", UsersLive, :index
+      live "/users", UserLive.Index, :index
+      live "/users/:id/edit", UserLive.Form, :edit
       live "/permissions", PermissionsLive, :index
 
       live "/organizations", OrganizationLive.Index, :index

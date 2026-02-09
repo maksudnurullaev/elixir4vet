@@ -14,7 +14,7 @@ defmodule Elixir4vet.AnimalsFixtures do
         microchip_number: "some microchip_number",
         name: "some name",
         notes: "some notes",
-        species: "some species",
+        species: "cat",
         owner_id: scope.user.id
       })
       |> then(&Elixir4vet.Animals.create_animal(scope, &1))
