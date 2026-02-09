@@ -23,7 +23,7 @@ erl_crash.dump
 /tmp/
 
 # Ignore package tarball (built via "mix hex.build").
-elixir4photos-*.tar
+elixir4vet-*.tar
 
 # Ignore assets that are produced by build tools.
 /priv/static/assets/
@@ -40,3 +40,14 @@ npm-debug.log
 /DATA/*.db-*
 
 /.claude/
+/.serena/
+/.expert/
+/.elixir_ls/
+
+# Editor settings
+.vscode/
+
+# OS-level files
+.DS_Store
+Thumbs.db
+/.vscode/   

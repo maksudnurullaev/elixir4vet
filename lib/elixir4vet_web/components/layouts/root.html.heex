@@ -175,8 +175,8 @@
           <div class="flex items-center gap-3">
             <!-- User Info Display -->
             <div class="hidden md:flex items-center gap-2">
-              <div class="font-semibold text-sm">
-                {@current_scope.user.email
+              <div class="font-semibold text-sm bg-base-300 rounded-full px-2 py-1  ">
+                <u>You:</u> {@current_scope.user.email
                 |> String.split("@")
                 |> List.first()
                 |> String.slice(0, 3)
