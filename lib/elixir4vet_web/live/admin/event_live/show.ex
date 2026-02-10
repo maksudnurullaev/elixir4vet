@@ -57,7 +57,9 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
         </:item>
         <:item title={gettext("Description")}>{@event.description}</:item>
         <:item title={gettext("Notes")}>{@event.notes}</:item>
-        <:item title={gettext("Cost")}>{if @event.cost, do: "#{@event.cost}", else: gettext("N/A")}</:item>
+        <:item title={gettext("Cost")}>
+          {if @event.cost, do: "#{@event.cost}", else: gettext("N/A")}
+        </:item>
       </.list>
     </Layouts.app>
     """

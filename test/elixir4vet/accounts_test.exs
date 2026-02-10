@@ -214,7 +214,9 @@ defmodule Elixir4vet.AccountsTest do
           %{
             password: "short",
             password_confirmation: "another"
-          }, validate_current_password: false)
+          },
+          validate_current_password: false
+        )
 
       assert %{
                password: ["should be at least 8 character(s)"],
@@ -239,7 +241,9 @@ defmodule Elixir4vet.AccountsTest do
           user,
           %{
             password: "new valid password"
-          }, validate_current_password: false)
+          },
+          validate_current_password: false
+        )
 
       assert expired_tokens == []
       assert is_nil(user.password)
@@ -254,7 +258,9 @@ defmodule Elixir4vet.AccountsTest do
           user,
           %{
             password: "new valid password"
-          }, validate_current_password: false)
+          },
+          validate_current_password: false
+        )
 
       refute Repo.get_by(UserToken, user_id: user.id)
     end

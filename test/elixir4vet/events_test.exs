@@ -97,7 +97,10 @@ defmodule Elixir4vet.EventsTest do
       assert event.event_type == "surgery"
     end
 
-    test "update_event/2 with invalid data returns error changeset", %{scope: scope, animal: animal} do
+    test "update_event/2 with invalid data returns error changeset", %{
+      scope: scope,
+      animal: animal
+    } do
       event = event_fixture(scope, %{animal_id: animal.id})
       assert {:error, %Ecto.Changeset{}} = Events.update_event(event, @invalid_attrs)
       assert event.id == Events.get_event!(event.id).id

@@ -195,7 +195,11 @@ defmodule Elixir4vetWeb.EventLiveTest do
       assert html =~ "50"
     end
 
-    test "displays N/A when optional fields are empty", %{conn: conn, scope: scope, animal: animal} do
+    test "displays N/A when optional fields are empty", %{
+      conn: conn,
+      scope: scope,
+      animal: animal
+    } do
       event = event_fixture(scope, %{animal: animal, performed_by_user_id: nil, cost: nil})
       {:ok, _show_live, html} = live(conn, ~p"/admin/events/#{event}")
 
