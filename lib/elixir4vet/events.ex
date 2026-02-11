@@ -4,9 +4,9 @@ defmodule Elixir4vet.Events do
   """
 
   import Ecto.Query, warn: false
-  alias Elixir4vet.Repo
-  alias Elixir4vet.Events.Event
   alias Elixir4vet.Accounts.Scope
+  alias Elixir4vet.Events.Event
+  alias Elixir4vet.Repo
 
   @pubsub Elixir4vet.PubSub
   @topic "events"

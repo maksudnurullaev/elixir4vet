@@ -4,11 +4,11 @@ defmodule Elixir4vet.Animals do
   """
 
   import Ecto.Query, warn: false
-  alias Elixir4vet.Repo
+  alias Elixir4vet.Accounts.Scope
+  alias Elixir4vet.Accounts.User
   alias Elixir4vet.Animals.Animal
   alias Elixir4vet.Animals.AnimalOwnership
-  alias Elixir4vet.Accounts.User
-  alias Elixir4vet.Accounts.Scope
+  alias Elixir4vet.Repo
 
   @pubsub Elixir4vet.PubSub
   @topic "animals"

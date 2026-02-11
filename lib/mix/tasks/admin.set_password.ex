@@ -29,29 +29,37 @@ defmodule Mix.Tasks.Admin.SetPassword do
         exit({:shutdown, 1})
 
       user ->
-        password = prompt_password()
-        confirmation = prompt_password_confirmation()
-
-        if password == confirmation do
-          case Accounts.update_user_password(user, %{password: password}) do
-            {:ok, {_user, _tokens}} ->
-              Mix.shell().info("Password updated successfully for #{email}.")
-
-            {:error, changeset} ->
-              Mix.shell().error("Failed to update password:")
-              print_errors(changeset)
-              exit({:shutdown, 1})
-          end
-        else
-          Mix.shell().error("Passwords do not match.")
-          exit({:shutdown, 1})
-        end
+        reset_password(user, email)
     end
   end
 
   def run(_) do
     Mix.shell().error("Usage: mix admin.set_password USER_EMAIL")
     exit({:shutdown, 1})
+  end
+
+  defp reset_password(user, email) do
+    password = prompt_password()
+    confirmation = prompt_password_confirmation()
+
+    if password == confirmation do
+      update_password(user, email, password)
+    else
+      Mix.shell().error("Passwords do not match.")
+      exit({:shutdown, 1})
+    end
+  end
+
+  defp update_password(user, email, password) do
+    case Accounts.update_user_password(user, %{password: password}) do
+      {:ok, {_user, _tokens}} ->
+        Mix.shell().info("Password updated successfully for #{email}.")
+
+      {:error, changeset} ->
+        Mix.shell().error("Failed to update password:")
+        print_errors(changeset)
+        exit({:shutdown, 1})
+    end
   end
 
   defp prompt_password do

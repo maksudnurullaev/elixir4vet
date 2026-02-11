@@ -1,9 +1,10 @@
 defmodule Elixir4vet.Photographs.Photograph do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Elixir4vet.Events.Event
   alias Elixir4vet.Accounts.User
+  alias Elixir4vet.Events.Event
 
   schema "photographs" do
     field :file_path, :string

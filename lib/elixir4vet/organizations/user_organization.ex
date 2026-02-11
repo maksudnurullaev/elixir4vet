@@ -1,4 +1,5 @@
 defmodule Elixir4vet.Organizations.UserOrganization do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

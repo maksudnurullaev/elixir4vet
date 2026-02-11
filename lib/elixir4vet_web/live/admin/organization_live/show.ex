@@ -1,8 +1,8 @@
 defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
   use Elixir4vetWeb, :live_view
 
-  alias Elixir4vet.Organizations
   alias Elixir4vet.Accounts
+  alias Elixir4vet.Organizations
 
   @impl true
   def render(assigns) do

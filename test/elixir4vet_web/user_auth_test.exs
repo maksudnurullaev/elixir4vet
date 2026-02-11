@@ -1,10 +1,10 @@
 defmodule Elixir4vetWeb.UserAuthTest do
   use Elixir4vetWeb.ConnCase
 
-  alias Phoenix.LiveView
   alias Elixir4vet.Accounts
   alias Elixir4vet.Accounts.Scope
   alias Elixir4vetWeb.UserAuth
+  alias Phoenix.LiveView
 
   import Elixir4vet.AccountsFixtures
 

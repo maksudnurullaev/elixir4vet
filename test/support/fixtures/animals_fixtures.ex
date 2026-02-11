@@ -1,4 +1,8 @@
 defmodule Elixir4vet.AnimalsFixtures do
+  @moduledoc """
+  This module defines test helpers for creating
+  entities via the `Elixir4vet.Animals` context.
+  """
   @doc """
   Generate a animal.
   """

@@ -1,10 +1,11 @@
 defmodule Elixir4vet.Events.Event do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   @type t :: %__MODULE__{}
 
-  alias Elixir4vet.Animals.Animal
   alias Elixir4vet.Accounts.User
+  alias Elixir4vet.Animals.Animal
   alias Elixir4vet.Organizations.Organization
   alias Elixir4vet.Photographs.Photograph
 

@@ -4,10 +4,9 @@ defmodule Elixir4vet.Authorization do
   """
 
   import Ecto.Query, warn: false
-  alias Elixir4vet.Repo
-
   alias Elixir4vet.Accounts.User
-  alias Elixir4vet.Authorization.{Role, UserRole, RolePermission}
+  alias Elixir4vet.Authorization.{Role, RolePermission, UserRole}
+  alias Elixir4vet.Repo
 
   ## Roles
 
@@ -134,7 +133,8 @@ defmodule Elixir4vet.Authorization do
         {:error, changeset}
 
       error ->
-        IO.inspect(error, label: "Unexpected transaction error")
+        require Logger
+        Logger.error("Unexpected transaction error: #{inspect(error)}")
         {:error, error}
     end
   end

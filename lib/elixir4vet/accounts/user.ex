@@ -1,4 +1,7 @@
 defmodule Elixir4vet.Accounts.User do
+  @moduledoc """
+  User schema.
+  """
   use Ecto.Schema
   import Ecto.Changeset
   @type t :: %__MODULE__{}

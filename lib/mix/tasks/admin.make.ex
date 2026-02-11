@@ -79,32 +79,44 @@ defmodule Mix.Tasks.Admin.Make do
   end
 
   defp assign_admin_role(user) do
-    admin_role = Authorization.get_role_by_name("admin")
+    case Authorization.get_role_by_name("admin") do
+      nil ->
+        Mix.shell().error("❌ Admin role not found. Run migrations first:")
+        Mix.shell().info("    mix ecto.migrate")
 
-    if admin_role do
-      case Authorization.assign_role(user, admin_role) do
-        {:ok, _} ->
-          Mix.shell().info("✅ Successfully made #{user.email} an administrator!")
-          Mix.shell().info("")
-          Mix.shell().info("User now has admin role with permissions:")
-          show_admin_permissions()
-          Mix.shell().info("")
-          Mix.shell().info("They can now access:")
-          Mix.shell().info("  • /admin/users - User management")
-          Mix.shell().info("  • /admin/permissions - Permission matrix")
+      admin_role ->
+        do_assign_admin_role(user, admin_role)
+    end
+  end
 
-        {:error, %{errors: errors}} ->
-          if Keyword.has_key?(errors, :user_id) do
-            Mix.shell().info("⚠️  User already has admin role!")
-            verify_permissions(user)
-          else
-            Mix.shell().error("❌ Failed to assign admin role")
-            IO.inspect(errors)
-          end
-      end
+  defp do_assign_admin_role(user, admin_role) do
+    case Authorization.assign_role(user, admin_role) do
+      {:ok, _} ->
+        print_success_message(user)
+
+      {:error, %{errors: errors}} ->
+        handle_assignment_error(user, errors)
+    end
+  end
+
+  defp print_success_message(user) do
+    Mix.shell().info("✅ Successfully made #{user.email} an administrator!")
+    Mix.shell().info("")
+    Mix.shell().info("User now has admin role with permissions:")
+    show_admin_permissions()
+    Mix.shell().info("")
+    Mix.shell().info("They can now access:")
+    Mix.shell().info("  • /admin/users - User management")
+    Mix.shell().info("  • /admin/permissions - Permission matrix")
+  end
+
+  defp handle_assignment_error(user, errors) do
+    if Keyword.has_key?(errors, :user_id) do
+      Mix.shell().info("⚠️  User already has admin role!")
+      verify_permissions(user)
     else
-      Mix.shell().error("❌ Admin role not found. Run migrations first:")
-      Mix.shell().info("    mix ecto.migrate")
+      Mix.shell().error("❌ Failed to assign admin role")
+      Mix.shell().error("Errors: #{inspect(errors)}")
     end
   end
 

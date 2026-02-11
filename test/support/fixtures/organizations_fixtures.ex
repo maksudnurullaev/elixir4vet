@@ -1,4 +1,8 @@
 defmodule Elixir4vet.OrganizationsFixtures do
+  @moduledoc """
+  This module defines test helpers for creating
+  entities via the `Elixir4vet.Organizations` context.
+  """
   def unique_organization_registration_number,
     do: "some registration_number#{System.unique_integer()}"
 

@@ -28,69 +28,14 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
 
   @impl true
   def handle_event("change_role", params, socket) do
-    # Handle both nested and flat parameter formats
-    # Nested: {"role-form-123" => {"user_id" => "123", "role" => "admin"}}
-    # Flat: {"user_id" => "123", "role" => "admin"}
-    form_data =
-      case params do
-        data when is_map(data) and map_size(data) == 1 ->
-          case Map.values(data) do
-            [nested_map] when is_map(nested_map) -> nested_map
-            _ -> data
-          end
-
-        data ->
-          data
-      end
-
+    form_data = extract_form_data(params)
     user_id_str = form_data["user_id"]
     role_name = form_data["role"]
 
-    # Validate parameters more strictly
-    with true <- is_binary(user_id_str) and byte_size(user_id_str) > 0,
-         true <- is_binary(role_name) and byte_size(role_name) > 0,
-         {user_id_int, ""} <- Integer.parse(user_id_str) do
-      user = Accounts.get_user!(user_id_int)
-      current_user = socket.assigns.current_scope.user
-
-      cond do
-        user.id == current_user.id ->
-          {:noreply,
-           socket
-           |> put_flash(:error, "You cannot change your own role.")
-           |> refresh_users()}
-
-        true ->
-          case Authorization.get_role_by_name(role_name) do
-            nil ->
-              {:noreply, put_flash(socket, :error, "Invalid role.")}
-
-            role ->
-              current_roles = Authorization.get_user_roles(user)
-              current_role_names = Enum.map(current_roles, & &1.name)
-
-              if role_name in current_role_names do
-                {:noreply,
-                 socket
-                 |> put_flash(:info, "User already has this role.")
-                 |> refresh_users()}
-              else
-                case Authorization.change_user_role(user, role) do
-                  :ok ->
-                    {:noreply,
-                     socket
-                     |> put_flash(:info, "User role updated successfully.")
-                     |> refresh_users()}
-
-                  {:error, _error} ->
-                    {:noreply,
-                     socket
-                     |> put_flash(:error, "Failed to update user role. Please try again.")
-                     |> refresh_users()}
-                end
-              end
-          end
-      end
+    with {:ok, user_id} <- validate_id(user_id_str),
+         {:ok, role_name} <- validate_role_name(role_name),
+         user <- Accounts.get_user!(user_id) do
+      update_user_role(socket, user, role_name)
     else
       _ ->
         {:noreply, put_flash(socket, :error, "Invalid parameters received")}
@@ -114,6 +59,73 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
         {:error, _changeset} ->
           {:noreply, put_flash(socket, :error, "Failed to delete user.")}
       end
+    end
+  end
+
+  defp extract_form_data(data) when is_map(data) and map_size(data) == 1 do
+    case Map.values(data) do
+      [nested_map] when is_map(nested_map) -> nested_map
+      _ -> data
+    end
+  end
+
+  defp extract_form_data(data), do: data
+
+  defp validate_id(id_str) when is_binary(id_str) and byte_size(id_str) > 0 do
+    case Integer.parse(id_str) do
+      {id, ""} -> {:ok, id}
+      _ -> :error
+    end
+  end
+
+  defp validate_id(_), do: :error
+
+  defp validate_role_name(name) when is_binary(name) and byte_size(name) > 0, do: {:ok, name}
+  defp validate_role_name(_), do: :error
+
+  defp update_user_role(socket, user, role_name) do
+    current_user = socket.assigns.current_scope.user
+
+    if user.id == current_user.id do
+      {:noreply,
+       socket
+       |> put_flash(:error, "You cannot change your own role.")
+       |> refresh_users()}
+    else
+      do_update_user_role(socket, user, role_name)
+    end
+  end
+
+  defp do_update_user_role(socket, user, role_name) do
+    case Authorization.get_role_by_name(role_name) do
+      nil ->
+        {:noreply, put_flash(socket, :error, "Invalid role.")}
+
+      role ->
+        if Authorization.user_has_role?(user, role_name) do
+          {:noreply,
+           socket
+           |> put_flash(:info, "User already has this role.")
+           |> refresh_users()}
+        else
+          apply_role_update(socket, user, role)
+        end
+    end
+  end
+
+  defp apply_role_update(socket, user, role) do
+    case Authorization.change_user_role(user, role) do
+      :ok ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "User role updated successfully.")
+         |> refresh_users()}
+
+      {:error, _error} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Failed to update user role. Please try again.")
+         |> refresh_users()}
     end
   end
 

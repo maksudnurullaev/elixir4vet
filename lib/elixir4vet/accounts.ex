@@ -4,9 +4,8 @@ defmodule Elixir4vet.Accounts do
   """
 
   import Ecto.Query, warn: false
+  alias Elixir4vet.Accounts.{User, UserNotifier, UserToken}
   alias Elixir4vet.Repo
-
-  alias Elixir4vet.Accounts.{User, UserToken, UserNotifier}
 
   ## Database getters
 
@@ -344,42 +343,10 @@ defmodule Elixir4vet.Accounts do
     case Repo.one(query) do
       # Prevent session fixation attacks by disallowing magic links for unconfirmed users with password
       {%User{confirmed_at: nil, hashed_password: hash}, _token} when not is_nil(hash) ->
-        raise """
-        magic link log in is not allowed for unconfirmed users with a password set!
-
-        This cannot happen with the default implementation, which indicates that you
-        might have adapted the code to a different use case. Please make sure to read the
-        "Mixing magic link and password registration" section of `mix help phx.gen.auth`.
-        """
+        raise_magic_link_error()
 
       {%User{confirmed_at: nil} = user, _token} ->
-        result =
-          user
-          |> User.confirm_changeset()
-          |> update_user_and_delete_all_tokens()
-
-        # Update RBAC system - upgrade guest to user role upon confirmation
-        case result do
-          {:ok, {confirmed_user, _tokens}} ->
-            # Remove guest role and assign user role
-            guest_roles = Elixir4vet.Authorization.get_user_roles(confirmed_user)
-
-            Enum.each(guest_roles, fn role ->
-              if role.name == "guest" do
-                Elixir4vet.Authorization.remove_role(confirmed_user.id, role.id)
-              end
-            end)
-
-            case Elixir4vet.Authorization.get_role_by_name("user") do
-              nil -> :ok
-              user_role -> Elixir4vet.Authorization.assign_role(confirmed_user, user_role)
-            end
-
-            result
-
-          _ ->
-            result
-        end
+        confirm_and_upgrade_user(user)
 
       {user, token} ->
         Repo.delete!(token)
@@ -387,6 +354,46 @@ defmodule Elixir4vet.Accounts do
 
       nil ->
         {:error, :not_found}
+    end
+  end
+
+  defp raise_magic_link_error do
+    raise """
+    magic link log in is not allowed for unconfirmed users with a password set!
+
+    This cannot happen with the default implementation, which indicates that you
+    might have adapted the code to a different use case. Please make sure to read the
+    "Mixing magic link and password registration" section of `mix help phx.gen.auth`.
+    """
+  end
+
+  defp confirm_and_upgrade_user(user) do
+    result =
+      user
+      |> User.confirm_changeset()
+      |> update_user_and_delete_all_tokens()
+
+    case result do
+      {:ok, {confirmed_user, _tokens}} ->
+        upgrade_user_role(confirmed_user)
+        result
+
+      _ ->
+        result
+    end
+  end
+
+  defp upgrade_user_role(user) do
+    # Remove guest roles
+    user
+    |> Elixir4vet.Authorization.get_user_roles()
+    |> Enum.filter(&(&1.name == "guest"))
+    |> Enum.each(&Elixir4vet.Authorization.remove_role(user.id, &1.id))
+
+    # Assign user role
+    case Elixir4vet.Authorization.get_role_by_name("user") do
+      nil -> :ok
+      user_role -> Elixir4vet.Authorization.assign_role(user, user_role)
     end
   end
 

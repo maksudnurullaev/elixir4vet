@@ -88,8 +88,8 @@ defmodule Elixir4vetWeb do
       import Elixir4vetWeb.CoreComponents
 
       # Common modules used in templates
-      alias Phoenix.LiveView.JS
       alias Elixir4vetWeb.Layouts
+      alias Phoenix.LiveView.JS
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

@@ -1,9 +1,9 @@
 defmodule Elixir4vet.EventsTest do
   use Elixir4vet.DataCase
 
+  alias Elixir4vet.Accounts.Scope
   alias Elixir4vet.Events
   alias Elixir4vet.Events.Event
-  alias Elixir4vet.Accounts.Scope
 
   import Elixir4vet.AccountsFixtures
   import Elixir4vet.AnimalsFixtures

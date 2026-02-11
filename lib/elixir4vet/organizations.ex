@@ -4,10 +4,10 @@ defmodule Elixir4vet.Organizations do
   """
 
   import Ecto.Query, warn: false
-  alias Elixir4vet.Repo
-  alias Elixir4vet.Organizations.Organization
-  alias Elixir4vet.Accounts.User
   alias Elixir4vet.Accounts.Scope
+  alias Elixir4vet.Accounts.User
+  alias Elixir4vet.Organizations.Organization
+  alias Elixir4vet.Repo
 
   @pubsub Elixir4vet.PubSub
   @topic "organizations"

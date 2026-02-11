@@ -1,11 +1,13 @@
 defmodule Elixir4vetWeb.Admin.EventLive.Form do
   use Elixir4vetWeb, :live_view
 
+  alias Elixir4vet.Accounts
+  alias Elixir4vet.Animals
   alias Elixir4vet.Events
   alias Elixir4vet.Events.Event
-  alias Elixir4vet.Animals
-  alias Elixir4vet.Accounts
   alias Elixir4vet.Organizations
+
+  import Elixir4vetWeb.Admin.EventLive.Helpers
 
   @impl true
   def render(assigns) do
@@ -152,24 +154,5 @@ defmodule Elixir4vetWeb.Admin.EventLive.Form do
     Enum.map(Event.event_types(), fn type ->
       {translate_event_type(type), type}
     end)
-  end
-
-  defp translate_event_type(type) do
-    case type do
-      "registration" -> gettext("Registration")
-      "microchipping" -> gettext("Microchipping")
-      "sterilization" -> gettext("Sterilization")
-      "neutering" -> gettext("Neutering")
-      "vaccination" -> gettext("Vaccination")
-      "examination" -> gettext("Examination")
-      "surgery" -> gettext("Surgery")
-      "bandage" -> gettext("Bandage")
-      "iv" -> gettext("IV")
-      "lost" -> gettext("Lost")
-      "found" -> gettext("Found")
-      "rip" -> gettext("RIP")
-      "other" -> gettext("Other")
-      _ -> type
-    end
   end
 end

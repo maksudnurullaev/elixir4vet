@@ -1,4 +1,8 @@
 defmodule Elixir4vet.AuthorizationFixtures do
+  @moduledoc """
+  This module defines test helpers for creating
+  entities via the `Elixir4vet.Authorization` context.
+  """
   alias Elixir4vet.Authorization
 
   def role_fixture(attrs \\ %{}) do

@@ -1,4 +1,5 @@
 defmodule Elixir4vet.Animals.Animal do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   @type t :: %__MODULE__{}

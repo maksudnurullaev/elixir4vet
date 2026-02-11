@@ -1,9 +1,10 @@
 defmodule Elixir4vet.Animals.AnimalOwnership do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Elixir4vet.Animals.Animal
   alias Elixir4vet.Accounts.User
+  alias Elixir4vet.Animals.Animal
 
   schema "animal_ownerships" do
     field :ownership_type, :string

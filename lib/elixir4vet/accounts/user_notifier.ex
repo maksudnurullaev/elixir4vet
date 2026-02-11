@@ -1,8 +1,11 @@
 defmodule Elixir4vet.Accounts.UserNotifier do
+  @moduledoc """
+  Notifier user email messages.
+  """
   import Swoosh.Email
 
-  alias Elixir4vet.Mailer
   alias Elixir4vet.Accounts.User
+  alias Elixir4vet.Mailer
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do

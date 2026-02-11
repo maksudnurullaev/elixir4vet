@@ -164,8 +164,7 @@ defmodule Elixir4vetWeb.Admin.PermissionsLive do
   defp format_resource(resource) do
     resource
     |> String.split("_")
-    |> Enum.map(&String.capitalize/1)
-    |> Enum.join(" ")
+    |> Enum.map_join(" ", &String.capitalize/1)
   end
 
   defp permission_class("NA"), do: "select-error"

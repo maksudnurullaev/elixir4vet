@@ -1,9 +1,9 @@
 defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
   use Elixir4vetWeb, :live_view
 
+  alias Elixir4vet.Accounts
   alias Elixir4vet.Animals
   alias Elixir4vet.Animals.Animal
-  alias Elixir4vet.Accounts
 
   @impl true
   def render(assigns) do

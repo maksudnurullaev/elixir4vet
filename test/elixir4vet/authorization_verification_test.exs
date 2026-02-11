@@ -23,7 +23,8 @@ defmodule Elixir4vet.AuthorizationVerificationTest do
     # 4. Check admin status again (should be true)
     # We might need to reload user or roles, but admin? checks via Repo queries internally usually?
     # Let's see how user_has_role? is implemented. It calls get_user_roles(user).
-    # get_user_roles queries the DB, so we don't need to reload the user struct necessarily if we pass the ID or if it uses the ID.
+    # get_user_roles queries the DB, so we don't need to reload the user struct necessarily
+    # if we pass the ID or if it uses the ID.
     # Authorization.user_has_role? takes %User{}.
 
     assert Accounts.admin?(user), "User should be admin after role assignment"
