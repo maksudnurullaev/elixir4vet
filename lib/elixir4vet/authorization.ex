@@ -96,11 +96,12 @@ defmodule Elixir4vet.Authorization do
   """
   def get_user_roles(%User{id: user_id}) do
     query =
-      from r in Role,
+      from(r in Role,
         join: ur in UserRole,
         on: ur.role_id == r.id,
         where: ur.user_id == ^user_id,
         preload: [:permissions]
+      )
 
     Repo.all(query)
   end
@@ -111,12 +112,10 @@ defmodule Elixir4vet.Authorization do
   """
   @spec change_user_role(User.t(), Role.t()) :: :ok | {:error, any()}
   def change_user_role(%User{id: user_id}, %Role{id: role_id}) do
-    multi = Ecto.Multi.new()
-
-    multi
+    Ecto.Multi.new()
     |> Ecto.Multi.run(:delete_old_roles, fn repo, _changes ->
       {_count, _} =
-        repo.delete_all(from ur in UserRole, where: ur.user_id == ^user_id)
+        repo.delete_all(from(ur in UserRole, where: ur.user_id == ^user_id))
 
       {:ok, nil}
     end)
@@ -133,8 +132,6 @@ defmodule Elixir4vet.Authorization do
         {:error, changeset}
 
       error ->
-        require Logger
-        Logger.error("Unexpected transaction error: #{inspect(error)}")
         {:error, error}
     end
   end
@@ -241,7 +238,7 @@ defmodule Elixir4vet.Authorization do
   Migrates first user to admin role (if using old system).
   """
   def migrate_first_user_to_admin do
-    with %User{} = user <- Repo.one(from u in User, order_by: [asc: u.id], limit: 1),
+    with %User{} = user <- Repo.one(from(u in User, order_by: [asc: u.id], limit: 1)),
          %Role{} = admin_role <- get_role_by_name("admin") do
       assign_role(user, admin_role)
     end

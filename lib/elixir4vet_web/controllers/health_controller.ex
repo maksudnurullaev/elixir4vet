@@ -22,11 +22,17 @@ defmodule Elixir4vetWeb.HealthController do
   - Docker health checks
   """
   def check(conn, _params) do
+    version =
+      case Application.spec(:elixir4vet, :vsn) do
+        nil -> "unknown"
+        vsn -> vsn |> List.to_string()
+      end
+
     health_status = %{
       status: "ok",
       timestamp: DateTime.utc_now() |> DateTime.to_iso8601(),
       app: :elixir4vet,
-      version: Application.spec(:elixir4vet, :vsn) |> List.to_string()
+      version: version
     }
 
     conn
@@ -43,11 +49,17 @@ defmodule Elixir4vetWeb.HealthController do
   def check_extended(conn, _params) do
     db_healthy = check_database_health()
 
+    version =
+      case Application.spec(:elixir4vet, :vsn) do
+        nil -> "unknown"
+        vsn -> vsn |> List.to_string()
+      end
+
     health_status = %{
       status: if(db_healthy, do: "ok", else: "degraded"),
       timestamp: DateTime.utc_now() |> DateTime.to_iso8601(),
       app: :elixir4vet,
-      version: Application.spec(:elixir4vet, :vsn) |> List.to_string(),
+      version: version,
       database: %{
         status: if(db_healthy, do: "ok", else: "error"),
         checked_at: DateTime.utc_now() |> DateTime.to_iso8601()

@@ -36,11 +36,12 @@ defmodule Elixir4vet.Animals do
   """
   def list_animals_by_owner(user_id) do
     query =
-      from a in Animal,
+      from(a in Animal,
         join: ao in AnimalOwnership,
         on: ao.animal_id == a.id,
         where: ao.user_id == ^user_id,
         order_by: [desc: a.inserted_at]
+      )
 
     Repo.all(query)
   end
@@ -163,11 +164,12 @@ defmodule Elixir4vet.Animals do
   """
   def list_animal_owners(%Scope{} = _scope, %Animal{} = animal) do
     query =
-      from u in User,
+      from(u in User,
         join: ao in AnimalOwnership,
         on: ao.user_id == u.id,
         where: ao.animal_id == ^animal.id,
         select: {u, ao.ownership_type}
+      )
 
     Repo.all(query)
   end
