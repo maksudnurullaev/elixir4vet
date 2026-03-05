@@ -1,7 +1,7 @@
 defmodule Elixir4vetWeb.HealthController do
   @moduledoc """
   Health check endpoint for monitoring and load balancers.
-  
+
   Returns a simple JSON response indicating the application health status.
   This endpoint does not require authentication and should not log requests
   for better performance and cleaner logs.
@@ -13,7 +13,7 @@ defmodule Elixir4vetWeb.HealthController do
 
   @doc """
   Simple health check endpoint.
-  
+
   Returns 200 OK if the application is running.
   Can be used by:
   - Load balancers
@@ -36,7 +36,7 @@ defmodule Elixir4vetWeb.HealthController do
 
   @doc """
   Extended health check with database connectivity.
-  
+
   Also checks if database is accessible.
   May take slightly longer due to DB query.
   """

@@ -1,10 +1,10 @@
 defmodule Elixir4vet.Release do
   @moduledoc """
   Tasks for running during release startup.
-  
+
   This module contains functions that are called during release initialization,
   such as running database migrations and seeding data.
-  
+
   Usage in production:
     _build/prod/rel/elixir4vet/bin/elixir4vet eval "Elixir4vet.Release.migrate()"
   """

@@ -25,7 +25,7 @@ defmodule Elixir4vetWeb.Router do
   # Health check endpoints (no authentication required)
   scope "/", Elixir4vetWeb do
     pipe_through :api
-    
+
     get "/health", HealthController, :check
     get "/health/extended", HealthController, :check_extended
   end
