@@ -1,0 +1,39 @@
+[Unit]
+Description=Elixir4vet Application
+Documentation=https://github.com/yourusername/elixir4vet
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=elixir4vet
+Group=elixir4vet
+WorkingDirectory=/opt/elixir4vet
+
+# Load environment variables
+EnvironmentFile=/etc/elixir4vet/.env.prod
+
+# Start command
+ExecStart=/opt/elixir4vet/bin/elixir4vet start
+
+# Restart policy
+Restart=on-failure
+RestartSec=5
+
+# Set resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=yes
+
+# Graceful shutdown
+TimeoutStopSec=30
+KillSignal=SIGTERM
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

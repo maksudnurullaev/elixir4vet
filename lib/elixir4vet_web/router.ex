@@ -22,6 +22,14 @@ defmodule Elixir4vetWeb.Router do
     plug Elixir4vetWeb.Plugs.RequireAdmin
   end
 
+  # Health check endpoints (no authentication required)
+  scope "/", Elixir4vetWeb do
+    pipe_through :api
+    
+    get "/health", HealthController, :check
+    get "/health/extended", HealthController, :check_extended
+  end
+
   # Moved to authenticated section below
 
   # Other scopes may use custom stacks.

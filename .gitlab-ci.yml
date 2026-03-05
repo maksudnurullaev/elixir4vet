@@ -1,0 +1,149 @@
+# GitLab CI/CD Alternative
+
+Если вы используете GitLab вместо GitHub, используйте этот конфиг:
+
+```yaml
+# .gitlab-ci.yml
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+  MIX_ENV: test
+  OTP_VERSION: "28.1"
+  ELIXIR_VERSION: "1.16.5"
+  REGISTRY: registry.gitlab.com
+  IMAGE_NAME: $REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+
+# Test stage
+test:
+  stage: test
+  image: hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-alpine-3.20
+  services:
+    - postgres:16
+  variables:
+    PGPASSWORD: postgres
+    POSTGRES_DB: elixir4vet_test
+    DATABASE_PATH: ":memory:"
+  before_script:
+    - apk add --no-cache build-base postgresql-client
+    - mix local.hex --force
+    - mix local.rebar --force
+    - mix deps.get
+    - mix compile
+  script:
+    - mix format --check-formatted
+    - mix credo
+    - mix test --cover
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: cover/cobertura.xml
+    paths:
+      - cover/
+    expire_in: 30 days
+  coverage: '/Coverage: \d+\.\d+%/'
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# Build Docker image
+build:image:
+  stage: build
+  image: docker:24
+  services:
+    - docker:24-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build
+        --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+        --build-arg VCS_REF=$CI_COMMIT_SHA
+        -t $IMAGE_NAME:$CI_COMMIT_SHA
+        -t $IMAGE_NAME:latest
+        .
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHA
+    - docker push $IMAGE_NAME:latest
+  only:
+    - main
+
+# Deploy to production
+deploy:production:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client curl
+    - eval $(ssh-agent -s)
+    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $DEPLOY_HOST >> ~/.ssh/known_hosts
+  script:
+    - ssh $DEPLOY_USER@$DEPLOY_HOST "bash /opt/elixir4vet/scripts/deploy.sh"
+  environment:
+    name: production
+    url: https://elixir4vet.example.com
+  only:
+    - main
+  when: manual
+
+# Rollback
+rollback:production:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $DEPLOY_HOST >> ~/.ssh/known_hosts
+  script:
+    - |
+      BACKUP_DIR=$(ssh $DEPLOY_USER@$DEPLOY_HOST "ls -t /opt/elixir4vet/releases/backup | head -1")
+      ssh $DEPLOY_USER@$DEPLOY_HOST "cp -r /opt/elixir4vet/releases/backup/$BACKUP_DIR/* /opt/elixir4vet/"
+      ssh $DEPLOY_USER@$DEPLOY_HOST "sudo systemctl restart elixir4vet"
+  environment:
+    name: production
+  only:
+    - main
+  when: manual
+```
+
+## GitLab CI Variables
+
+В GitLab Project → Settings → CI/CD → Variables добавьте:
+
+```
+DEPLOY_HOST              = your-server-ip или domain
+DEPLOY_USER              = elixir4vet
+DEPLOY_SSH_KEY           = приватный SSH ключ
+CI_REGISTRY_PASSWORD     = ваш GitLab token
+```
+
+## GitLab Runners
+
+Для локального запуска CI/CD заемы GitLab Runner:
+
+```bash
+# Установка
+curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+sudo apt-get install gitlab-runner
+
+# Регистрация
+sudo gitlab-runner register \
+  --url https://gitlab.example.com/ \
+  --registration-token $RUNNER_TOKEN \
+  --executor docker \
+  --docker-image hexpm/elixir:1.16.5-erlang-28.1-alpine \
+  --description "Elixir4vet Runner"
+
+# Запуск
+sudo systemctl restart gitlab-runner
+```

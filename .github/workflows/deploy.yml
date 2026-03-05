@@ -1,0 +1,136 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+    # Trigger только для определённых тегов (например, v1.0.0)
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+      image-digest: ${{ steps.build.outputs.digest }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ vars.DOCKER_USERNAME }}/elixir4vet
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy to ${{ github.event.inputs.environment || 'production' }}
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+
+    environment:
+      name: ${{ github.event.inputs.environment || 'production' }}
+      url: https://elixir4vet.example.com
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          script: |
+            set -e
+            
+            # Перейти в директорию проекта
+            cd ${{ secrets.PROJECT_PATH }}
+            
+            # Останавливаем текущий сервис (если запущен)
+            sudo systemctl stop elixir4vet || true
+            
+            # Подтягиваем последние изменения
+            git fetch origin
+            git checkout main
+            git pull origin main
+            
+            # Устанавливаем переменные окружения
+            source /etc/elixir4vet/.env.prod
+            
+            # Устанавливаем зависимости и собираем релиз
+            mix deps.get --only prod
+            mix assets.deploy
+            MIX_ENV=prod mix release
+            
+            # Запускаем миграции базы данных
+            MIX_ENV=prod _build/prod/rel/elixir4vet/bin/elixir4vet eval "Elixir4vet.Release.migrate()"
+            
+            # Запускаем сервис
+            sudo systemctl start elixir4vet
+            sudo systemctl status elixir4vet
+
+      - name: Health Check
+        run: |
+          for i in {1..10}; do
+            if curl -f https://elixir4vet.example.com/health; then
+              echo "✓ Health check passed"
+              exit 0
+            fi
+            echo "Attempt $i/10 failed, retrying in 5 seconds..."
+            sleep 5
+          done
+          echo "✗ Health check failed"
+          exit 1
+
+      - name: Notify deployment
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: |
+            Deployment to ${{ github.event.inputs.environment || 'production' }} ${{ job.status }}
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
