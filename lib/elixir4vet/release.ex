@@ -75,3 +75,4 @@ defmodule Elixir4vet.Release do
         raise "Failed to get priv directory for #{app}"
     end
   end
+end
