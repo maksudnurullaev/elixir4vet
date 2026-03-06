@@ -38,11 +38,29 @@ log_info "Running as root..."
 # ─── Preflight checks ─────────────────────────────────────────────────────────
 log_info "Checking prerequisites..."
 
-command_exists asdf   || log_error "asdf is not installed or not in PATH. Install it first: https://asdf-vm.com"
-command_exists erlang || asdf list erlang 2>/dev/null | grep -q "$OTP_VERSION" \
-    || log_error "Erlang $OTP_VERSION is not installed in asdf. Run: asdf install erlang $OTP_VERSION"
-command_exists elixir || asdf list elixir 2>/dev/null | grep -q "$ELIXIR_VERSION" \
-    || log_error "Elixir $ELIXIR_VERSION is not installed in asdf. Run: asdf install elixir $ELIXIR_VERSION"
+# asdf is loaded via shell script, not a standalone binary — source it if needed
+if ! command_exists asdf; then
+    for asdf_sh in \
+        "$HOME/.asdf/asdf.sh" \
+        "/opt/asdf-vm/asdf.sh" \
+        "/usr/local/asdf/asdf.sh"
+    do
+        if [ -f "$asdf_sh" ]; then
+            # shellcheck disable=SC1090
+            source "$asdf_sh"
+            break
+        fi
+    done
+fi
+
+command_exists asdf \
+    || log_error "asdf is not installed. Install it first: https://asdf-vm.com"
+
+asdf list erlang 2>/dev/null | grep -q "$OTP_VERSION" \
+    || log_error "Erlang $OTP_VERSION not found in asdf. Run: asdf install erlang $OTP_VERSION"
+
+asdf list elixir 2>/dev/null | grep -q "$ELIXIR_VERSION" \
+    || log_error "Elixir $ELIXIR_VERSION not found in asdf. Run: asdf install elixir $ELIXIR_VERSION"
 
 log_success "Prerequisites OK (asdf, erlang $OTP_VERSION, elixir $ELIXIR_VERSION)"
 
