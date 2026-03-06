@@ -55,21 +55,25 @@ defmodule Elixir4vet.Animals do
   @doc """
   Creates a animal and assigns an owner.
   """
+  @spec create_animal(Scope.t(), map()) :: {:ok, Animal.t()} | {:error, Ecto.Changeset.t()}
+  # dialyzer:disable-next-line opaque
   def create_animal(%Scope{permissions: %{"animals" => "RW"}}, attrs) do
     owner_id = Map.get(attrs, "owner_id") || Map.get(attrs, :owner_id)
 
-    Ecto.Multi.new()
-    |> Ecto.Multi.insert(:animal, Animal.changeset(%Animal{}, attrs))
-    |> Ecto.Multi.insert(:ownership, fn %{animal: animal} ->
-      AnimalOwnership.changeset(%AnimalOwnership{}, %{
-        animal_id: animal.id,
-        user_id: owner_id,
-        ownership_type: "owner",
-        started_at: Date.utc_today()
-      })
-    end)
-    |> Repo.transaction()
-    |> case do
+    result =
+      Ecto.Multi.new()
+      |> Ecto.Multi.insert(:animal, Animal.changeset(%Animal{}, attrs))
+      |> Ecto.Multi.insert(:ownership, fn %{animal: animal} ->
+        AnimalOwnership.changeset(%AnimalOwnership{}, %{
+          animal_id: animal.id,
+          user_id: owner_id,
+          ownership_type: "owner",
+          started_at: Date.utc_today()
+        })
+      end)
+      |> Repo.transaction()
+
+    case result do
       {:ok, %{animal: animal}} ->
         broadcast({:ok, animal}, :created)
 
@@ -78,24 +82,29 @@ defmodule Elixir4vet.Animals do
     end
   end
 
+  @spec create_animal(Scope.t()) :: {:error, :unauthorized}
   def create_animal(%Scope{}, _attrs), do: {:error, :unauthorized}
 
+  @spec create_animal(map()) :: {:ok, Animal.t()} | {:error, Ecto.Changeset.t()}
+  # dialyzer:disable-next-line opaque
   def create_animal(attrs \\ %{}) do
     # Fallback for unauthenticated/unscoped calls if needed, though mostly used via Scope
     owner_id = Map.get(attrs, "owner_id") || Map.get(attrs, :owner_id)
 
-    Ecto.Multi.new()
-    |> Ecto.Multi.insert(:animal, Animal.changeset(%Animal{}, attrs))
-    |> Ecto.Multi.insert(:ownership, fn %{animal: animal} ->
-      AnimalOwnership.changeset(%AnimalOwnership{}, %{
-        animal_id: animal.id,
-        user_id: owner_id,
-        ownership_type: "owner",
-        started_at: Date.utc_today()
-      })
-    end)
-    |> Repo.transaction()
-    |> case do
+    result =
+      Ecto.Multi.new()
+      |> Ecto.Multi.insert(:animal, Animal.changeset(%Animal{}, attrs))
+      |> Ecto.Multi.insert(:ownership, fn %{animal: animal} ->
+        AnimalOwnership.changeset(%AnimalOwnership{}, %{
+          animal_id: animal.id,
+          user_id: owner_id,
+          ownership_type: "owner",
+          started_at: Date.utc_today()
+        })
+      end)
+      |> Repo.transaction()
+
+    case result do
       {:ok, %{animal: animal}} ->
         broadcast({:ok, animal}, :created)
 

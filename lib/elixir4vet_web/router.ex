@@ -115,4 +115,10 @@ defmodule Elixir4vetWeb.Router do
     post "/login", UserSessionController, :create
     delete "/users/log-out", UserSessionController, :delete
   end
+
+  scope "/", Elixir4vetWeb do
+    pipe_through [:browser]
+
+    get "/*path", PageController, :not_found
+  end
 end

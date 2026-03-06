@@ -111,20 +111,23 @@ defmodule Elixir4vet.Authorization do
   Returns :ok on success or {:error, reason} on failure.
   """
   @spec change_user_role(User.t(), Role.t()) :: :ok | {:error, any()}
+  # dialyzer:disable-next-line opaque
   def change_user_role(%User{id: user_id}, %Role{id: role_id}) do
-    Ecto.Multi.new()
-    |> Ecto.Multi.run(:delete_old_roles, fn repo, _changes ->
-      {_count, _} =
-        repo.delete_all(from(ur in UserRole, where: ur.user_id == ^user_id))
+    result =
+      Ecto.Multi.new()
+      |> Ecto.Multi.run(:delete_old_roles, fn repo, _changes ->
+        {_count, _} =
+          repo.delete_all(from(ur in UserRole, where: ur.user_id == ^user_id))
 
-      {:ok, nil}
-    end)
-    |> Ecto.Multi.insert(:assign_new_role, fn _changes ->
-      %UserRole{}
-      |> UserRole.changeset(%{user_id: user_id, role_id: role_id})
-    end)
-    |> Repo.transaction()
-    |> case do
+        {:ok, nil}
+      end)
+      |> Ecto.Multi.insert(:assign_new_role, fn _changes ->
+        %UserRole{}
+        |> UserRole.changeset(%{user_id: user_id, role_id: role_id})
+      end)
+      |> Repo.transaction()
+
+    case result do
       {:ok, _} ->
         :ok
 
