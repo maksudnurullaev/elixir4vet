@@ -5,8 +5,6 @@
 
 set -e
 
-export HOMEBREW_ALLOW_ROOT=1
-
 # Configuration
 PROJECT_DIR="/opt/elixir4vet"
 APP_USER="elixir4vet"
@@ -68,53 +66,27 @@ else
     log_success "System dependencies installed: ${MISSING_APT[*]}"
 fi
 
-# ─── Step 3: Install Homebrew ─────────────────────────────────────────────────
-log_info "Checking Homebrew..."
-if command_exists brew; then
-    log_skip "Homebrew"
-else
-    log_info "Installing Homebrew..."
-    # Homebrew must NOT be run as root
-    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# ─── Step 3: Install asdf via git ────────────────────────────────────────────
+ASDF_DIR="$HOME/.asdf"
+ASDF_VERSION="v0.14.1"
 
-    if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.bashrc"
-        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
-    elif [ -f /usr/local/bin/brew ]; then
-        eval "$(/usr/local/bin/brew shellenv)"
-    fi
-
-    log_success "Homebrew installed"
-fi
-
-# Ensure brew is in PATH for this session
-if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
-# ─── Step 4: Install asdf via Homebrew ───────────────────────────────────────
 log_info "Checking asdf..."
 if command_exists asdf; then
     log_skip "asdf"
 else
-    log_info "Installing asdf via Homebrew..."
-    brew install asdf
+    log_info "Installing asdf $ASDF_VERSION via git..."
+    git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch "$ASDF_VERSION" --depth 1
 
-    ASDF_SH="$(brew --prefix asdf)/libexec/asdf.sh"
-    if [ -f "$ASDF_SH" ]; then
-        # shellcheck disable=SC1090
-        source "$ASDF_SH"
-        echo ". \"$ASDF_SH\"" >> "$HOME/.bashrc"
-        echo ". \"$ASDF_SH\"" >> "$HOME/.profile"
-    fi
+    # shellcheck disable=SC1091
+    source "$ASDF_DIR/asdf.sh"
+    echo ". \"$ASDF_DIR/asdf.sh\"" >> "$HOME/.bashrc"
+    echo ". \"$ASDF_DIR/asdf.sh\"" >> "$HOME/.profile"
 
-    log_success "asdf installed via Homebrew"
+    log_success "asdf $ASDF_VERSION installed"
 fi
 
 # Ensure asdf is sourced for this session
-ASDF_SH="$(brew --prefix asdf 2>/dev/null)/libexec/asdf.sh"
-[ -f "$ASDF_SH" ] && source "$ASDF_SH"
+[ -f "$ASDF_DIR/asdf.sh" ] && source "$ASDF_DIR/asdf.sh"
 
 # ─── Step 5: Install Erlang & Elixir via asdf ────────────────────────────────
 log_info "Checking Erlang $OTP_VERSION..."
