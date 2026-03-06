@@ -1,9 +1,11 @@
 #!/bin/bash
 
 # Server setup script for Elixir4vet
-# Run as a sudoers user: bash scripts/setup-server.sh
+# Must be run as root: sudo bash scripts/setup-server.sh
 
 set -e
+
+export HOMEBREW_ALLOW_ROOT=1
 
 # Configuration
 PROJECT_DIR="/opt/elixir4vet"
@@ -27,20 +29,17 @@ log_skip()    { echo -e "${YELLOW}[~]${NC} $1 — already installed, skipping"; 
 
 command_exists() { command -v "$1" &>/dev/null; }
 
-# Check sudo access (not root)
-if [ "$EUID" -eq 0 ]; then
-    log_error "Do not run this script as root. Run as a sudoers user instead."
-fi
-if ! sudo -n true 2>/dev/null; then
-    log_error "This script requires sudo access. Add your user to sudoers first."
+# Must run as root
+if [ "$EUID" -ne 0 ]; then
+    log_error "This script must be run as root. Use: sudo bash $0"
 fi
 
-log_info "Running as $(whoami) with sudo privileges..."
+log_info "Running as root..."
 
 # ─── Step 1: Update system ────────────────────────────────────────────────────
 log_info "Updating system packages..."
-sudo apt-get update -qq
-sudo apt-get upgrade -y -qq
+apt-get update -qq
+apt-get upgrade -y -qq
 log_success "System packages updated"
 
 # ─── Step 2: Install system dependencies ─────────────────────────────────────
@@ -65,7 +64,7 @@ done
 if [ ${#MISSING_APT[@]} -eq 0 ]; then
     log_skip "System dependencies"
 else
-    sudo apt-get install -y -qq "${MISSING_APT[@]}"
+    apt-get install -y -qq "${MISSING_APT[@]}"
     log_success "System dependencies installed: ${MISSING_APT[*]}"
 fi
 
@@ -145,16 +144,16 @@ log_info "Checking application user..."
 if id "$APP_USER" &>/dev/null; then
     log_skip "User $APP_USER"
 else
-    sudo useradd -m -s /bin/bash "$APP_USER"
-    sudo usermod -aG sudo "$APP_USER"
+    useradd -m -s /bin/bash "$APP_USER"
+    usermod -aG sudo "$APP_USER"
     log_success "User $APP_USER created"
 fi
 
 # ─── Step 7: Create project directory ────────────────────────────────────────
 log_info "Setting up project directory..."
-sudo mkdir -p "$PROJECT_DIR"/{data,releases/backup,scripts,logs}
-sudo chown -R "$APP_USER:$APP_GROUP" "$PROJECT_DIR"
-sudo chmod 755 "$PROJECT_DIR"
+mkdir -p "$PROJECT_DIR"/{data,releases/backup,scripts,logs}
+chown -R "$APP_USER:$APP_GROUP" "$PROJECT_DIR"
+chmod 755 "$PROJECT_DIR"
 log_success "Project directory ready at $PROJECT_DIR"
 
 # ─── Step 8: Create environment file template ────────────────────────────────
@@ -163,8 +162,8 @@ log_info "Checking environment template..."
 if [ -f "$ENV_TEMPLATE" ]; then
     log_skip "Environment template"
 else
-    sudo mkdir -p /etc/elixir4vet
-    sudo tee "$ENV_TEMPLATE" > /dev/null << 'EOF'
+    mkdir -p /etc/elixir4vet
+    tee "$ENV_TEMPLATE" > /dev/null << 'EOF'
 # Elixir4vet Production Environment Variables
 
 PHX_SERVER=true
@@ -181,8 +180,8 @@ MAIL_FROM=noreply@vetvision.uz
 LOG_LEVEL=info
 MIX_ENV=prod
 EOF
-    sudo chown "root:$APP_GROUP" "$ENV_TEMPLATE"
-    sudo chmod 640 "$ENV_TEMPLATE"
+    chown "root:$APP_GROUP" "$ENV_TEMPLATE"
+    chmod 640 "$ENV_TEMPLATE"
     log_success "Environment template created at $ENV_TEMPLATE"
     log_warning "Edit $ENV_TEMPLATE and save as /etc/elixir4vet/.env.prod"
 fi
@@ -193,9 +192,9 @@ if systemctl list-unit-files 2>/dev/null | grep -q "elixir4vet.service"; then
     log_skip "Systemd service"
 else
     if [ -f "$PROJECT_DIR/systemd/elixir4vet.service" ]; then
-        sudo cp "$PROJECT_DIR/systemd/elixir4vet.service" /etc/systemd/system/
-        sudo systemctl daemon-reload
-        sudo systemctl enable elixir4vet
+        cp "$PROJECT_DIR/systemd/elixir4vet.service" /etc/systemd/system/
+        systemctl daemon-reload
+        systemctl enable elixir4vet
         log_success "Systemd service configured"
     else
         log_warning "systemd/elixir4vet.service not found — skipping"
@@ -205,12 +204,12 @@ fi
 # Systemd env override
 OVERRIDE_DIR="/etc/systemd/system/elixir4vet.service.d"
 if [ ! -f "$OVERRIDE_DIR/env.conf" ]; then
-    sudo mkdir -p "$OVERRIDE_DIR"
-    sudo tee "$OVERRIDE_DIR/env.conf" > /dev/null << 'EOF'
+    mkdir -p "$OVERRIDE_DIR"
+    tee "$OVERRIDE_DIR/env.conf" > /dev/null << 'EOF'
 [Service]
 EnvironmentFile=/etc/elixir4vet/.env.prod
 EOF
-    sudo systemctl daemon-reload
+    systemctl daemon-reload
     log_success "Systemd environment override created"
 fi
 
@@ -220,10 +219,10 @@ if [ -f "/etc/nginx/sites-enabled/elixir4vet" ]; then
     log_skip "Nginx config"
 else
     if [ -f "$PROJECT_DIR/nginx.conf" ]; then
-        sudo cp "$PROJECT_DIR/nginx.conf" /etc/nginx/sites-available/elixir4vet
-        sudo ln -sf /etc/nginx/sites-available/elixir4vet /etc/nginx/sites-enabled/
-        sudo rm -f /etc/nginx/sites-enabled/default
-        sudo nginx -t && sudo systemctl restart nginx
+        cp "$PROJECT_DIR/nginx.conf" /etc/nginx/sites-available/elixir4vet
+        ln -sf /etc/nginx/sites-available/elixir4vet /etc/nginx/sites-enabled/
+        rm -f /etc/nginx/sites-enabled/default
+        nginx -t && systemctl restart nginx
         log_success "Nginx configured"
     else
         log_warning "nginx.conf not found in $PROJECT_DIR — skipping"
@@ -236,7 +235,7 @@ log_info "Checking log rotation..."
 if [ -f "$LOGROTATE_CONF" ]; then
     log_skip "Log rotation"
 else
-    sudo tee "$LOGROTATE_CONF" > /dev/null << 'EOF'
+    tee "$LOGROTATE_CONF" > /dev/null << 'EOF'
 /opt/elixir4vet/logs/*.log {
     daily
     rotate 14
@@ -261,9 +260,9 @@ if [ -f "$DEPLOY_DEST" ]; then
 else
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     if [ -f "$SCRIPT_DIR/deploy.sh" ]; then
-        sudo cp "$SCRIPT_DIR/deploy.sh" "$DEPLOY_DEST"
-        sudo chmod +x "$DEPLOY_DEST"
-        sudo chown "root:$APP_GROUP" "$DEPLOY_DEST"
+        cp "$SCRIPT_DIR/deploy.sh" "$DEPLOY_DEST"
+        chmod +x "$DEPLOY_DEST"
+        chown "root:$APP_GROUP" "$DEPLOY_DEST"
         log_success "Deployment script installed"
     else
         log_warning "deploy.sh not found — skipping"
@@ -276,14 +275,14 @@ log_info "Checking sudoers configuration..."
 if [ -f "$SUDOERS_FILE" ]; then
     log_skip "Sudoers config"
 else
-    sudo tee "$SUDOERS_FILE" > /dev/null << EOF
+    tee "$SUDOERS_FILE" > /dev/null << EOF
 $APP_USER ALL=(ALL) NOPASSWD: /opt/elixir4vet/scripts/deploy.sh
 $APP_USER ALL=(ALL) NOPASSWD: /bin/systemctl start elixir4vet
 $APP_USER ALL=(ALL) NOPASSWD: /bin/systemctl stop elixir4vet
 $APP_USER ALL=(ALL) NOPASSWD: /bin/systemctl restart elixir4vet
 $APP_USER ALL=(ALL) NOPASSWD: /bin/systemctl status elixir4vet
 EOF
-    sudo chmod 440 "$SUDOERS_FILE"
+    chmod 440 "$SUDOERS_FILE"
     log_success "Sudoers configuration created"
 fi
 
