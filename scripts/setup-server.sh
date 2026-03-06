@@ -10,8 +10,8 @@ set -e
 PROJECT_DIR="/opt/elixir4vet"
 APP_USER="elixir4vet"
 APP_GROUP="elixir4vet"
-OTP_VERSION="28.1"
-ELIXIR_VERSION="1.16.5"
+OTP_VERSION="28.4"
+ELIXIR_VERSION="1.19.5"
 
 # Colors for output
 RED='\033[0;31m'
@@ -38,31 +38,13 @@ log_info "Running as root..."
 # ─── Preflight checks ─────────────────────────────────────────────────────────
 log_info "Checking prerequisites..."
 
-# asdf is loaded via shell script, not a standalone binary — source it if needed
-if ! command_exists asdf; then
-    for asdf_sh in \
-        "$HOME/.asdf/asdf.sh" \
-        "/opt/asdf-vm/asdf.sh" \
-        "/usr/local/asdf/asdf.sh"
-    do
-        if [ -f "$asdf_sh" ]; then
-            # shellcheck disable=SC1090
-            source "$asdf_sh"
-            break
-        fi
-    done
-fi
+command_exists erlang \
+    || log_error "Erlang $OTP_VERSION not found. Run: curl -fsSO https://elixir-lang.org/install.sh && sh install.sh elixir@1.19.5 otp@28.1"
 
-command_exists asdf \
-    || log_error "asdf is not installed. Install it first: https://asdf-vm.com"
+command_exists elixir \
+    || log_error "Elixir $ELIXIR_VERSION not found. Run: curl -fsSO https://elixir-lang.org/install.sh && sh install.sh elixir@1.19.5 otp@28.1"
 
-asdf list erlang 2>/dev/null | grep -q "$OTP_VERSION" \
-    || log_error "Erlang $OTP_VERSION not found in asdf. Run: asdf install erlang $OTP_VERSION"
-
-asdf list elixir 2>/dev/null | grep -q "$ELIXIR_VERSION" \
-    || log_error "Elixir $ELIXIR_VERSION not found in asdf. Run: asdf install elixir $ELIXIR_VERSION"
-
-log_success "Prerequisites OK (asdf, erlang $OTP_VERSION, elixir $ELIXIR_VERSION)"
+log_success "Prerequisites OK (erlang $OTP_VERSION, elixir $ELIXIR_VERSION)"
 
 # ─── Step 1: Update system ────────────────────────────────────────────────────
 log_info "Updating system packages..."
