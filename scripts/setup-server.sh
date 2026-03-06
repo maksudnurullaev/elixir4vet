@@ -168,7 +168,7 @@ else
 # Elixir4vet Production Environment Variables
 
 PHX_SERVER=true
-PHX_HOST=elixir4vet.example.com
+PHX_HOST=vetvision.uz
 PORT=4000
 
 DATABASE_PATH=/opt/elixir4vet/data/elixir4vet_prod.db
@@ -176,7 +176,7 @@ POOL_SIZE=10
 
 SECRET_KEY_BASE=$(mix phx.gen.secret) 
 
-MAIL_FROM=noreply@elixir4vet.example.com
+MAIL_FROM=noreply@vetvision.uz
 
 LOG_LEVEL=info
 MIX_ENV=prod
@@ -296,6 +296,6 @@ log_warning "1. Edit $ENV_TEMPLATE with your configuration"
 log_warning "2. Copy to /etc/elixir4vet/.env.prod: sudo cp $ENV_TEMPLATE /etc/elixir4vet/.env.prod"
 log_warning "3. Set correct permissions: sudo chmod 640 /etc/elixir4vet/.env.prod"
 log_warning "4. Generate SECRET_KEY_BASE: mix phx.gen.secret"
-log_warning "5. Set up SSL: sudo certbot certonly --nginx -d elixir4vet.example.com"
+log_warning "5. Set up SSL: sudo certbot certonly --nginx -d vetvision.uz"
 log_warning "6. Clone repo: sudo -u $APP_USER git clone <repo-url> $PROJECT_DIR"
 log_warning "7. Run deploy: sudo /opt/elixir4vet/scripts/deploy.sh"
