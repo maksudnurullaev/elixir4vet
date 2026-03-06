@@ -2,6 +2,7 @@
 
 # Server setup script for Elixir4vet
 # Must be run as root: sudo bash scripts/setup-server.sh
+# Prerequisites: asdf with erlang and elixir plugins must be installed and configured
 
 set -e
 
@@ -33,6 +34,17 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 log_info "Running as root..."
+
+# ─── Preflight checks ─────────────────────────────────────────────────────────
+log_info "Checking prerequisites..."
+
+command_exists asdf   || log_error "asdf is not installed or not in PATH. Install it first: https://asdf-vm.com"
+command_exists erlang || asdf list erlang 2>/dev/null | grep -q "$OTP_VERSION" \
+    || log_error "Erlang $OTP_VERSION is not installed in asdf. Run: asdf install erlang $OTP_VERSION"
+command_exists elixir || asdf list elixir 2>/dev/null | grep -q "$ELIXIR_VERSION" \
+    || log_error "Elixir $ELIXIR_VERSION is not installed in asdf. Run: asdf install elixir $ELIXIR_VERSION"
+
+log_success "Prerequisites OK (asdf, erlang $OTP_VERSION, elixir $ELIXIR_VERSION)"
 
 # ─── Step 1: Update system ────────────────────────────────────────────────────
 log_info "Updating system packages..."
@@ -66,52 +78,7 @@ else
     log_success "System dependencies installed: ${MISSING_APT[*]}"
 fi
 
-# ─── Step 3: Install asdf via git ────────────────────────────────────────────
-ASDF_DIR="$HOME/.asdf"
-ASDF_VERSION="v0.14.1"
-
-log_info "Checking asdf..."
-if command_exists asdf; then
-    log_skip "asdf"
-else
-    log_info "Installing asdf $ASDF_VERSION via git..."
-    git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch "$ASDF_VERSION" --depth 1
-
-    # shellcheck disable=SC1091
-    source "$ASDF_DIR/asdf.sh"
-    echo ". \"$ASDF_DIR/asdf.sh\"" >> "$HOME/.bashrc"
-    echo ". \"$ASDF_DIR/asdf.sh\"" >> "$HOME/.profile"
-
-    log_success "asdf $ASDF_VERSION installed"
-fi
-
-# Ensure asdf is sourced for this session
-[ -f "$ASDF_DIR/asdf.sh" ] && source "$ASDF_DIR/asdf.sh"
-
-# ─── Step 5: Install Erlang & Elixir via asdf ────────────────────────────────
-log_info "Checking Erlang $OTP_VERSION..."
-if asdf list erlang 2>/dev/null | grep -q "$OTP_VERSION"; then
-    log_skip "Erlang $OTP_VERSION"
-else
-    asdf plugin add erlang 2>/dev/null || true
-    log_info "Installing Erlang $OTP_VERSION (this may take a while)..."
-    asdf install erlang "$OTP_VERSION"
-    log_success "Erlang $OTP_VERSION installed"
-fi
-asdf global erlang "$OTP_VERSION"
-
-log_info "Checking Elixir $ELIXIR_VERSION..."
-if asdf list elixir 2>/dev/null | grep -q "$ELIXIR_VERSION"; then
-    log_skip "Elixir $ELIXIR_VERSION"
-else
-    asdf plugin add elixir 2>/dev/null || true
-    log_info "Installing Elixir $ELIXIR_VERSION..."
-    asdf install elixir "$ELIXIR_VERSION"
-    log_success "Elixir $ELIXIR_VERSION installed"
-fi
-asdf global elixir "$ELIXIR_VERSION"
-
-# ─── Step 6: Create application user ─────────────────────────────────────────
+# ─── Step 3: Create application user ─────────────────────────────────────────
 log_info "Checking application user..."
 if id "$APP_USER" &>/dev/null; then
     log_skip "User $APP_USER"
@@ -121,14 +88,14 @@ else
     log_success "User $APP_USER created"
 fi
 
-# ─── Step 7: Create project directory ────────────────────────────────────────
+# ─── Step 4: Create project directory ────────────────────────────────────────
 log_info "Setting up project directory..."
 mkdir -p "$PROJECT_DIR"/{data,releases/backup,scripts,logs}
 chown -R "$APP_USER:$APP_GROUP" "$PROJECT_DIR"
 chmod 755 "$PROJECT_DIR"
 log_success "Project directory ready at $PROJECT_DIR"
 
-# ─── Step 8: Create environment file template ────────────────────────────────
+# ─── Step 5: Create environment file template ────────────────────────────────
 ENV_TEMPLATE="/etc/elixir4vet/.env.prod.template"
 log_info "Checking environment template..."
 if [ -f "$ENV_TEMPLATE" ]; then
@@ -145,7 +112,7 @@ PORT=4000
 DATABASE_PATH=/opt/elixir4vet/data/elixir4vet_prod.db
 POOL_SIZE=10
 
-SECRET_KEY_BASE=$(mix phx.gen.secret) 
+SECRET_KEY_BASE=REPLACE_WITH_OUTPUT_OF_mix_phx_gen_secret
 
 MAIL_FROM=noreply@vetvision.uz
 
@@ -158,7 +125,7 @@ EOF
     log_warning "Edit $ENV_TEMPLATE and save as /etc/elixir4vet/.env.prod"
 fi
 
-# ─── Step 9: Set up systemd service ──────────────────────────────────────────
+# ─── Step 6: Set up systemd service ──────────────────────────────────────────
 log_info "Checking systemd service..."
 if systemctl list-unit-files 2>/dev/null | grep -q "elixir4vet.service"; then
     log_skip "Systemd service"
@@ -185,7 +152,7 @@ EOF
     log_success "Systemd environment override created"
 fi
 
-# ─── Step 10: Configure Nginx ─────────────────────────────────────────────────
+# ─── Step 7: Configure Nginx ──────────────────────────────────────────────────
 log_info "Checking Nginx configuration..."
 if [ -f "/etc/nginx/sites-enabled/elixir4vet" ]; then
     log_skip "Nginx config"
@@ -201,7 +168,7 @@ else
     fi
 fi
 
-# ─── Step 11: Set up log rotation ────────────────────────────────────────────
+# ─── Step 8: Set up log rotation ─────────────────────────────────────────────
 LOGROTATE_CONF="/etc/logrotate.d/elixir4vet"
 log_info "Checking log rotation..."
 if [ -f "$LOGROTATE_CONF" ]; then
@@ -224,7 +191,7 @@ EOF
     log_success "Log rotation configured"
 fi
 
-# ─── Step 12: Set up deployment script ───────────────────────────────────────
+# ─── Step 9: Set up deployment script ────────────────────────────────────────
 log_info "Checking deployment script..."
 DEPLOY_DEST="/opt/elixir4vet/scripts/deploy.sh"
 if [ -f "$DEPLOY_DEST" ]; then
@@ -241,7 +208,7 @@ else
     fi
 fi
 
-# ─── Step 13: Sudoers for CI/CD ───────────────────────────────────────────────
+# ─── Step 10: Sudoers for CI/CD ──────────────────────────────────────────────
 SUDOERS_FILE="/etc/sudoers.d/elixir4vet"
 log_info "Checking sudoers configuration..."
 if [ -f "$SUDOERS_FILE" ]; then
@@ -264,9 +231,9 @@ log_success "Server setup completed!"
 echo ""
 log_warning "NEXT STEPS:"
 log_warning "1. Edit $ENV_TEMPLATE with your configuration"
-log_warning "2. Copy to /etc/elixir4vet/.env.prod: sudo cp $ENV_TEMPLATE /etc/elixir4vet/.env.prod"
-log_warning "3. Set correct permissions: sudo chmod 640 /etc/elixir4vet/.env.prod"
+log_warning "2. Copy to /etc/elixir4vet/.env.prod: cp $ENV_TEMPLATE /etc/elixir4vet/.env.prod"
+log_warning "3. Set correct permissions: chmod 640 /etc/elixir4vet/.env.prod"
 log_warning "4. Generate SECRET_KEY_BASE: mix phx.gen.secret"
-log_warning "5. Set up SSL: sudo certbot certonly --nginx -d vetvision.uz"
-log_warning "6. Clone repo: sudo -u $APP_USER git clone <repo-url> $PROJECT_DIR"
-log_warning "7. Run deploy: sudo /opt/elixir4vet/scripts/deploy.sh"
+log_warning "5. Set up SSL: certbot certonly --nginx -d vetvision.uz"
+log_warning "6. Clone repo: git clone <repo-url> $PROJECT_DIR"
+log_warning "7. Run deploy: /opt/elixir4vet/scripts/deploy.sh"
