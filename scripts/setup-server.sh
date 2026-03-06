@@ -12,6 +12,7 @@ APP_USER="elixir4vet"
 APP_GROUP="elixir4vet"
 OTP_VERSION="28.4"
 ELIXIR_VERSION="1.19.5"
+RUN2INSTALL="curl -fsSO https://elixir-lang.org/install.sh && sh install.sh elixir@$ELIXIR_VERSION otp@$OTP_VERSION"
 
 # Colors for output
 RED='\033[0;31m'
@@ -26,30 +27,23 @@ log_warning() { echo -e "${YELLOW}[!]${NC} $1"; }
 log_error()   { echo -e "${RED}[✗]${NC} $1"; exit 1; }
 log_skip()    { echo -e "${YELLOW}[~]${NC} $1 — already installed, skipping"; }
 
-command_exists() { command -v "$1" &>/dev/null; }
-
-# Must run as root
-if [ "$EUID" -ne 0 ]; then
-    log_error "This script must be run as root. Use: sudo bash $0"
-fi
-
-log_info "Running as root..."
+command_exists() { command -v "$1"; }
 
 # ─── Preflight checks ─────────────────────────────────────────────────────────
 log_info "Checking prerequisites..."
 
-command_exists erlang \
-    || log_error "Erlang $OTP_VERSION not found. Run: curl -fsSO https://elixir-lang.org/install.sh && sh install.sh elixir@1.19.5 otp@28.1"
+command_exists erl \
+    || log_error "Erlang $OTP_VERSION not found. Run: $RUN2INSTALL"
 
-command_exists elixir \
-    || log_error "Elixir $ELIXIR_VERSION not found. Run: curl -fsSO https://elixir-lang.org/install.sh && sh install.sh elixir@1.19.5 otp@28.1"
+command_exists iex \
+    || log_error "Elixir $ELIXIR_VERSION not found. Run: $RUN2INSTALL"
 
 log_success "Prerequisites OK (erlang $OTP_VERSION, elixir $ELIXIR_VERSION)"
 
 # ─── Step 1: Update system ────────────────────────────────────────────────────
 log_info "Updating system packages..."
-apt-get update -qq
-apt-get upgrade -y -qq
+sudo apt-get update -qq
+sudo apt-get upgrade -y -qq
 log_success "System packages updated"
 
 # ─── Step 2: Install system dependencies ─────────────────────────────────────
@@ -74,7 +68,7 @@ done
 if [ ${#MISSING_APT[@]} -eq 0 ]; then
     log_skip "System dependencies"
 else
-    apt-get install -y -qq "${MISSING_APT[@]}"
+    sudo apt-get install -y -qq "${MISSING_APT[@]}"
     log_success "System dependencies installed: ${MISSING_APT[*]}"
 fi
 
@@ -83,16 +77,16 @@ log_info "Checking application user..."
 if id "$APP_USER" &>/dev/null; then
     log_skip "User $APP_USER"
 else
-    useradd -m -s /bin/bash "$APP_USER"
-    usermod -aG sudo "$APP_USER"
+    sudo useradd -m -s /bin/bash "$APP_USER"
+    sudo usermod -aG sudo "$APP_USER"
     log_success "User $APP_USER created"
 fi
 
 # ─── Step 4: Create project directory ────────────────────────────────────────
 log_info "Setting up project directory..."
-mkdir -p "$PROJECT_DIR"/{data,releases/backup,scripts,logs}
-chown -R "$APP_USER:$APP_GROUP" "$PROJECT_DIR"
-chmod 755 "$PROJECT_DIR"
+sudo mkdir -p "$PROJECT_DIR"/{data,releases/backup,scripts,logs}
+sudo chown -R "$APP_USER:$APP_GROUP" "$PROJECT_DIR"
+sudo chmod 755 "$PROJECT_DIR"
 log_success "Project directory ready at $PROJECT_DIR"
 
 # ─── Step 5: Create environment file template ────────────────────────────────
@@ -101,8 +95,8 @@ log_info "Checking environment template..."
 if [ -f "$ENV_TEMPLATE" ]; then
     log_skip "Environment template"
 else
-    mkdir -p /etc/elixir4vet
-    tee "$ENV_TEMPLATE" > /dev/null << 'EOF'
+    sudo mkdir -p /etc/elixir4vet
+    sudo tee "$ENV_TEMPLATE" > /dev/null << 'EOF'
 # Elixir4vet Production Environment Variables
 
 PHX_SERVER=true
@@ -119,8 +113,8 @@ MAIL_FROM=noreply@vetvision.uz
 LOG_LEVEL=info
 MIX_ENV=prod
 EOF
-    chown "root:$APP_GROUP" "$ENV_TEMPLATE"
-    chmod 640 "$ENV_TEMPLATE"
+    sudo chown "root:$APP_GROUP" "$ENV_TEMPLATE"
+    sudo chmod 640 "$ENV_TEMPLATE"
     log_success "Environment template created at $ENV_TEMPLATE"
     log_warning "Edit $ENV_TEMPLATE and save as /etc/elixir4vet/.env.prod"
 fi
@@ -143,12 +137,12 @@ fi
 # Systemd env override
 OVERRIDE_DIR="/etc/systemd/system/elixir4vet.service.d"
 if [ ! -f "$OVERRIDE_DIR/env.conf" ]; then
-    mkdir -p "$OVERRIDE_DIR"
-    tee "$OVERRIDE_DIR/env.conf" > /dev/null << 'EOF'
+    sudo mkdir -p "$OVERRIDE_DIR"
+    sudo tee "$OVERRIDE_DIR/env.conf" > /dev/null << 'EOF'
 [Service]
 EnvironmentFile=/etc/elixir4vet/.env.prod
 EOF
-    systemctl daemon-reload
+    sudo systemctl daemon-reload
     log_success "Systemd environment override created"
 fi
 
@@ -174,7 +168,7 @@ log_info "Checking log rotation..."
 if [ -f "$LOGROTATE_CONF" ]; then
     log_skip "Log rotation"
 else
-    tee "$LOGROTATE_CONF" > /dev/null << 'EOF'
+    sudo tee "$LOGROTATE_CONF" > /dev/null << 'EOF'
 /opt/elixir4vet/logs/*.log {
     daily
     rotate 14
@@ -200,8 +194,8 @@ else
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     if [ -f "$SCRIPT_DIR/deploy.sh" ]; then
         cp "$SCRIPT_DIR/deploy.sh" "$DEPLOY_DEST"
-        chmod +x "$DEPLOY_DEST"
-        chown "root:$APP_GROUP" "$DEPLOY_DEST"
+        sudo chmod +x "$DEPLOY_DEST"
+        sudo chown "root:$APP_GROUP" "$DEPLOY_DEST"
         log_success "Deployment script installed"
     else
         log_warning "deploy.sh not found — skipping"
@@ -214,14 +208,14 @@ log_info "Checking sudoers configuration..."
 if [ -f "$SUDOERS_FILE" ]; then
     log_skip "Sudoers config"
 else
-    tee "$SUDOERS_FILE" > /dev/null << EOF
+    sudo tee "$SUDOERS_FILE" > /dev/null << EOF
 $APP_USER ALL=(ALL) NOPASSWD: /opt/elixir4vet/scripts/deploy.sh
 $APP_USER ALL=(ALL) NOPASSWD: /bin/systemctl start elixir4vet
 $APP_USER ALL=(ALL) NOPASSWD: /bin/systemctl stop elixir4vet
 $APP_USER ALL=(ALL) NOPASSWD: /bin/systemctl restart elixir4vet
 $APP_USER ALL=(ALL) NOPASSWD: /bin/systemctl status elixir4vet
 EOF
-    chmod 440 "$SUDOERS_FILE"
+    sudo chmod 440 "$SUDOERS_FILE"
     log_success "Sudoers configuration created"
 fi
 
