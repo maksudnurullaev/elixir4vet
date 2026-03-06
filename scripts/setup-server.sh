@@ -174,7 +174,7 @@ PORT=4000
 DATABASE_PATH=/opt/elixir4vet/data/elixir4vet_prod.db
 POOL_SIZE=10
 
-SECRET_KEY_BASE=REPLACE_WITH_OUTPUT_OF_mix_phx_gen_secret
+SECRET_KEY_BASE=$(mix phx.gen.secret) 
 
 MAIL_FROM=noreply@elixir4vet.example.com
 
