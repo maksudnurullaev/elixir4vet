@@ -77,11 +77,12 @@ log_success "Environment variables loaded"
 
 # Step 5: Install dependencies
 log_info "Installing dependencies..."
-su - $USER -c "cd $PROJECT_DIR && mix deps.get --only prod" || log_error "Failed to install dependencies"
+su - $USER -c "cd $PROJECT_DIR && mix deps.get" || log_error "Failed to install dependencies"
 log_success "Dependencies installed"
 
 # Step 6: Compile assets
 log_info "Compiling assets..."
+su - $USER -c "cd $PROJECT_DIR && mix compile" || log_error "Failed to compile assets"
 su - $USER -c "cd $PROJECT_DIR && mix assets.deploy" || log_error "Failed to compile assets"
 log_success "Assets compiled"
 
