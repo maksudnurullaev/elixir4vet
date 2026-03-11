@@ -63,8 +63,8 @@ fi
 log_info "Pulling latest code..."
 cd $PROJECT_DIR
 git fetch origin
-git checkout main
-git pull origin main
+git checkout master
+git pull origin master
 log_success "Code updated"
 
 # Step 4: Load environment variables
