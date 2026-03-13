@@ -2,37 +2,22 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ master ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ master ]
 
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
 
     strategy:
       matrix:
-        otp: ["28.1"]
-        elixir: ["1.16.5"]
+        otp: ["27.2"]
+        elixir: ["1.18.2"]
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
@@ -40,20 +25,15 @@ jobs:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-
       - name: Restore dependencies cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
 
       - name: Restore build cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: _build
           key: ${{ runner.os }}-build-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
@@ -67,79 +47,66 @@ jobs:
       - name: Check code formatting
         run: mix format --check-formatted
 
+      - name: Compile (warnings as errors)
+        run: mix compile --warnings-as-errors
+        env:
+          MIX_ENV: test
+
       - name: Run Credo
-        run: mix credo
+        run: mix credo --strict
 
-      - name: Compile project
-        run: mix compile
+      - name: Create data directory for SQLite
+        run: mkdir -p data
 
-      - name: Run tests
-        run: mix test --cover
-
-      - name: Generate coverage report
-        if: always()
-        run: |
-          mkdir -p cover
-          mix coveralls.html
+      - name: Run tests with coverage
+        run: mix coveralls.xml
+        env:
+          MIX_ENV: test
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
-          files: ./cover/excoveralls.html
+          files: ./cover/excoveralls.xml
           flags: unittests
           fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   build:
-    name: Build Release
+    name: Build Release Check
     needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
-          otp-version: "28.1"
-          elixir-version: "1.16.5"
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
+          otp-version: "27.2"
+          elixir-version: "1.18.2"
 
       - name: Restore dependencies cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
 
-      - name: Restore build cache
-        uses: actions/cache@v3
-        with:
-          path: _build
-          key: ${{ runner.os }}-build-28.1-1.16.5-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-28.1-1.16.5-
-            ${{ runner.os }}-build-
-
-      - name: Install dependencies
+      - name: Install dependencies (prod only)
         run: mix deps.get --only prod
+        env:
+          MIX_ENV: prod
 
       - name: Build assets
         run: mix assets.deploy
+        env:
+          MIX_ENV: prod
 
       - name: Build release
-        run: |
-          mix release
-
-      - name: Upload release artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: elixir4vet-release
-          path: _build/prod/rel/elixir4vet/
-          retention-days: 5
+        run: mix release --overwrite
+        env:
+          MIX_ENV: prod
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+          PHX_HOST: localhost
