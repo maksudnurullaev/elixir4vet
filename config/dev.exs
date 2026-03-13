@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :elixir4vet, Elixir4vet.Repo,
-  database: Path.expand("../DATA/elixir4vet_dev.db", __DIR__),
+  database: Path.expand("../data/elixir4vet_dev.db", __DIR__),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
