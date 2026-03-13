@@ -2,14 +2,14 @@ defmodule Elixir4vetWeb.Admin.EventLive.Helpers do
   use Elixir4vetWeb, :html
 
   def translate_event_type(type) do
-    if is_medical?(type) do
+    if medical?(type) do
       translate_medical(type)
     else
       translate_general(type)
     end
   end
 
-  defp is_medical?(type) do
+  defp medical?(type) do
     type in [
       "sterilization",
       "neutering",

@@ -1,4 +1,6 @@
 defmodule Elixir4vetWeb.Plugs.SetLocale do
+  @moduledoc false
+
   import Plug.Conn
 
   @supported_locales Gettext.known_locales(Elixir4vetWeb.Gettext)

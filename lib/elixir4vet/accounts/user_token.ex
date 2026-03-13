@@ -1,4 +1,6 @@
 defmodule Elixir4vet.Accounts.UserToken do
+  @moduledoc false
+
   use Ecto.Schema
   import Ecto.Query
   alias Elixir4vet.Accounts.UserToken

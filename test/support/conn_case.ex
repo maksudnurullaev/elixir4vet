@@ -17,6 +17,8 @@ defmodule Elixir4vetWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias Elixir4vet.Accounts.Scope
+
   using do
     quote do
       # The default endpoint for testing
@@ -46,7 +48,7 @@ defmodule Elixir4vetWeb.ConnCase do
   """
   def register_and_log_in_user(%{conn: conn} = context) do
     user = Elixir4vet.AccountsFixtures.user_fixture()
-    scope = Elixir4vet.Accounts.Scope.for_user(user)
+    scope = Scope.for_user(user)
 
     opts =
       context
@@ -64,7 +66,7 @@ defmodule Elixir4vetWeb.ConnCase do
     admin_role = Elixir4vet.AuthorizationFixtures.admin_role_fixture()
     Elixir4vet.AuthorizationFixtures.assign_role_fixture(user, admin_role)
 
-    scope = Elixir4vet.Accounts.Scope.for_user(user)
+    scope = Scope.for_user(user)
 
     opts =
       context

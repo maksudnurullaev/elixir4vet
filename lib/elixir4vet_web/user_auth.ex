@@ -1,4 +1,6 @@
 defmodule Elixir4vetWeb.UserAuth do
+  @moduledoc false
+
   use Elixir4vetWeb, :verified_routes
 
   import Plug.Conn

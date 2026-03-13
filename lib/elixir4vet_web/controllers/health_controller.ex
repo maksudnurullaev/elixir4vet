@@ -9,6 +9,8 @@ defmodule Elixir4vetWeb.HealthController do
 
   use Elixir4vetWeb, :controller
 
+  alias Ecto.Adapters.SQL
+
   require Logger
 
   @doc """
@@ -75,7 +77,7 @@ defmodule Elixir4vetWeb.HealthController do
   end
 
   defp check_database_health do
-    case Ecto.Adapters.SQL.query(Elixir4vet.Repo, "SELECT 1") do
+    case SQL.query(Elixir4vet.Repo, "SELECT 1") do
       {:ok, _} -> true
       {:error, _reason} -> false
     end
