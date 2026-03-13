@@ -100,7 +100,7 @@ jobs:
           MIX_ENV: prod
 
       - name: Build assets
-        run: mix assets.deploy
+        run: mix compile && mix assets.deploy
         env:
           MIX_ENV: prod
 
