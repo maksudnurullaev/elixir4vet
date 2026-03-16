@@ -90,4 +90,4 @@ jobs:
             Deployment to ${{ github.event.inputs.environment || 'production' }} ${{ job.status }}
             Commit: ${{ github.sha }}
             Author: ${{ github.actor }}
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          # webhook_url: ${{ secrets.SLACK_WEBHOOK }}
