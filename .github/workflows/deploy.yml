@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - name: Set up Elixir
-        uses: beam-community/setup-beam@v1
+        uses: erlef/setup-beam@v1
         with:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
