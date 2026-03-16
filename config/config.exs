@@ -75,7 +75,7 @@ config :phoenix, :json_library, Jason
 
 # Configure Gettext for internationalization
 config :elixir4vet, Elixir4vetWeb.Gettext,
-  default_locale: "en",
+  default_locale: "ru",
   locales: ~w(en ru uz)
 
 # Import environment specific config. This must remain at the bottom
