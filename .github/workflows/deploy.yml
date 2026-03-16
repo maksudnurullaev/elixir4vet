@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy to'
+        description: 'Environment to deploy to production'
         required: true
         default: 'production'
         type: choice
@@ -19,12 +19,14 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to ${{ github.event.inputs.environment || 'production' }}
+    #name: Deploy to ${{ github.event.inputs.environment || 'production' }}
+    name: Deploy to production
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
 
     environment:
-      name: ${{ github.event.inputs.environment || 'production' }}
+      #name: ${{ github.event.inputs.environment || 'production' }}
+      name: production
       url: https://vetvision.uz
 
     steps:
@@ -43,9 +45,6 @@ jobs:
             # Перейти в директорию проекта
             cd ${{ secrets.PROJECT_PATH }}
             
-            # Останавливаем текущий сервис (если запущен)
-            /opt/elixir4vet/bin/elixir4vet stop > /dev/null 2>&1 || true
-            
             # Подтягиваем последние изменения
             git fetch origin
             git checkout main
@@ -62,6 +61,9 @@ jobs:
             
             # Запускаем миграции базы данных
             MIX_ENV=prod mix ecto.migrate
+            
+            # Останавливаем текущий сервис (если запущен)
+            /opt/elixir4vet/bin/elixir4vet stop > /dev/null 2>&1 || true
             
             # Запускаем сервис
             /opt/elixir4vet/bin/elixir4vet daemon
