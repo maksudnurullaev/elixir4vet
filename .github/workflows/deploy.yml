@@ -32,7 +32,8 @@ jobs:
           port: ${{ secrets.SERVER_PORT || 22 }}
           script: |
             set -e
-
+            source ~/.profile
+            
             # Перейти в директорию проекта
             cd ${{ secrets.PROJECT_PATH }}
 
