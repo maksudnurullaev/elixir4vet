@@ -47,8 +47,8 @@ jobs:
             
             # Подтягиваем последние изменения
             git fetch origin
-            git checkout main
-            git pull origin main
+            git checkout master
+            git pull origin master
             
             # Устанавливаем переменные окружения
             # source /etc/elixir4vet/.env.prod
