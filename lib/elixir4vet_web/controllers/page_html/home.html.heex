@@ -1,18 +1,134 @@
 <div class="min-h-screen bg-base-100">
+  <!-- Hero Section -->
+  <div class="relative overflow-hidden bg-gradient-to-br from-primary/15 via-base-100 to-secondary/10 py-20 px-4">
+    <!-- Decorative paw prints background -->
+    <div class="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
+      <svg class="absolute top-6 left-8 w-12 h-12 text-primary/20 rotate-12" viewBox="0 0 60 60" fill="currentColor">
+        <ellipse cx="30" cy="38" rx="14" ry="18"/><circle cx="12" cy="18" r="7"/><circle cx="48" cy="18" r="7"/><circle cx="6" cy="30" r="6"/><circle cx="54" cy="30" r="6"/>
+      </svg>
+      <svg class="absolute top-24 right-16 w-8 h-8 text-secondary/20 -rotate-6" viewBox="0 0 60 60" fill="currentColor">
+        <ellipse cx="30" cy="38" rx="14" ry="18"/><circle cx="12" cy="18" r="7"/><circle cx="48" cy="18" r="7"/><circle cx="6" cy="30" r="6"/><circle cx="54" cy="30" r="6"/>
+      </svg>
+      <svg class="absolute bottom-10 left-1/4 w-10 h-10 text-primary/10 rotate-45" viewBox="0 0 60 60" fill="currentColor">
+        <ellipse cx="30" cy="38" rx="14" ry="18"/><circle cx="12" cy="18" r="7"/><circle cx="48" cy="18" r="7"/><circle cx="6" cy="30" r="6"/><circle cx="54" cy="30" r="6"/>
+      </svg>
+      <svg class="absolute top-1/3 right-8 w-6 h-6 text-secondary/20 rotate-30" viewBox="0 0 60 60" fill="currentColor">
+        <ellipse cx="30" cy="38" rx="14" ry="18"/><circle cx="12" cy="18" r="7"/><circle cx="48" cy="18" r="7"/><circle cx="6" cy="30" r="6"/><circle cx="54" cy="30" r="6"/>
+      </svg>
+    </div>
+
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 relative z-10">
+      <!-- Left: Text -->
+      <div class="flex-1 text-center lg:text-left">
+        <div class="badge badge-primary badge-lg mb-6 text-base px-4 py-3">VetVision.UZ</div>
+        <h1 class="text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
+          Забота о каждом<br>
+          <span class="text-primary">хвостике</span> 🐾
+        </h1>
+        <p class="text-xl text-base-content/70 mb-10 max-w-lg">
+          Объединяем ветеринаров, приюты и неравнодушных людей ради счастья каждого животного
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+          <a href="/users/register" class="btn btn-primary btn-lg shadow-lg">Присоединиться</a>
+          <a href="#mission" class="btn btn-outline btn-lg">Наша миссия</a>
+        </div>
+      </div>
+
+      <!-- Right: Animal SVG Illustration -->
+      <div class="flex-1 flex justify-center">
+        <svg viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-md drop-shadow-xl">
+          <!-- Ground -->
+          <ellipse cx="210" cy="308" rx="185" ry="22" fill="currentColor" class="text-primary/10"/>
+
+          <!-- CAT (left) -->
+          <!-- Cat tail -->
+          <path d="M72,245 Q30,210 48,168" stroke="#94a3b8" stroke-width="13" fill="none" stroke-linecap="round"/>
+          <!-- Cat body -->
+          <ellipse cx="128" cy="228" rx="50" ry="58" fill="#94a3b8"/>
+          <!-- Cat head -->
+          <circle cx="128" cy="148" r="40" fill="#94a3b8"/>
+          <!-- Cat ears -->
+          <polygon points="103,122 92,80 124,118" fill="#94a3b8"/>
+          <polygon points="153,122 164,80 132,118" fill="#94a3b8"/>
+          <polygon points="106,119 97,86 124,115" fill="#fda4af"/>
+          <polygon points="150,119 159,86 132,115" fill="#fda4af"/>
+          <!-- Cat eyes -->
+          <ellipse cx="116" cy="145" rx="9" ry="11" fill="#4ade80"/>
+          <ellipse cx="140" cy="145" rx="9" ry="11" fill="#4ade80"/>
+          <ellipse cx="116" cy="146" rx="4" ry="8" fill="#0f172a"/>
+          <ellipse cx="140" cy="146" rx="4" ry="8" fill="#0f172a"/>
+          <circle cx="114" cy="143" r="2.5" fill="white"/>
+          <circle cx="138" cy="143" r="2.5" fill="white"/>
+          <!-- Cat nose -->
+          <polygon points="128,160 122,168 134,168" fill="#fda4af"/>
+          <!-- Cat mouth -->
+          <path d="M122,168 Q128,174 134,168" stroke="#475569" stroke-width="1.5" fill="none"/>
+          <!-- Cat whiskers -->
+          <line x1="70" y1="162" x2="120" y2="164" stroke="#64748b" stroke-width="1.5"/>
+          <line x1="70" y1="169" x2="120" y2="169" stroke="#64748b" stroke-width="1.5"/>
+          <line x1="136" y1="164" x2="186" y2="162" stroke="#64748b" stroke-width="1.5"/>
+          <line x1="136" y1="169" x2="186" y2="169" stroke="#64748b" stroke-width="1.5"/>
+          <!-- Cat paws -->
+          <ellipse cx="100" cy="283" rx="20" ry="11" fill="#94a3b8"/>
+          <ellipse cx="156" cy="283" rx="20" ry="11" fill="#94a3b8"/>
+
+          <!-- DOG (right) -->
+          <!-- Dog tail -->
+          <path d="M336,215 Q378,170 360,135" stroke="#d97706" stroke-width="15" fill="none" stroke-linecap="round"/>
+          <!-- Dog body -->
+          <ellipse cx="276" cy="222" rx="58" ry="65" fill="#f59e0b"/>
+          <!-- Dog head -->
+          <circle cx="276" cy="140" r="45" fill="#f59e0b"/>
+          <!-- Dog floppy ears -->
+          <ellipse cx="240" cy="158" rx="20" ry="33" fill="#d97706" transform="rotate(-15, 240, 158)"/>
+          <ellipse cx="312" cy="158" rx="20" ry="33" fill="#d97706" transform="rotate(15, 312, 158)"/>
+          <!-- Dog eyes -->
+          <circle cx="262" cy="132" r="9" fill="#1e293b"/>
+          <circle cx="290" cy="132" r="9" fill="#1e293b"/>
+          <circle cx="264" cy="130" r="3.5" fill="white"/>
+          <circle cx="292" cy="130" r="3.5" fill="white"/>
+          <!-- Dog eyebrows -->
+          <path d="M255,120 Q262,116 269,120" stroke="#92400e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M283,120 Q290,116 297,120" stroke="#92400e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Dog nose -->
+          <ellipse cx="276" cy="152" rx="11" ry="8" fill="#1e293b"/>
+          <!-- Dog tongue -->
+          <path d="M267,163 Q276,178 285,163" fill="#ef4444"/>
+          <ellipse cx="276" cy="170" rx="10" ry="10" fill="#ef4444"/>
+          <!-- Dog paws -->
+          <ellipse cx="246" cy="284" rx="22" ry="12" fill="#f59e0b"/>
+          <ellipse cx="306" cy="284" rx="22" ry="12" fill="#f59e0b"/>
+
+          <!-- Heart between them -->
+          <path d="M194,90 C194,82 200,76 208,76 C212,76 216,78 218,82 C220,78 224,76 228,76 C236,76 242,82 242,90 C242,104 218,118 218,118 C218,118 194,104 194,90 Z" fill="#ef4444" opacity="0.85"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
   <!-- Mission Section -->
-  <div class="py-20 px-4 bg-base-100">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-8 text-primary">{gettext("Our Mission")}</h2>
-      <p class="text-lg leading-relaxed text-base-content/80 mb-6">
-        {gettext(
-          "VetVision.UZ is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering."
-        )}
-      </p>
-      <p class="text-lg leading-relaxed text-base-content/80">
-        {gettext(
-          "Our mission is to connect veterinarians, shelters, and compassionate individuals to ensure that homeless animals receive the attention they desperately need. Join us in creating a world where every wagging tail and purring friend is cherished."
-        )}
-      </p>
+  <div id="mission" class="py-20 px-4 bg-base-100">
+    <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+      <div class="flex-1">
+        <img
+          src={~p"/images/your_god_created_us_too.jpg"}
+          alt="Your God Created Us Too"
+          class="rounded-2xl shadow-2xl w-full object-cover max-h-96"
+        />
+      </div>
+      <div class="flex-1 text-center lg:text-left">
+        <h2 class="text-3xl font-bold mb-8 text-primary">{gettext("Our Mission")}</h2>
+        <p class="text-lg leading-relaxed text-base-content/80 mb-6">
+          {gettext(
+            "VetVision.UZ is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering."
+          )}
+        </p>
+        <p class="text-lg leading-relaxed text-base-content/80">
+          {gettext(
+            "Our mission is to connect veterinarians, shelters, and compassionate individuals to ensure that homeless animals receive the attention they desperately need. Join us in creating a world where every wagging tail and purring friend is cherished."
+          )}
+        </p>
+      </div>
     </div>
   </div>
   
