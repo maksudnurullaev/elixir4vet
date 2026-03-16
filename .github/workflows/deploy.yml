@@ -24,17 +24,22 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
 
+    strategy:
+      matrix:
+        otp: ["28.4"]
+        elixir: ["1.19.5"]
+
     environment:
       #name: ${{ github.event.inputs.environment || 'production' }}
       name: production
       url: https://vetvision.uz
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Deploy to server via SSH
-        uses: appleboy/ssh-action@v1.0.0
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
         with:
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
