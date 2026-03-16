@@ -24,52 +24,45 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
 
-    strategy:
-      matrix:
-        otp: ["28.4"]
-        elixir: ["1.19.5"]
-
     environment:
       #name: ${{ github.event.inputs.environment || 'production' }}
       name: production
       url: https://vetvision.uz
 
     steps:
-      - name: Set up Elixir
-        uses: erlef/setup-beam@v1
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
         with:
-          otp-version: ${{ matrix.otp }}
-          elixir-version: ${{ matrix.elixir }}
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT || 22 }}
           script: |
             set -e
-            
+
             # Перейти в директорию проекта
             cd ${{ secrets.PROJECT_PATH }}
-            
+
             # Подтягиваем последние изменения
             git fetch origin
             git checkout master
             git pull origin master
-            
+
             # Устанавливаем переменные окружения
             # source /etc/elixir4vet/.env.prod
-            
+
             # Устанавливаем зависимости и собираем релиз
             mix deps.get --only prod
             MIX_ENV=prod mix assets.deploy
             MIX_ENV=prod mix phx.digest
             MIX_ENV=prod mix release --path /opt/elixir4vet --overwrite
-            
+
             # Запускаем миграции базы данных
             MIX_ENV=prod mix ecto.migrate
-            
+
             # Останавливаем текущий сервис (если запущен)
             /opt/elixir4vet/bin/elixir4vet stop > /dev/null 2>&1 || true
-            
+
             # Запускаем сервис
             /opt/elixir4vet/bin/elixir4vet daemon
 
