@@ -4,8 +4,8 @@ on:
   push:
     branches: [ main ]
     # Trigger только для определённых тегов (например, v1.0.0)
-    tags:
-      - 'v*'
+    #tags:
+    #  - 'v*'
   workflow_dispatch:
     inputs:
       environment:
@@ -18,59 +18,14 @@ on:
           - staging
 
 jobs:
-  build:
-    name: Build Docker Image
-    runs-on: ubuntu-latest
-    outputs:
-      image-tag: ${{ steps.meta.outputs.tags }}
-      image-digest: ${{ steps.build.outputs.digest }}
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            ${{ vars.DOCKER_USERNAME }}/elixir4vet
-          tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha
-
-      - name: Build and push
-        id: build
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
   deploy:
     name: Deploy to ${{ github.event.inputs.environment || 'production' }}
-    needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
 
     environment:
       name: ${{ github.event.inputs.environment || 'production' }}
-      url: https://elixir4vet.example.com
+      url: https://vetvision.uz
 
     steps:
       - uses: actions/checkout@v4
@@ -89,7 +44,7 @@ jobs:
             cd ${{ secrets.PROJECT_PATH }}
             
             # Останавливаем текущий сервис (если запущен)
-            sudo systemctl stop elixir4vet || true
+            /opt/elixir4vet/bin/elixir4vet stop > /dev/null 2>&1 || true
             
             # Подтягиваем последние изменения
             git fetch origin
@@ -97,24 +52,24 @@ jobs:
             git pull origin main
             
             # Устанавливаем переменные окружения
-            source /etc/elixir4vet/.env.prod
+            # source /etc/elixir4vet/.env.prod
             
             # Устанавливаем зависимости и собираем релиз
             mix deps.get --only prod
-            mix assets.deploy
-            MIX_ENV=prod mix release
+            MIX_ENV=prod mix assets.deploy
+            MIX_ENV=prod mix phx.digest
+            MIX_ENV=prod mix release --path /opt/elixir4vet --overwrite
             
             # Запускаем миграции базы данных
-            MIX_ENV=prod _build/prod/rel/elixir4vet/bin/elixir4vet eval "Elixir4vet.Release.migrate()"
+            MIX_ENV=prod mix ecto.migrate
             
             # Запускаем сервис
-            sudo systemctl start elixir4vet
-            sudo systemctl status elixir4vet
+            /opt/elixir4vet/bin/elixir4vet daemon
 
       - name: Health Check
         run: |
           for i in {1..10}; do
-            if curl -f https://elixir4vet.example.com/health; then
+            if curl -f https://vetvision.uz/health; then
               echo "✓ Health check passed"
               exit 0
             fi
