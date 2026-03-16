@@ -33,7 +33,7 @@ jobs:
           script: |
             set -e
             source ~/.profile
-            
+
             # Перейти в директорию проекта
             cd ${{ secrets.PROJECT_PATH }}
 
@@ -73,14 +73,3 @@ jobs:
           done
           echo "✗ Health check failed"
           exit 1
-
-      - name: Notify deployment
-        if: always()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          text: |
-            Deployment to ${{ github.event.inputs.environment || 'production' }} ${{ job.status }}
-            Commit: ${{ github.sha }}
-            Author: ${{ github.actor }}
-          # webhook_url: ${{ secrets.SLACK_WEBHOOK }}
