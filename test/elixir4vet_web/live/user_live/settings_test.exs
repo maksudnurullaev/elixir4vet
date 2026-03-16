@@ -88,7 +88,7 @@ defmodule Elixir4vetWeb.UserLive.SettingsTest do
         })
 
       assert result =~ "Save Password"
-      assert result =~ "should be at least 8 character(s)"
+      assert result =~ "должно быть не менее 8 символов"
       assert result =~ "does not match password"
     end
 
@@ -108,7 +108,7 @@ defmodule Elixir4vetWeb.UserLive.SettingsTest do
         |> render_submit()
 
       assert result =~ "Save Password"
-      assert result =~ "should be at least 8 character(s)"
+      assert result =~ "должно быть не менее 8 символов"
       assert result =~ "does not match password"
     end
   end
