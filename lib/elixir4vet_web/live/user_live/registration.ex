@@ -50,8 +50,8 @@ defmodule Elixir4vetWeb.UserLive.Registration do
             type="tel"
             label={gettext("Phone")}
             placeholder="+998 (XX) XXX-XX-XX"
-            pattern="\+998 \(\d{2}\) \d{3}-\d{2}-\d{2}"
             autocomplete="tel"
+            phx-hook="PhoneMask"
             required
           />
 

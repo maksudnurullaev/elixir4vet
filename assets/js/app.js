@@ -25,11 +25,72 @@ import { LiveSocket } from "phoenix_live_view"
 import { hooks as colocatedHooks } from "phoenix-colocated/elixir4vet"
 import topbar from "../vendor/topbar"
 
+const PhoneMask = {
+  PREFIX: "+998 (",
+
+  getDigits(value) {
+    let digits = value.replace(/\D/g, "")
+    if (digits.startsWith("998")) digits = digits.slice(3)
+    return digits.slice(0, 9)
+  },
+
+  format(digits) {
+    if (digits.length === 0) return this.PREFIX
+    let result = this.PREFIX
+    if (digits.length <= 2) {
+      result += digits
+    } else {
+      result += digits.slice(0, 2) + ") "
+      if (digits.length <= 5) {
+        result += digits.slice(2)
+      } else {
+        result += digits.slice(2, 5) + "-"
+        if (digits.length <= 7) {
+          result += digits.slice(5)
+        } else {
+          result += digits.slice(5, 7) + "-" + digits.slice(7)
+        }
+      }
+    }
+    return result
+  },
+
+  mounted() {
+    if (!this.el.value) this.el.value = this.PREFIX
+
+    this.el.addEventListener("input", () => {
+      const digits = this.getDigits(this.el.value)
+      this.el.value = this.format(digits)
+    })
+
+    this.el.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" &&
+          this.el.selectionStart <= this.PREFIX.length &&
+          this.el.selectionEnd <= this.PREFIX.length) {
+        e.preventDefault()
+      }
+    })
+
+    this.el.addEventListener("focus", () => {
+      if (!this.el.value || this.el.value.length < this.PREFIX.length) {
+        this.el.value = this.PREFIX
+      }
+      setTimeout(() => this.el.setSelectionRange(this.el.value.length, this.el.value.length), 0)
+    })
+
+    this.el.addEventListener("click", () => {
+      if (this.el.selectionStart < this.PREFIX.length) {
+        this.el.setSelectionRange(this.PREFIX.length, this.PREFIX.length)
+      }
+    })
+  }
+}
+
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
-  hooks: { ...colocatedHooks },
+  hooks: { ...colocatedHooks, PhoneMask },
 })
 
 // Show progress bar on live navigation and form submits

@@ -40,18 +40,11 @@ defmodule Mix.Tasks.Admin.SetPassword do
 
   defp reset_password(user, email) do
     password = prompt_password()
-    confirmation = prompt_password_confirmation()
-
-    if password == confirmation do
-      update_password(user, email, password)
-    else
-      Mix.shell().error("Passwords do not match.")
-      exit({:shutdown, 1})
-    end
+    update_password(user, email, password)
   end
 
   defp update_password(user, email, password) do
-    case Accounts.update_user_password(user, %{password: password}) do
+    case Accounts.update_user_password(user, %{password: password}, validate_current_password: false) do
       {:ok, {_user, _tokens}} ->
         Mix.shell().info("Password updated successfully for #{email}.")
 
@@ -63,13 +56,13 @@ defmodule Mix.Tasks.Admin.SetPassword do
   end
 
   defp prompt_password do
-    Mix.shell().prompt("Enter new password:")
-    |> String.trim()
-  end
-
-  defp prompt_password_confirmation do
-    Mix.shell().prompt("Confirm new password:")
-    |> String.trim()
+    IO.write("Enter new password: ")
+    gl = Process.group_leader()
+    :io.setopts(gl, echo: false)
+    password = IO.gets("") |> String.trim()
+    :io.setopts(gl, echo: true)
+    IO.puts("")
+    password
   end
 
   defp print_errors(changeset) do
