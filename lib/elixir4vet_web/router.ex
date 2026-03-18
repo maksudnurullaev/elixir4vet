@@ -110,6 +110,8 @@ defmodule Elixir4vetWeb.Router do
       live "/users/register", UserLive.Registration, :new
       live "/login", UserLive.Login, :new
       live "/users/log-in/:token", UserLive.Confirmation, :new
+      live "/terms", PageLive.Terms, :index
+      live "/privacy", PageLive.Privacy, :index
     end
 
     post "/login", UserSessionController, :create

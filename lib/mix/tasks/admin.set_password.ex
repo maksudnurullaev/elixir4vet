@@ -44,7 +44,9 @@ defmodule Mix.Tasks.Admin.SetPassword do
   end
 
   defp update_password(user, email, password) do
-    case Accounts.update_user_password(user, %{password: password}, validate_current_password: false) do
+    case Accounts.update_user_password(user, %{password: password},
+           validate_current_password: false
+         ) do
       {:ok, {_user, _tokens}} ->
         Mix.shell().info("Password updated successfully for #{email}.")
 

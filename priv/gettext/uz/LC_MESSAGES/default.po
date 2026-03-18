@@ -553,3 +553,21 @@ msgid "Vaccination"
 msgstr "Emlash"
 
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:11
+
+#: lib/elixir4vet_web/live/page_live/terms.ex:6
+#: lib/elixir4vet_web/components/layouts/root.html.heex
+#, elixir-autogen, elixir-format
+msgid "Terms of Service"
+msgstr "Foydalanish shartlari"
+
+#: lib/elixir4vet_web/live/page_live/privacy.ex:6
+#: lib/elixir4vet_web/components/layouts/root.html.heex
+#, elixir-autogen, elixir-format
+msgid "Privacy Policy"
+msgstr "Maxfiylik siyosati"
+
+#: lib/elixir4vet_web/live/page_live/terms.ex:12
+#: lib/elixir4vet_web/live/page_live/privacy.ex:12
+#, elixir-autogen, elixir-format
+msgid "Last updated: March 18, 2026"
+msgstr "Oxirgi yangilanish: 2026-yil 18-mart"

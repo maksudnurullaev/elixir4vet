@@ -241,6 +241,14 @@
     <footer class="footer px-10 py-4 border-t bg-base-200 text-base-content border-base-300 flex justify-between items-center">
       <div class="items-center grid-flow-col">
         <p>{gettext("© 2026 VetVision.UZ. All rights reserved.")}</p>
+        <div class="flex gap-4 mt-1 text-sm">
+          <.link navigate={~p"/terms"} class="link link-hover opacity-70">
+            {gettext("Terms of Service")}
+          </.link>
+          <.link navigate={~p"/privacy"} class="link link-hover opacity-70">
+            {gettext("Privacy Policy")}
+          </.link>
+        </div>
       </div>
       <div class="grid grid-flow-col gap-4">
         <a>
