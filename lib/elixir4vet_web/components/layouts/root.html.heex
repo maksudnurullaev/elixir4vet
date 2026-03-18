@@ -192,7 +192,7 @@
                 <span class="badge badge-sm badge-ghost">{gettext("User")}</span>
               <% end %>
             </div>
-
+            
 <!-- User Menu -->
             <div class="dropdown dropdown-end">
               <label tabindex="0" class="btn btn-ghost btn-sm">
@@ -211,7 +211,9 @@
                           <.link navigate={~p"/admin/users"}>{gettext("Users Management")}</.link>
                         </li>
                         <li>
-                          <.link navigate={~p"/admin/permissions"}>{gettext("Permissions")}</.link>
+                          <.link navigate={~p"/admin/permissions"}>
+                            {gettext("Permissions")}
+                          </.link>
                         </li>
                       </ul>
                     </details>
