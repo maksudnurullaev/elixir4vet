@@ -10,16 +10,16 @@ defmodule Elixir4vetWeb.UserLive.Login do
       <div class="mx-auto max-w-sm space-y-4">
         <div class="text-center">
           <.header>
-            <p>Log in</p>
+            <p>{gettext("Log in")}</p>
             <:subtitle>
               <%= if @current_scope do %>
-                You need to reauthenticate to perform sensitive actions on your account.
+                {gettext("You need to reauthenticate to perform sensitive actions on your account.")}
               <% else %>
-                Don't have an account? <.link
+                {gettext("Don't have an account?")} <.link
                   navigate={~p"/users/register"}
                   class="font-semibold text-brand hover:underline"
                   phx-no-format
-                >Sign up</.link> for an account now.
+                >{gettext("Sign up")}</.link> {gettext("for an account now.")}
               <% end %>
             </:subtitle>
           </.header>
@@ -28,15 +28,16 @@ defmodule Elixir4vetWeb.UserLive.Login do
         <div :if={local_mail_adapter?()} class="alert alert-info">
           <.icon name="hero-information-circle" class="size-6 shrink-0" />
           <div>
-            <p>You are running the local mail adapter.</p>
+            <p>{gettext("You are running the local mail adapter.")}</p>
             <p>
-              To see sent emails, visit <.link href="/dev/mailbox" class="underline">the mailbox page</.link>.
+              {gettext("To see sent emails, visit")}
+              <.link href="/dev/mailbox" class="underline">{gettext("the mailbox page")}</.link>.
             </p>
           </div>
         </div>
 
         <div class="space-y-4">
-          <h3 class="text-sm font-semibold">Log in with email</h3>
+          <h3 class="text-sm font-semibold">{gettext("Log in with email")}</h3>
 
           <.form
             :let={f}
@@ -47,17 +48,17 @@ defmodule Elixir4vetWeb.UserLive.Login do
             <.input
               field={f[:email]}
               type="email"
-              label="Email"
-              placeholder="Enter your email"
+              label={gettext("Email")}
+              placeholder={gettext("Enter your email")}
               autocomplete="email"
               required
             />
-            <.button class="btn btn-primary w-full" phx-disable-with="Sending...">
-              Send magic link <span aria-hidden="true">→</span>
+            <.button class="btn btn-primary w-full" phx-disable-with={gettext("Sending...")}>
+              {gettext("Send magic link")} <span aria-hidden="true">→</span>
             </.button>
           </.form>
 
-          <div class="divider">OR</div>
+          <div class="divider">{gettext("OR")}</div>
 
           <.form
             :let={f}
@@ -70,7 +71,7 @@ defmodule Elixir4vetWeb.UserLive.Login do
             <.input
               field={f[:email]}
               type="email"
-              label="Email"
+              label={gettext("Email")}
               autocomplete="email"
               required
               phx-mounted={@current_scope && JS.focus()}
@@ -78,12 +79,12 @@ defmodule Elixir4vetWeb.UserLive.Login do
             <.input
               field={f[:password]}
               type="password"
-              label="Password"
+              label={gettext("Password")}
               autocomplete="current-password"
               required
             />
             <.button class="btn btn-primary w-full" name={f[:remember_me].name} value="true">
-              Log in <span aria-hidden="true">→</span>
+              {gettext("Log in")} <span aria-hidden="true">→</span>
             </.button>
           </.form>
         </div>
@@ -114,7 +115,8 @@ defmodule Elixir4vetWeb.UserLive.Login do
       )
     end
 
-    info = "If your email is in our system, you will receive instructions to log in shortly."
+    info =
+      gettext("If your email is in our system, you will receive instructions to log in shortly.")
 
     {:noreply,
      socket

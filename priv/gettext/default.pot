@@ -11,7 +11,8 @@
 msgid ""
 msgstr ""
 
-#: lib/elixir4vet_web/components/core_components.ex:368
+#: lib/elixir4vet_web/components/core_components.ex:369
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:194
 #, elixir-autogen, elixir-format
 msgid "Actions"
 msgstr ""
@@ -23,6 +24,7 @@ msgid "Attempting to reconnect"
 msgstr ""
 
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:67
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:33
 #, elixir-autogen, elixir-format
 msgid "Back to Users"
 msgstr ""
@@ -59,6 +61,7 @@ msgstr ""
 
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:20
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:65
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:175
 #, elixir-autogen, elixir-format
 msgid "Permission Matrix"
 msgstr ""
@@ -78,7 +81,9 @@ msgstr ""
 msgid "Read Write"
 msgstr ""
 
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:66
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:106
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:191
 #, elixir-autogen, elixir-format
 msgid "Role"
 msgstr ""
@@ -98,88 +103,104 @@ msgstr ""
 msgid "We can't find the internet"
 msgstr ""
 
-#: lib/elixir4vet_web/components/core_components.ex:74
+#: lib/elixir4vet_web/components/core_components.ex:75
 #, elixir-autogen, elixir-format
 msgid "close"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:188
+#: lib/elixir4vet_web/components/layouts/root.html.heex:190
+#: lib/elixir4vet_web/components/layouts/root.html.heex:208
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:187
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:159
 #, elixir-autogen, elixir-format
 msgid "Admin"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:182
+#: lib/elixir4vet_web/components/layouts/root.html.heex:109
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:181
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:52
 #, elixir-autogen, elixir-format
 msgid "Animals"
 msgstr ""
 
 #: lib/elixir4vet_web/components/layouts/root.html.heex:65
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:183
+#: lib/elixir4vet_web/components/layouts/root.html.heex:112
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:182
 #, elixir-autogen, elixir-format
 msgid "Events"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:191
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:190
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:162
 #, elixir-autogen, elixir-format
 msgid "Guest"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:189
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:52
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:188
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:160
 #, elixir-autogen, elixir-format
 msgid "Manager"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:181
+#: lib/elixir4vet_web/components/layouts/root.html.heex:104
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:180
 #, elixir-autogen, elixir-format
 msgid "Organizations"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:184
+#: lib/elixir4vet_web/components/layouts/root.html.heex:115
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:183
 #, elixir-autogen, elixir-format
 msgid "Photographs"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:190
+#: lib/elixir4vet_web/components/layouts/root.html.heex:192
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:64
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:65
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:189
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:161
 #, elixir-autogen, elixir-format
 msgid "User"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/permissions_live.ex:185
+#: lib/elixir4vet_web/live/admin/permissions_live.ex:184
 #, elixir-autogen, elixir-format
 msgid "Users"
 msgstr ""
 
-#: lib/elixir4vet_web/controllers/page_html/home.html.heex:68
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:265
 #, elixir-autogen, elixir-format
 msgid "\"Compassion for animals is intimately associated with goodness of character.\""
 msgstr ""
 
-#: lib/elixir4vet_web/controllers/page_html/home.html.heex:32
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:229
 #, elixir-autogen, elixir-format
 msgid "\"The greatness of a nation and its moral progress can be judged by the way its animals are treated.\""
 msgstr ""
 
-#: lib/elixir4vet_web/controllers/page_html/home.html.heex:50
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:247
 #, elixir-autogen, elixir-format
 msgid "\"Until one has loved an animal, a part of one's soul remains unawakened.\""
 msgstr ""
 
-#: lib/elixir4vet_web/controllers/page_html/home.html.heex:5
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:68
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:201
 #, elixir-autogen, elixir-format
 msgid "Our Mission"
 msgstr ""
 
-#: lib/elixir4vet_web/controllers/page_html/home.html.heex:12
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:208
 #, elixir-autogen, elixir-format
 msgid "Our mission is to connect veterinarians, shelters, and compassionate individuals to ensure that homeless animals receive the attention they desperately need. Join us in creating a world where every wagging tail and purring friend is cherished."
 msgstr ""
 
-#: lib/elixir4vet_web/controllers/page_html/home.html.heex:7
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:203
 #, elixir-autogen, elixir-format
 msgid "VetVision.UZ is more than just a platform; it's a commitment to the voiceless. We believe that every animal deserves a loving home, proper medical care, and a life free from suffering."
 msgstr ""
 
-#: lib/elixir4vet_web/controllers/page_html/home.html.heex:22
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:219
 #, elixir-autogen, elixir-format
 msgid "Voices of Compassion"
 msgstr ""
@@ -249,36 +270,39 @@ msgstr ""
 msgid "Veterinary Care"
 msgstr ""
 
-#: lib/elixir4vet_web/components/layouts/root.html.heex:243
+#: lib/elixir4vet_web/components/layouts/root.html.heex:251
 #, elixir-autogen, elixir-format
 msgid "© 2026 VetVision.UZ. All rights reserved."
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:24
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:12
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:25
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:28
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:28
 #, elixir-autogen, elixir-format
 msgid "Animal"
 msgstr ""
 
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:44
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:56
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:46
 #, elixir-autogen, elixir-format
 msgid "Are you sure?"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:167
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:105
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:113
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:29
 #, elixir-autogen, elixir-format
 msgid "Bandage"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:66
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:53
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:67
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:35
 #, elixir-autogen, elixir-format
 msgid "Cancel"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:59
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:60
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:44
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:61
 #, elixir-autogen, elixir-format
@@ -290,23 +314,32 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:46
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:58
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:48
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:256
 #, elixir-autogen, elixir-format
 msgid "Delete"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:57
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:46
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:33
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:32
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:58
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:59
 #, elixir-autogen, elixir-format
 msgid "Description"
 msgstr ""
 
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:39
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:51
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:40
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:247
 #, elixir-autogen, elixir-format
 msgid "Edit"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:92
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:93
 #, elixir-autogen, elixir-format
 msgid "Edit Event"
 msgstr ""
@@ -321,52 +354,46 @@ msgstr ""
 msgid "Event"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:37
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:38
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:37
 #, elixir-autogen, elixir-format
 msgid "Event Date"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:38
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:39
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:38
 #, elixir-autogen, elixir-format
 msgid "Event Time"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:32
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:33
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:25
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:25
 #, elixir-autogen, elixir-format
 msgid "Event Type"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:139
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:140
 #, elixir-autogen, elixir-format
 msgid "Event created successfully"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:124
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:125
 #, elixir-autogen, elixir-format
 msgid "Event updated successfully"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:165
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:103
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:111
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:27
 #, elixir-autogen, elixir-format
 msgid "Examination"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:170
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:108
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:116
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:36
 #, elixir-autogen, elixir-format
 msgid "Found"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:168
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:106
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:114
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:30
 #, elixir-autogen, elixir-format
 msgid "IV"
 msgstr ""
@@ -377,23 +404,19 @@ msgstr ""
 msgid "Listing Events"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:39
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:40
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:33
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:39
 #, elixir-autogen, elixir-format
 msgid "Location"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:169
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:107
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:115
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:35
 #, elixir-autogen, elixir-format
 msgid "Lost"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:161
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:99
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:107
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:34
 #, elixir-autogen, elixir-format
 msgid "Microchipping"
 msgstr ""
@@ -404,33 +427,36 @@ msgstr ""
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:34
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:44
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:56
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:61
+#: lib/elixir4vet_web/live/admin/event_live/show.ex:62
 #, elixir-autogen, elixir-format
 msgid "N/A"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:163
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:101
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:109
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:25
 #, elixir-autogen, elixir-format
 msgid "Neutering"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:101
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:102
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:15
 #, elixir-autogen, elixir-format
 msgid "New Event"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:58
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:47
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:34
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:33
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:59
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:60
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:29
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:34
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:34
+#: lib/elixir4vet_web/live/user_live/settings.ex:51
 #, elixir-autogen, elixir-format
 msgid "Notes"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:172
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:110
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:118
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:38
 #, elixir-autogen, elixir-format
 msgid "Other"
 msgstr ""
@@ -440,92 +466,95 @@ msgstr ""
 msgid "Performed By"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:52
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:53
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:47
 #, elixir-autogen, elixir-format
 msgid "Performed By Organization"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:44
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:45
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:40
 #, elixir-autogen, elixir-format
 msgid "Performed By User"
 msgstr ""
 
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:26
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:31
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:31
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:63
 #: lib/elixir4vet_web/live/user_live/registration.ex:51
+#: lib/elixir4vet_web/live/user_live/settings.ex:49
 #, elixir-autogen, elixir-format
 msgid "Phone"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:171
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:109
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:117
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:37
 #, elixir-autogen, elixir-format
 msgid "RIP"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:160
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:98
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:106
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:33
 #, elixir-autogen, elixir-format
 msgid "Registration"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:63
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:64
 #, elixir-autogen, elixir-format
 msgid "Save Event"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:62
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:49
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:63
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:31
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:69
+#: lib/elixir4vet_web/live/user_live/settings.ex:96
 #, elixir-autogen, elixir-format
 msgid "Saving..."
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:46
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:47
 #, elixir-autogen, elixir-format
 msgid "Select a user (optional)"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:26
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:27
 #, elixir-autogen, elixir-format
 msgid "Select an animal"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:54
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:55
 #, elixir-autogen, elixir-format
 msgid "Select an organization (optional)"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:34
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:35
 #, elixir-autogen, elixir-format
 msgid "Select event type"
 msgstr ""
 
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:37
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:49
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:37
 #, elixir-autogen, elixir-format
 msgid "Show"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:77
+#: lib/elixir4vet_web/live/admin/event_live/show.ex:79
 #, elixir-autogen, elixir-format
 msgid "Show Event"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:162
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:100
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:108
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:24
 #, elixir-autogen, elixir-format
 msgid "Sterilization"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:166
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:104
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:112
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:28
 #, elixir-autogen, elixir-format
 msgid "Surgery"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:95
+#: lib/elixir4vet_web/live/admin/event_live/show.ex:97
 #, elixir-autogen, elixir-format
 msgid "The current event was deleted."
 msgstr ""
@@ -540,14 +569,800 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:17
+#: lib/elixir4vet_web/live/admin/event_live/form.ex:18
 #, elixir-autogen, elixir-format
 msgid "Use this form to manage event records in your database."
 msgstr ""
 
-#: lib/elixir4vet_web/live/admin/event_live/form.ex:164
-#: lib/elixir4vet_web/live/admin/event_live/index.ex:102
-#: lib/elixir4vet_web/live/admin/event_live/show.ex:110
+#: lib/elixir4vet_web/live/admin/event_live/helpers.ex:26
 #, elixir-autogen, elixir-format
 msgid "Vaccination"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:21
+#, elixir-autogen, elixir-format
+msgid "Account Settings"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:57
+#, elixir-autogen, elixir-format
+msgid "Add Member"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:56
+#, elixir-autogen, elixir-format
+msgid "Add Owner"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:55
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:56
+#, elixir-autogen, elixir-format
+msgid "Adding..."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:25
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:30
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:30
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:64
+#: lib/elixir4vet_web/live/user_live/settings.ex:50
+#, elixir-autogen, elixir-format
+msgid "Address"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/registration.ex:16
+#, elixir-autogen, elixir-format
+msgid "Already registered?"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/registration.ex:89
+#, elixir-autogen, elixir-format
+msgid "An email was sent to %{email}, please access it to confirm your account."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:124
+#, elixir-autogen, elixir-format
+msgid "Animal created successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:109
+#, elixir-autogen, elixir-format
+msgid "Animal updated successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:253
+#, elixir-autogen, elixir-format
+msgid "Are you sure you want to delete this user?"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:72
+#, elixir-autogen, elixir-format
+msgid "Are you sure you want to remove this member?"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:71
+#, elixir-autogen, elixir-format
+msgid "Are you sure you want to remove this owner?"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:178
+#, elixir-autogen, elixir-format
+msgid "Back to Home"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:25
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:26
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:27
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:89
+#, elixir-autogen, elixir-format
+msgid "Breed"
+msgstr ""
+
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:56
+#, elixir-autogen, elixir-format
+msgid "Caring for every"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:51
+#, elixir-autogen, elixir-format
+msgid "Co-owner"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:28
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:31
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:30
+#, elixir-autogen, elixir-format
+msgid "Color"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:37
+#, elixir-autogen, elixir-format
+msgid "Confirm and log in only this time"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:31
+#, elixir-autogen, elixir-format
+msgid "Confirm and stay logged in"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:93
+#, elixir-autogen, elixir-format
+msgid "Confirm new password"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/registration.ex:44
+#, elixir-autogen, elixir-format
+msgid "Confirm password"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:192
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:233
+#, elixir-autogen, elixir-format
+msgid "Confirmed"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:28
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:34
+#, elixir-autogen, elixir-format
+msgid "Confirming..."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/registration.ex:59
+#, elixir-autogen, elixir-format
+msgid "Create an account"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/registration.ex:58
+#, elixir-autogen, elixir-format
+msgid "Creating account..."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:78
+#, elixir-autogen, elixir-format
+msgid "Current password"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:26
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:27
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:28
+#, elixir-autogen, elixir-format
+msgid "Date of birth"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:18
+#, elixir-autogen, elixir-format
+msgid "Don't have an account?"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:77
+#, elixir-autogen, elixir-format
+msgid "Edit Animal"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:58
+#, elixir-autogen, elixir-format
+msgid "Edit Organization"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:14
+#, elixir-autogen, elixir-format
+msgid "Edit User"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:19
+#, elixir-autogen, elixir-format
+msgid "Edit animal"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:22
+#, elixir-autogen, elixir-format
+msgid "Edit organization"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:27
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:32
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:32
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:190
+#: lib/elixir4vet_web/live/user_live/login.ex:51
+#: lib/elixir4vet_web/live/user_live/login.ex:74
+#: lib/elixir4vet_web/live/user_live/registration.ex:29
+#, elixir-autogen, elixir-format
+msgid "Email"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:31
+#, elixir-autogen, elixir-format
+msgid "Email (cannot be changed)"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:112
+#, elixir-autogen, elixir-format
+msgid "Email change link is invalid or it has expired."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:109
+#, elixir-autogen, elixir-format
+msgid "Email changed successfully."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:51
+#, elixir-autogen, elixir-format
+msgid "Employee"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:52
+#, elixir-autogen, elixir-format
+msgid "Enter your email"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:116
+#, elixir-autogen, elixir-format
+msgid "Failed to add member"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:115
+#, elixir-autogen, elixir-format
+msgid "Failed to add owner"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:59
+#, elixir-autogen, elixir-format
+msgid "Failed to delete user."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:135
+#, elixir-autogen, elixir-format
+msgid "Failed to remove member"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:134
+#, elixir-autogen, elixir-format
+msgid "Failed to remove owner"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:126
+#, elixir-autogen, elixir-format
+msgid "Failed to update user role. Please try again."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:61
+#: lib/elixir4vet_web/live/user_live/settings.ex:46
+#, elixir-autogen, elixir-format
+msgid "First Name"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:53
+#, elixir-autogen, elixir-format
+msgid "Foster"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:32
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:32
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:31
+#, elixir-autogen, elixir-format
+msgid "Gender"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:52
+#, elixir-autogen, elixir-format
+msgid "Guardian"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:189
+#, elixir-autogen, elixir-format
+msgid "ID"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:119
+#, elixir-autogen, elixir-format
+msgid "If your email is in our system, you will receive instructions to log in shortly."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:66
+#, elixir-autogen, elixir-format
+msgid "Internal Notes"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:40
+#, elixir-autogen, elixir-format
+msgid "Invalid parameters received"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:101
+#, elixir-autogen, elixir-format
+msgid "Invalid role."
+msgstr ""
+
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:66
+#, elixir-autogen, elixir-format
+msgid "Join us"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:62
+#, elixir-autogen, elixir-format
+msgid "Keep me logged in on this device"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:62
+#: lib/elixir4vet_web/live/user_live/settings.ex:47
+#, elixir-autogen, elixir-format
+msgid "Last Name"
+msgstr ""
+
+#: lib/elixir4vet_web/live/page_live/privacy.ex:16
+#: lib/elixir4vet_web/live/page_live/terms.ex:16
+#, elixir-autogen, elixir-format
+msgid "Last updated: March 18, 2026"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:11
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:62
+#, elixir-autogen, elixir-format
+msgid "Listing Animals"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:11
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:64
+#, elixir-autogen, elixir-format
+msgid "Listing Organizations"
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:236
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:53
+#: lib/elixir4vet_web/live/user_live/login.ex:13
+#: lib/elixir4vet_web/live/user_live/login.ex:87
+#: lib/elixir4vet_web/live/user_live/registration.ex:18
+#, elixir-autogen, elixir-format
+msgid "Log in"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:40
+#, elixir-autogen, elixir-format
+msgid "Log in with email"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:68
+#, elixir-autogen, elixir-format
+msgid "Log me in only this time"
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:223
+#, elixir-autogen, elixir-format
+msgid "Log out"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:52
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:59
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:65
+#, elixir-autogen, elixir-format
+msgid "Logging in..."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:91
+#, elixir-autogen, elixir-format
+msgid "Magic link is invalid or it has expired."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:22
+#, elixir-autogen, elixir-format
+msgid "Manage your account email address and password settings"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:112
+#, elixir-autogen, elixir-format
+msgid "Member added successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:131
+#, elixir-autogen, elixir-format
+msgid "Member removed successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:40
+#, elixir-autogen, elixir-format
+msgid "Members"
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:199
+#, elixir-autogen, elixir-format
+msgid "Menu"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:90
+#, elixir-autogen, elixir-format
+msgid "Microchip"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:27
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:28
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:29
+#, elixir-autogen, elixir-format
+msgid "Microchip number"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:18
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:24
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:25
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:19
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:26
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:28
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:87
+#, elixir-autogen, elixir-format
+msgid "Name"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:86
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:14
+#, elixir-autogen, elixir-format
+msgid "New Animal"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:70
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:14
+#, elixir-autogen, elixir-format
+msgid "New Organization"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:86
+#, elixir-autogen, elixir-format
+msgid "New password"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:61
+#, elixir-autogen, elixir-format
+msgid "OR"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:12
+#, elixir-autogen, elixir-format
+msgid "Organization"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:118
+#, elixir-autogen, elixir-format
+msgid "Organization created successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:103
+#, elixir-autogen, elixir-format
+msgid "Organization updated successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:79
+#, elixir-autogen, elixir-format
+msgid "Owned Animals"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:40
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:50
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:54
+#, elixir-autogen, elixir-format
+msgid "Owner"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:111
+#, elixir-autogen, elixir-format
+msgid "Owner added successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:130
+#, elixir-autogen, elixir-format
+msgid "Owner removed successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:39
+#, elixir-autogen, elixir-format
+msgid "Owners"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:82
+#: lib/elixir4vet_web/live/user_live/registration.ex:37
+#, elixir-autogen, elixir-format
+msgid "Password"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:235
+#, elixir-autogen, elixir-format
+msgid "Pending"
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:214
+#, elixir-autogen, elixir-format
+msgid "Permissions"
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:257
+#: lib/elixir4vet_web/live/page_live/privacy.ex:7
+#: lib/elixir4vet_web/live/page_live/privacy.ex:15
+#: lib/elixir4vet_web/live/page_live/terms.ex:235
+#, elixir-autogen, elixir-format
+msgid "Privacy Policy"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:45
+#, elixir-autogen, elixir-format
+msgid "Profile Info"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:180
+#, elixir-autogen, elixir-format
+msgid "Profile updated successfully."
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:233
+#, elixir-autogen, elixir-format
+msgid "Register"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/registration.ex:14
+#, elixir-autogen, elixir-format
+msgid "Register for an account"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:193
+#, elixir-autogen, elixir-format
+msgid "Registered"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:23
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:27
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:29
+#, elixir-autogen, elixir-format
+msgid "Registration number"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:74
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:75
+#, elixir-autogen, elixir-format
+msgid "Remove"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:53
+#, elixir-autogen, elixir-format
+msgid "Representative"
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:99
+#, elixir-autogen, elixir-format
+msgid "Resources"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:50
+#, elixir-autogen, elixir-format
+msgid "Save Animal"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:32
+#, elixir-autogen, elixir-format
+msgid "Save Organization"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:97
+#, elixir-autogen, elixir-format
+msgid "Save Password"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:70
+#, elixir-autogen, elixir-format
+msgid "Save Profile"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:44
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:45
+#, elixir-autogen, elixir-format
+msgid "Select User"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:42
+#, elixir-autogen, elixir-format
+msgid "Select an owner"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:57
+#, elixir-autogen, elixir-format
+msgid "Send magic link"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:56
+#, elixir-autogen, elixir-format
+msgid "Sending..."
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:220
+#, elixir-autogen, elixir-format
+msgid "Settings"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:94
+#, elixir-autogen, elixir-format
+msgid "Show Animal"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:95
+#, elixir-autogen, elixir-format
+msgid "Show Organization"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:22
+#, elixir-autogen, elixir-format
+msgid "Sign up"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:22
+#: lib/elixir4vet_web/live/admin/animal_live/index.ex:25
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:26
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:88
+#, elixir-autogen, elixir-format
+msgid "Species"
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:254
+#: lib/elixir4vet_web/live/page_live/privacy.ex:254
+#: lib/elixir4vet_web/live/page_live/terms.ex:7
+#: lib/elixir4vet_web/live/page_live/terms.ex:15
+#, elixir-autogen, elixir-format
+msgid "Terms of Service"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:152
+#, elixir-autogen, elixir-format
+msgid "The current animal was deleted."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:153
+#, elixir-autogen, elixir-format
+msgid "The current organization was deleted."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:13
+#, elixir-autogen, elixir-format
+msgid "This is an animal record from your database."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:13
+#, elixir-autogen, elixir-format
+msgid "This is an organization record from your database."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:83
+#, elixir-autogen, elixir-format
+msgid "This user doesn't own any animals yet."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:74
+#, elixir-autogen, elixir-format
+msgid "Tip: If you prefer passwords, you can enable them in the user settings."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:33
+#, elixir-autogen, elixir-format
+msgid "To see sent emails, visit"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:271
+#, elixir-autogen, elixir-format
+msgid "Total Users"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/show.ex:65
+#, elixir-autogen, elixir-format
+msgid "Type"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:53
+#, elixir-autogen, elixir-format
+msgid "Update Profile"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/settings.ex:52
+#, elixir-autogen, elixir-format
+msgid "Updating..."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/animal_live/form.ex:14
+#, elixir-autogen, elixir-format
+msgid "Use this form to manage animal records in your database."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:14
+#, elixir-autogen, elixir-format
+msgid "Use this form to manage organization records in your database."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:25
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:172
+#, elixir-autogen, elixir-format
+msgid "User Management"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:107
+#, elixir-autogen, elixir-format
+msgid "User already has this role."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:55
+#, elixir-autogen, elixir-format
+msgid "User deleted successfully."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:127
+#, elixir-autogen, elixir-format
+msgid "User profile updated successfully"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:120
+#, elixir-autogen, elixir-format
+msgid "User role updated successfully."
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:211
+#, elixir-autogen, elixir-format
+msgid "Users Management"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/form.ex:93
+#, elixir-autogen, elixir-format
+msgid "View details"
+msgstr ""
+
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:60
+#, elixir-autogen, elixir-format
+msgid "We unite veterinarians, shelters and compassionate people for the happiness of every animal"
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/organization_live/form.ex:28
+#: lib/elixir4vet_web/live/admin/organization_live/index.ex:33
+#: lib/elixir4vet_web/live/admin/organization_live/show.ex:33
+#, elixir-autogen, elixir-format
+msgid "Website"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/confirmation.ex:12
+#, elixir-autogen, elixir-format
+msgid "Welcome"
+msgstr ""
+
+#: lib/elixir4vet_web/components/layouts/root.html.heex:183
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:259
+#, elixir-autogen, elixir-format
+msgid "You"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:31
+#, elixir-autogen, elixir-format
+msgid "You are running the local mail adapter."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:91
+#, elixir-autogen, elixir-format
+msgid "You cannot change your own role."
+msgstr ""
+
+#: lib/elixir4vet_web/live/admin/user_live/index.ex:49
+#, elixir-autogen, elixir-format
+msgid "You cannot delete your own account."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:16
+#, elixir-autogen, elixir-format
+msgid "You need to reauthenticate to perform sensitive actions on your account."
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:22
+#, elixir-autogen, elixir-format
+msgid "for an account now."
+msgstr ""
+
+#: lib/elixir4vet_web/controllers/page_html/home.html.heex:57
+#, elixir-autogen, elixir-format
+msgid "little tail"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/login.ex:34
+#, elixir-autogen, elixir-format
+msgid "the mailbox page"
+msgstr ""
+
+#: lib/elixir4vet_web/live/user_live/registration.ex:20
+#, elixir-autogen, elixir-format
+msgid "to your account now."
 msgstr ""

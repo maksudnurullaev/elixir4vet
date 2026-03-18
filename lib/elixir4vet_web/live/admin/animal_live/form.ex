@@ -11,25 +11,25 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
         {@page_title}
-        <:subtitle>Use this form to manage animal records in your database.</:subtitle>
+        <:subtitle>{gettext("Use this form to manage animal records in your database.")}</:subtitle>
       </.header>
 
       <.form for={@form} id="animal-form" phx-change="validate" phx-submit="save">
-        <.input field={@form[:name]} type="text" label="Name" />
+        <.input field={@form[:name]} type="text" label={gettext("Name")} />
         <.input
           field={@form[:species]}
           type="select"
-          label="Species"
+          label={gettext("Species")}
           options={Animal.species_options()}
         />
-        <.input field={@form[:breed]} type="text" label="Breed" />
-        <.input field={@form[:date_of_birth]} type="date" label="Date of birth" />
-        <.input field={@form[:microchip_number]} type="text" label="Microchip number" />
-        <.input field={@form[:color]} type="text" label="Color" />
+        <.input field={@form[:breed]} type="text" label={gettext("Breed")} />
+        <.input field={@form[:date_of_birth]} type="date" label={gettext("Date of birth")} />
+        <.input field={@form[:microchip_number]} type="text" label={gettext("Microchip number")} />
+        <.input field={@form[:color]} type="text" label={gettext("Color")} />
         <.input
           field={@form[:gender]}
           type="select"
-          label="Gender"
+          label={gettext("Gender")}
           options={Animal.genders()}
         />
 
@@ -37,17 +37,21 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
           <.input
             field={@form[:owner_id]}
             type="select"
-            label="Owner"
+            label={gettext("Owner")}
             options={Enum.map(@users, &{&1.email, &1.id})}
-            prompt="Select an owner"
+            prompt={gettext("Select an owner")}
           />
         <% end %>
 
-        <.input field={@form[:description]} type="text" label="Description" />
-        <.input field={@form[:notes]} type="text" label="Notes" />
+        <.input field={@form[:description]} type="text" label={gettext("Description")} />
+        <.input field={@form[:notes]} type="text" label={gettext("Notes")} />
         <footer>
-          <.button phx-disable-with="Saving..." variant="primary">Save Animal</.button>
-          <.button navigate={return_path(@current_scope, @return_to, @animal)}>Cancel</.button>
+          <.button phx-disable-with={gettext("Saving...")} variant="primary">
+            {gettext("Save Animal")}
+          </.button>
+          <.button navigate={return_path(@current_scope, @return_to, @animal)}>
+            {gettext("Cancel")}
+          </.button>
         </footer>
       </.form>
     </Layouts.app>
@@ -70,7 +74,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
     animal = Animals.get_animal!(socket.assigns.current_scope, id)
 
     socket
-    |> assign(:page_title, "Edit Animal")
+    |> assign(:page_title, gettext("Edit Animal"))
     |> assign(:animal, animal)
     |> assign(:form, to_form(Animals.change_animal(socket.assigns.current_scope, animal)))
   end
@@ -79,7 +83,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
     animal = %Animal{}
 
     socket
-    |> assign(:page_title, "New Animal")
+    |> assign(:page_title, gettext("New Animal"))
     |> assign(:animal, animal)
     |> assign(:form, to_form(Animals.change_animal(socket.assigns.current_scope, animal)))
   end
@@ -102,7 +106,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
       {:ok, animal} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Animal updated successfully")
+         |> put_flash(:info, gettext("Animal updated successfully"))
          |> push_navigate(
            to: return_path(socket.assigns.current_scope, socket.assigns.return_to, animal)
          )}
@@ -117,7 +121,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
       {:ok, animal} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Animal created successfully")
+         |> put_flash(:info, gettext("Animal created successfully"))
          |> push_navigate(
            to: return_path(socket.assigns.current_scope, socket.assigns.return_to, animal)
          )}

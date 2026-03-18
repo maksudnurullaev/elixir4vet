@@ -8,10 +8,10 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Index do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
-        Listing Organizations
+        {gettext("Listing Organizations")}
         <:actions>
           <.button variant="primary" navigate={~p"/admin/organizations/new"}>
-            <.icon name="hero-plus" /> New Organization
+            <.icon name="hero-plus" /> {gettext("New Organization")}
           </.button>
         </:actions>
       </.header>
@@ -23,27 +23,29 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Index do
           fn {_id, organization} -> JS.navigate(~p"/admin/organizations/#{organization}") end
         }
       >
-        <:col :let={{_id, organization}} label="Name">{organization.name}</:col>
-        <:col :let={{_id, organization}} label="Registration number">
+        <:col :let={{_id, organization}} label={gettext("Name")}>{organization.name}</:col>
+        <:col :let={{_id, organization}} label={gettext("Registration number")}>
           {organization.registration_number}
         </:col>
-        <:col :let={{_id, organization}} label="Address">{organization.address}</:col>
-        <:col :let={{_id, organization}} label="Phone">{organization.phone}</:col>
-        <:col :let={{_id, organization}} label="Email">{organization.email}</:col>
-        <:col :let={{_id, organization}} label="Website">{organization.website}</:col>
-        <:col :let={{_id, organization}} label="Notes">{organization.notes}</:col>
+        <:col :let={{_id, organization}} label={gettext("Address")}>{organization.address}</:col>
+        <:col :let={{_id, organization}} label={gettext("Phone")}>{organization.phone}</:col>
+        <:col :let={{_id, organization}} label={gettext("Email")}>{organization.email}</:col>
+        <:col :let={{_id, organization}} label={gettext("Website")}>{organization.website}</:col>
+        <:col :let={{_id, organization}} label={gettext("Notes")}>{organization.notes}</:col>
         <:action :let={{_id, organization}}>
           <div class="sr-only">
-            <.link navigate={~p"/admin/organizations/#{organization}"}>Show</.link>
+            <.link navigate={~p"/admin/organizations/#{organization}"}>{gettext("Show")}</.link>
           </div>
-          <.link navigate={~p"/admin/organizations/#{organization}/edit"}>Edit</.link>
+          <.link navigate={~p"/admin/organizations/#{organization}/edit"}>
+            {gettext("Edit")}
+          </.link>
         </:action>
         <:action :let={{id, organization}}>
           <.link
             phx-click={JS.push("delete", value: %{id: organization.id}) |> hide("##{id}")}
-            data-confirm="Are you sure?"
+            data-confirm={gettext("Are you sure?")}
           >
-            Delete
+            {gettext("Delete")}
           </.link>
         </:action>
       </.table>
@@ -59,7 +61,7 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Index do
 
     {:ok,
      socket
-     |> assign(:page_title, "Listing Organizations")
+     |> assign(:page_title, gettext("Listing Organizations"))
      |> stream(:organizations, list_organizations(socket.assigns.current_scope))}
   end
 

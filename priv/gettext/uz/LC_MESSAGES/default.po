@@ -61,7 +61,7 @@ msgstr "Ruxsat darajalari:"
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:65
 #, elixir-autogen, elixir-format
 msgid "Permission Matrix"
-msgstr "Ruxsatnomalar matritsasi"
+msgstr "Ruxsatlar matritsasi"
 
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:41
 #, elixir-autogen, elixir-format
@@ -117,7 +117,7 @@ msgstr "Hayvonlar"
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:183
 #, elixir-autogen, elixir-format
 msgid "Events"
-msgstr "Hodisalar"
+msgstr "Tadbirlar"
 
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:191
 #, elixir-autogen, elixir-format
@@ -259,7 +259,7 @@ msgstr "© 2026 VetVision.UZ. Barcha huquqlar himoyalangan."
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:28
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Animal"
-msgstr "Hayvonlar"
+msgstr "Hayvon"
 
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:56
 #, elixir-autogen, elixir-format
@@ -504,7 +504,7 @@ msgstr "Hodisa turini tanlang"
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:49
 #, elixir-autogen, elixir-format
 msgid "Show"
-msgstr "Ko'rsatish"
+msgstr "Ko'rish"
 
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:77
 #, elixir-autogen, elixir-format
@@ -553,7 +553,6 @@ msgid "Vaccination"
 msgstr "Emlash"
 
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:11
-
 #: lib/elixir4vet_web/live/page_live/terms.ex:6
 #: lib/elixir4vet_web/components/layouts/root.html.heex
 #, elixir-autogen, elixir-format
@@ -571,3 +570,438 @@ msgstr "Maxfiylik siyosati"
 #, elixir-autogen, elixir-format
 msgid "Last updated: March 18, 2026"
 msgstr "Oxirgi yangilanish: 2026-yil 18-mart"
+
+# ---- user_live/login.ex ----
+msgid "Log in"
+msgstr "Kirish"
+
+msgid "You need to reauthenticate to perform sensitive actions on your account."
+msgstr "Muhim amallarni bajarish uchun qayta autentifikatsiya talab etiladi."
+
+msgid "Don't have an account?"
+msgstr "Hisobingiz yo'qmi?"
+
+msgid "Sign up"
+msgstr "Ro'yxatdan o'tish"
+
+msgid "for an account now."
+msgstr "hoziroq."
+
+msgid "You are running the local mail adapter."
+msgstr "Siz lokal pochta adaptoridan foydalanayapsiz."
+
+msgid "To see sent emails, visit"
+msgstr "Yuborilgan xatlarni ko'rish uchun tashrif buyuring"
+
+msgid "the mailbox page"
+msgstr "pochta qutisi sahifasi"
+
+msgid "Log in with email"
+msgstr "Email orqali kirish"
+
+msgid "Email"
+msgstr "Elektron pochta"
+
+msgid "Enter your email"
+msgstr "Emailingizni kiriting"
+
+msgid "Sending..."
+msgstr "Yuborilmoqda..."
+
+msgid "Send magic link"
+msgstr "Magic havolani yuborish"
+
+msgid "OR"
+msgstr "YOKI"
+
+msgid "Password"
+msgstr "Parol"
+
+msgid "If your email is in our system, you will receive instructions to log in shortly."
+msgstr "Emailingiz tizimimizda mavjud bo'lsa, kirish bo'yicha ko'rsatmalar yuboriladi."
+
+# ---- user_live/registration.ex ----
+msgid "Register for an account"
+msgstr "Hisob yaratish"
+
+msgid "Already registered?"
+msgstr "Allaqachon ro'yxatdan o'tganmisiz?"
+
+msgid "to your account now."
+msgstr "hisobingizga."
+
+msgid "Confirm password"
+msgstr "Parolni tasdiqlang"
+
+msgid "Creating account..."
+msgstr "Hisob yaratilmoqda..."
+
+msgid "Create an account"
+msgstr "Hisob yaratish"
+
+msgid "An email was sent to %{email}, please access it to confirm your account."
+msgstr "%{email} manziliga xat yuborildi. Hisobni tasdiqlash uchun havolaga o'ting."
+
+# ---- user_live/settings.ex ----
+msgid "Account Settings"
+msgstr "Hisob sozlamalari"
+
+msgid "Manage your account email address and password settings"
+msgstr "Email va parol sozlamalarini boshqarish"
+
+msgid "Email (cannot be changed)"
+msgstr "Elektron pochta (o'zgartirib bo'lmaydi)"
+
+msgid "First Name"
+msgstr "Ism"
+
+msgid "Last Name"
+msgstr "Familiya"
+
+msgid "Address"
+msgstr "Manzil"
+
+msgid "Updating..."
+msgstr "Yangilanmoqda..."
+
+msgid "Update Profile"
+msgstr "Profilni yangilash"
+
+msgid "Current password"
+msgstr "Joriy parol"
+
+msgid "New password"
+msgstr "Yangi parol"
+
+msgid "Confirm new password"
+msgstr "Yangi parolni tasdiqlang"
+
+msgid "Save Password"
+msgstr "Parolni saqlash"
+
+msgid "Email changed successfully."
+msgstr "Email muvaffaqiyatli o'zgartirildi."
+
+msgid "Email change link is invalid or it has expired."
+msgstr "Email o'zgartirish havolasi yaroqsiz yoki muddati o'tgan."
+
+msgid "Profile updated successfully."
+msgstr "Profil muvaffaqiyatli yangilandi."
+
+# ---- user_live/confirmation.ex ----
+msgid "Welcome"
+msgstr "Xush kelibsiz"
+
+msgid "Confirming..."
+msgstr "Tasdiqlanmoqda..."
+
+msgid "Confirm and stay logged in"
+msgstr "Tasdiqlash va tizimda qolish"
+
+msgid "Confirm and log in only this time"
+msgstr "Tasdiqlash va faqat shu safar kirish"
+
+msgid "Logging in..."
+msgstr "Kirilmoqda..."
+
+msgid "Keep me logged in on this device"
+msgstr "Ushbu qurilmada eslab qolish"
+
+msgid "Log me in only this time"
+msgstr "Faqat shu safar kirish"
+
+msgid "Tip: If you prefer passwords, you can enable them in the user settings."
+msgstr "Maslahat: Parol afzal ko'rsangiz, foydalanuvchi sozlamalarida yoqishingiz mumkin."
+
+msgid "Magic link is invalid or it has expired."
+msgstr "Magic havola yaroqsiz yoki muddati o'tgan."
+
+# ---- admin/animal_live ----
+msgid "Listing Animals"
+msgstr "Hayvonlar ro'yxati"
+
+msgid "New Animal"
+msgstr "Yangi hayvon"
+
+msgid "Name"
+msgstr "Ism"
+
+msgid "Species"
+msgstr "Tur"
+
+msgid "Breed"
+msgstr "Zot"
+
+msgid "Date of birth"
+msgstr "Tug'ilgan sana"
+
+msgid "Microchip number"
+msgstr "Mikrochip raqami"
+
+msgid "Color"
+msgstr "Rang"
+
+msgid "Gender"
+msgstr "Jins"
+
+msgid "Use this form to manage animal records in your database."
+msgstr "Ma'lumotlar bazasidagi hayvon yozuvlarini boshqarish uchun ushbu formadan foydalaning."
+
+msgid "Owner"
+msgstr "Egasi"
+
+msgid "Select an owner"
+msgstr "Egasini tanlang"
+
+msgid "Save Animal"
+msgstr "Hayvonni saqlash"
+
+msgid "Edit Animal"
+msgstr "Hayvonni tahrirlash"
+
+msgid "Animal updated successfully"
+msgstr "Hayvon muvaffaqiyatli yangilandi"
+
+msgid "Animal created successfully"
+msgstr "Hayvon muvaffaqiyatli yaratildi"
+
+msgid "This is an animal record from your database."
+msgstr "Bu ma'lumotlar bazasidagi hayvon yozuvi."
+
+msgid "Edit animal"
+msgstr "Hayvonni tahrirlash"
+
+msgid "Owners"
+msgstr "Egalar"
+
+msgid "Select User"
+msgstr "Foydalanuvchini tanlang"
+
+msgid "Co-owner"
+msgstr "Hamegasi"
+
+msgid "Guardian"
+msgstr "Vasiy"
+
+msgid "Foster"
+msgstr "Vaqtincha saqlash"
+
+msgid "Adding..."
+msgstr "Qo'shilmoqda..."
+
+msgid "Add Owner"
+msgstr "Egasini qo'shish"
+
+msgid "Type"
+msgstr "Tur"
+
+msgid "Are you sure you want to remove this owner?"
+msgstr "Ushbu egani o'chirishga ishonchingiz komilmi?"
+
+msgid "Remove"
+msgstr "O'chirish"
+
+msgid "Show Animal"
+msgstr "Hayvonni ko'rish"
+
+msgid "Owner added successfully"
+msgstr "Egasi muvaffaqiyatli qo'shildi"
+
+msgid "Failed to add owner"
+msgstr "Egasini qo'shib bo'lmadi"
+
+msgid "Owner removed successfully"
+msgstr "Egasi muvaffaqiyatli o'chirildi"
+
+msgid "Failed to remove owner"
+msgstr "Egasini o'chirib bo'lmadi"
+
+msgid "The current animal was deleted."
+msgstr "Joriy hayvon o'chirildi."
+
+# ---- admin/organization_live ----
+msgid "Listing Organizations"
+msgstr "Tashkilotlar ro'yxati"
+
+msgid "New Organization"
+msgstr "Yangi tashkilot"
+
+msgid "Registration number"
+msgstr "Ro'yxatga olish raqami"
+
+msgid "Website"
+msgstr "Veb-sayt"
+
+msgid "Use this form to manage organization records in your database."
+msgstr "Ma'lumotlar bazasidagi tashkilot yozuvlarini boshqarish uchun ushbu formadan foydalaning."
+
+msgid "Save Organization"
+msgstr "Tashkilotni saqlash"
+
+msgid "Edit Organization"
+msgstr "Tashkilotni tahrirlash"
+
+msgid "Organization updated successfully"
+msgstr "Tashkilot muvaffaqiyatli yangilandi"
+
+msgid "Organization created successfully"
+msgstr "Tashkilot muvaffaqiyatli yaratildi"
+
+msgid "Organization"
+msgstr "Tashkilot"
+
+msgid "This is an organization record from your database."
+msgstr "Bu ma'lumotlar bazasidagi tashkilot yozuvi."
+
+msgid "Edit organization"
+msgstr "Tashkilotni tahrirlash"
+
+msgid "Members"
+msgstr "A'zolar"
+
+msgid "Employee"
+msgstr "Xodim"
+
+msgid "Representative"
+msgstr "Vakil"
+
+msgid "Are you sure you want to remove this member?"
+msgstr "Ushbu a'zoni o'chirishga ishonchingiz komilmi?"
+
+msgid "Add Member"
+msgstr "A'zo qo'shish"
+
+msgid "Show Organization"
+msgstr "Tashkilotni ko'rish"
+
+msgid "Member added successfully"
+msgstr "A'zo muvaffaqiyatli qo'shildi"
+
+msgid "Failed to add member"
+msgstr "A'zoni qo'shib bo'lmadi"
+
+msgid "Member removed successfully"
+msgstr "A'zo muvaffaqiyatli o'chirildi"
+
+msgid "Failed to remove member"
+msgstr "A'zoni o'chirib bo'lmadi"
+
+msgid "The current organization was deleted."
+msgstr "Joriy tashkilot o'chirildi."
+
+# ---- admin/user_live ----
+msgid "User Management"
+msgstr "Foydalanuvchilarni boshqarish"
+
+msgid "Back to Home"
+msgstr "Bosh sahifaga"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Confirmed"
+msgstr "Tasdiqlangan"
+
+msgid "Registered"
+msgstr "Ro'yxatdan o'tgan"
+
+msgid "Pending"
+msgstr "Kutilmoqda"
+
+msgid "You"
+msgstr "Siz"
+
+msgid "Total Users"
+msgstr "Jami foydalanuvchilar"
+
+msgid "Invalid parameters received"
+msgstr "Noto'g'ri parametrlar olindi"
+
+msgid "You cannot delete your own account."
+msgstr "O'z hisobingizni o'chirib bo'lmaydi."
+
+msgid "User deleted successfully."
+msgstr "Foydalanuvchi muvaffaqiyatli o'chirildi."
+
+msgid "Failed to delete user."
+msgstr "Foydalanuvchini o'chirib bo'lmadi."
+
+msgid "You cannot change your own role."
+msgstr "O'z rolingizni o'zgartirib bo'lmaydi."
+
+msgid "Invalid role."
+msgstr "Noto'g'ri rol."
+
+msgid "User already has this role."
+msgstr "Foydalanuvchi allaqachon bu rolga ega."
+
+msgid "User role updated successfully."
+msgstr "Foydalanuvchi roli muvaffaqiyatli yangilandi."
+
+msgid "Failed to update user role. Please try again."
+msgstr "Foydalanuvchi rolini yangilab bo'lmadi. Qayta urinib ko'ring."
+
+msgid "Are you sure you want to delete this user?"
+msgstr "Ushbu foydalanuvchini o'chirishga ishonchingiz komilmi?"
+
+msgid "Edit User"
+msgstr "Foydalanuvchini tahrirlash"
+
+msgid "Profile Info"
+msgstr "Profil ma'lumotlari"
+
+msgid "Internal Notes"
+msgstr "Ichki izohlar"
+
+msgid "Save Profile"
+msgstr "Profilni saqlash"
+
+msgid "Owned Animals"
+msgstr "Foydalanuvchi hayvonlari"
+
+msgid "This user doesn't own any animals yet."
+msgstr "Bu foydalanuvchining hali hayvonlari yo'q."
+
+msgid "Microchip"
+msgstr "Mikrochip"
+
+msgid "View details"
+msgstr "Batafsil"
+
+msgid "User profile updated successfully"
+msgstr "Foydalanuvchi profili muvaffaqiyatli yangilandi"
+
+# ---- root.html.heex navigation ----
+msgid "Resources"
+msgstr "Resurslar"
+
+msgid "Menu"
+msgstr "Menyu"
+
+msgid "Users Management"
+msgstr "Foydalanuvchilarni boshqarish"
+
+msgid "Permissions"
+msgstr "Ruxsatlar"
+
+msgid "Settings"
+msgstr "Sozlamalar"
+
+msgid "Log out"
+msgstr "Chiqish"
+
+msgid "Register"
+msgstr "Ro'yxatdan o'tish"
+
+# ---- home.html.heex hero ----
+msgid "Caring for every"
+msgstr "Har bir"
+
+msgid "little tail"
+msgstr "dumchaga g'amxo'rlik"
+
+msgid "We unite veterinarians, shelters and compassionate people for the happiness of every animal"
+msgstr "Har bir hayvonning baxtliligi uchun veterinarlar, boshpanalar va mehr-shafqatli odamlarni birlashtiramiz"
+
+msgid "Join us"
+msgstr "Qo'shiling"

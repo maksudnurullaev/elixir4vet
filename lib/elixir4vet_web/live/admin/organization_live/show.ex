@@ -9,8 +9,8 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
-        Organization {@organization.id}
-        <:subtitle>This is a organization record from your database.</:subtitle>
+        {gettext("Organization")} {@organization.id}
+        <:subtitle>{gettext("This is an organization record from your database.")}</:subtitle>
         <:actions>
           <.button navigate={~p"/admin/organizations"}>
             <.icon name="hero-arrow-left" />
@@ -19,42 +19,42 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
             variant="primary"
             navigate={~p"/admin/organizations/#{@organization}/edit?return_to=show"}
           >
-            <.icon name="hero-pencil-square" /> Edit organization
+            <.icon name="hero-pencil-square" /> {gettext("Edit organization")}
           </.button>
         </:actions>
       </.header>
 
       <.list>
-        <:item title="Name">{@organization.name}</:item>
-        <:item title="Registration number">{@organization.registration_number}</:item>
-        <:item title="Address">{@organization.address}</:item>
-        <:item title="Phone">{@organization.phone}</:item>
-        <:item title="Email">{@organization.email}</:item>
-        <:item title="Website">{@organization.website}</:item>
-        <:item title="Notes">{@organization.notes}</:item>
+        <:item title={gettext("Name")}>{@organization.name}</:item>
+        <:item title={gettext("Registration number")}>{@organization.registration_number}</:item>
+        <:item title={gettext("Address")}>{@organization.address}</:item>
+        <:item title={gettext("Phone")}>{@organization.phone}</:item>
+        <:item title={gettext("Email")}>{@organization.email}</:item>
+        <:item title={gettext("Website")}>{@organization.website}</:item>
+        <:item title={gettext("Notes")}>{@organization.notes}</:item>
       </.list>
 
       <div class="divider"></div>
 
       <.header>
-        Members
+        {gettext("Members")}
         <:actions>
           <div class="flex gap-2 items-center">
             <form id="add-member-form" phx-submit="add_member" class="flex gap-2">
               <select name="user_id" class="select select-bordered select-sm">
-                <option value="" disabled selected>Select User</option>
+                <option value="" disabled selected>{gettext("Select User")}</option>
                 <%= for user <- @users do %>
                   <option value={user.id}>{user.email}</option>
                 <% end %>
               </select>
               <select name="role" class="select select-bordered select-sm">
-                <option value="employee">Employee</option>
-                <option value="manager">Manager</option>
-                <option value="representative">Representative</option>
-                <option value="owner">Owner</option>
+                <option value="employee">{gettext("Employee")}</option>
+                <option value="manager">{gettext("Manager")}</option>
+                <option value="representative">{gettext("Representative")}</option>
+                <option value="owner">{gettext("Owner")}</option>
               </select>
-              <.button type="submit" variant="primary" phx-disable-with="Adding...">
-                Add Member
+              <.button type="submit" variant="primary" phx-disable-with={gettext("Adding...")}>
+                {gettext("Add Member")}
               </.button>
             </form>
           </div>
@@ -62,17 +62,17 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
       </.header>
 
       <.table id="members" rows={@members}>
-        <:col :let={{user, _role}} label="User">{user.email}</:col>
-        <:col :let={{_user, role}} label="Role">{role}</:col>
+        <:col :let={{user, _role}} label={gettext("User")}>{user.email}</:col>
+        <:col :let={{_user, role}} label={gettext("Role")}>{role}</:col>
         <:action :let={{user, role}}>
           <.link
             phx-click="remove_member"
             phx-value-user_id={user.id}
             phx-value-role={role}
-            data-confirm="Are you sure you want to remove this member?"
+            data-confirm={gettext("Are you sure you want to remove this member?")}
             class="text-error"
           >
-            Remove
+            {gettext("Remove")}
           </.link>
         </:action>
       </.table>
@@ -92,7 +92,7 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
 
     {:ok,
      socket
-     |> assign(:page_title, "Show Organization")
+     |> assign(:page_title, gettext("Show Organization"))
      |> assign(:organization, organization)
      |> assign(:members, members)
      |> assign(:users, users)}
@@ -109,11 +109,11 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
       {:ok, _uo} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Member added successfully")
+         |> put_flash(:info, gettext("Member added successfully"))
          |> refresh_members()}
 
       {:error, _changeset} ->
-        {:noreply, put_flash(socket, :error, "Failed to add member")}
+        {:noreply, put_flash(socket, :error, gettext("Failed to add member"))}
     end
   end
 
@@ -128,11 +128,11 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
       {:ok, _uo} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Member removed successfully")
+         |> put_flash(:info, gettext("Member removed successfully"))
          |> refresh_members()}
 
       {:error, _reason} ->
-        {:noreply, put_flash(socket, :error, "Failed to remove member")}
+        {:noreply, put_flash(socket, :error, gettext("Failed to remove member"))}
     end
   end
 
@@ -150,7 +150,7 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
       ) do
     {:noreply,
      socket
-     |> put_flash(:error, "The current organization was deleted.")
+     |> put_flash(:error, gettext("The current organization was deleted."))
      |> push_navigate(to: ~p"/admin/organizations")}
   end
 

@@ -10,20 +10,30 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Form do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
         {@page_title}
-        <:subtitle>Use this form to manage organization records in your database.</:subtitle>
+        <:subtitle>
+          {gettext("Use this form to manage organization records in your database.")}
+        </:subtitle>
       </.header>
 
       <.form for={@form} id="organization-form" phx-change="validate" phx-submit="save">
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:registration_number]} type="text" label="Registration number" />
-        <.input field={@form[:address]} type="text" label="Address" />
-        <.input field={@form[:phone]} type="text" label="Phone" />
-        <.input field={@form[:email]} type="text" label="Email" />
-        <.input field={@form[:website]} type="text" label="Website" />
-        <.input field={@form[:notes]} type="text" label="Notes" />
+        <.input field={@form[:name]} type="text" label={gettext("Name")} />
+        <.input
+          field={@form[:registration_number]}
+          type="text"
+          label={gettext("Registration number")}
+        />
+        <.input field={@form[:address]} type="text" label={gettext("Address")} />
+        <.input field={@form[:phone]} type="text" label={gettext("Phone")} />
+        <.input field={@form[:email]} type="text" label={gettext("Email")} />
+        <.input field={@form[:website]} type="text" label={gettext("Website")} />
+        <.input field={@form[:notes]} type="text" label={gettext("Notes")} />
         <footer>
-          <.button phx-disable-with="Saving..." variant="primary">Save Organization</.button>
-          <.button navigate={return_path(@current_scope, @return_to, @organization)}>Cancel</.button>
+          <.button phx-disable-with={gettext("Saving...")} variant="primary">
+            {gettext("Save Organization")}
+          </.button>
+          <.button navigate={return_path(@current_scope, @return_to, @organization)}>
+            {gettext("Cancel")}
+          </.button>
         </footer>
       </.form>
     </Layouts.app>
@@ -45,7 +55,7 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Form do
     organization = Organizations.get_organization!(socket.assigns.current_scope, id)
 
     socket
-    |> assign(:page_title, "Edit Organization")
+    |> assign(:page_title, gettext("Edit Organization"))
     |> assign(:organization, organization)
     |> assign(
       :form,
@@ -57,7 +67,7 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Form do
     organization = %Organization{}
 
     socket
-    |> assign(:page_title, "New Organization")
+    |> assign(:page_title, gettext("New Organization"))
     |> assign(:organization, organization)
     |> assign(
       :form,
@@ -90,7 +100,7 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Form do
       {:ok, organization} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Organization updated successfully")
+         |> put_flash(:info, gettext("Organization updated successfully"))
          |> push_navigate(
            to: return_path(socket.assigns.current_scope, socket.assigns.return_to, organization)
          )}
@@ -105,7 +115,7 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Form do
       {:ok, organization} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Organization created successfully")
+         |> put_flash(:info, gettext("Organization created successfully"))
          |> push_navigate(
            to: return_path(socket.assigns.current_scope, socket.assigns.return_to, organization)
          )}

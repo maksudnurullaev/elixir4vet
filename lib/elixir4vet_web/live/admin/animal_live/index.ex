@@ -8,10 +8,10 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Index do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
-        Listing Animals
+        {gettext("Listing Animals")}
         <:actions>
           <.button variant="primary" navigate={~p"/admin/animals/new"}>
-            <.icon name="hero-plus" /> New Animal
+            <.icon name="hero-plus" /> {gettext("New Animal")}
           </.button>
         </:actions>
       </.header>
@@ -21,27 +21,29 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Index do
         rows={@streams.animals}
         row_click={fn {_id, animal} -> JS.navigate(~p"/admin/animals/#{animal}") end}
       >
-        <:col :let={{_id, animal}} label="Name">{animal.name}</:col>
-        <:col :let={{_id, animal}} label="Species">{animal.species}</:col>
-        <:col :let={{_id, animal}} label="Breed">{animal.breed}</:col>
-        <:col :let={{_id, animal}} label="Date of birth">{animal.date_of_birth}</:col>
-        <:col :let={{_id, animal}} label="Microchip number">{animal.microchip_number}</:col>
-        <:col :let={{_id, animal}} label="Color">{animal.color}</:col>
-        <:col :let={{_id, animal}} label="Gender">{animal.gender}</:col>
-        <:col :let={{_id, animal}} label="Description">{animal.description}</:col>
-        <:col :let={{_id, animal}} label="Notes">{animal.notes}</:col>
+        <:col :let={{_id, animal}} label={gettext("Name")}>{animal.name}</:col>
+        <:col :let={{_id, animal}} label={gettext("Species")}>{animal.species}</:col>
+        <:col :let={{_id, animal}} label={gettext("Breed")}>{animal.breed}</:col>
+        <:col :let={{_id, animal}} label={gettext("Date of birth")}>{animal.date_of_birth}</:col>
+        <:col :let={{_id, animal}} label={gettext("Microchip number")}>
+          {animal.microchip_number}
+        </:col>
+        <:col :let={{_id, animal}} label={gettext("Color")}>{animal.color}</:col>
+        <:col :let={{_id, animal}} label={gettext("Gender")}>{animal.gender}</:col>
+        <:col :let={{_id, animal}} label={gettext("Description")}>{animal.description}</:col>
+        <:col :let={{_id, animal}} label={gettext("Notes")}>{animal.notes}</:col>
         <:action :let={{_id, animal}}>
           <div class="sr-only">
-            <.link navigate={~p"/admin/animals/#{animal}"}>Show</.link>
+            <.link navigate={~p"/admin/animals/#{animal}"}>{gettext("Show")}</.link>
           </div>
-          <.link navigate={~p"/admin/animals/#{animal}/edit"}>Edit</.link>
+          <.link navigate={~p"/admin/animals/#{animal}/edit"}>{gettext("Edit")}</.link>
         </:action>
         <:action :let={{id, animal}}>
           <.link
             phx-click={JS.push("delete", value: %{id: animal.id}) |> hide("##{id}")}
-            data-confirm="Are you sure?"
+            data-confirm={gettext("Are you sure?")}
           >
-            Delete
+            {gettext("Delete")}
           </.link>
         </:action>
       </.table>
@@ -57,7 +59,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Index do
 
     {:ok,
      socket
-     |> assign(:page_title, "Listing Animals")
+     |> assign(:page_title, gettext("Listing Animals"))
      |> stream(:animals, list_animals(socket.assigns.current_scope))}
   end
 

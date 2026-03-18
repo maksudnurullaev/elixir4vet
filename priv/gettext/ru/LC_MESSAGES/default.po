@@ -117,7 +117,7 @@ msgstr "Животные"
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:183
 #, elixir-autogen, elixir-format
 msgid "Events"
-msgstr "События"
+msgstr "Мероприятия"
 
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:191
 #, elixir-autogen, elixir-format
@@ -259,7 +259,7 @@ msgstr "© 2026 VetVision.UZ. Все права защищены."
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:28
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Animal"
-msgstr "Животные"
+msgstr "Животное"
 
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:56
 #, elixir-autogen, elixir-format
@@ -504,7 +504,7 @@ msgstr "Выберите тип события"
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:49
 #, elixir-autogen, elixir-format
 msgid "Show"
-msgstr "Показать"
+msgstr "Просмотр"
 
 #: lib/elixir4vet_web/live/admin/event_live/show.ex:77
 #, elixir-autogen, elixir-format
@@ -553,7 +553,6 @@ msgid "Vaccination"
 msgstr "Вакцинация"
 
 #: lib/elixir4vet_web/live/admin/event_live/index.ex:11
-
 #: lib/elixir4vet_web/live/page_live/terms.ex:6
 #: lib/elixir4vet_web/components/layouts/root.html.heex
 #, elixir-autogen, elixir-format
@@ -571,3 +570,438 @@ msgstr "Политика конфиденциальности"
 #, elixir-autogen, elixir-format
 msgid "Last updated: March 18, 2026"
 msgstr "Последнее обновление: 18 марта 2026 г."
+
+# ---- user_live/login.ex ----
+msgid "Log in"
+msgstr "Войти"
+
+msgid "You need to reauthenticate to perform sensitive actions on your account."
+msgstr "Вам необходимо повторно пройти аутентификацию для выполнения важных действий."
+
+msgid "Don't have an account?"
+msgstr "Нет аккаунта?"
+
+msgid "Sign up"
+msgstr "Зарегистрироваться"
+
+msgid "for an account now."
+msgstr "прямо сейчас."
+
+msgid "You are running the local mail adapter."
+msgstr "Вы используете локальный почтовый адаптер."
+
+msgid "To see sent emails, visit"
+msgstr "Для просмотра отправленных писем перейдите на"
+
+msgid "the mailbox page"
+msgstr "страницу почтового ящика"
+
+msgid "Log in with email"
+msgstr "Войти по электронной почте"
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Enter your email"
+msgstr "Введите ваш email"
+
+msgid "Sending..."
+msgstr "Отправка..."
+
+msgid "Send magic link"
+msgstr "Отправить magic-ссылку"
+
+msgid "OR"
+msgstr "ИЛИ"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "If your email is in our system, you will receive instructions to log in shortly."
+msgstr "Если ваш email есть в нашей системе, вы получите инструкции для входа."
+
+# ---- user_live/registration.ex ----
+msgid "Register for an account"
+msgstr "Создать аккаунт"
+
+msgid "Already registered?"
+msgstr "Уже зарегистрированы?"
+
+msgid "to your account now."
+msgstr "в свой аккаунт."
+
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+msgid "Creating account..."
+msgstr "Создание аккаунта..."
+
+msgid "Create an account"
+msgstr "Создать аккаунт"
+
+msgid "An email was sent to %{email}, please access it to confirm your account."
+msgstr "Письмо отправлено на %{email}, пожалуйста, перейдите по ссылке для подтверждения аккаунта."
+
+# ---- user_live/settings.ex ----
+msgid "Account Settings"
+msgstr "Настройки аккаунта"
+
+msgid "Manage your account email address and password settings"
+msgstr "Управление email и паролем вашего аккаунта"
+
+msgid "Email (cannot be changed)"
+msgstr "Электронная почта (изменить нельзя)"
+
+msgid "First Name"
+msgstr "Имя"
+
+msgid "Last Name"
+msgstr "Фамилия"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Updating..."
+msgstr "Обновление..."
+
+msgid "Update Profile"
+msgstr "Обновить профиль"
+
+msgid "Current password"
+msgstr "Текущий пароль"
+
+msgid "New password"
+msgstr "Новый пароль"
+
+msgid "Confirm new password"
+msgstr "Подтвердите новый пароль"
+
+msgid "Save Password"
+msgstr "Сохранить пароль"
+
+msgid "Email changed successfully."
+msgstr "Email успешно изменён."
+
+msgid "Email change link is invalid or it has expired."
+msgstr "Ссылка для смены email недействительна или истекла."
+
+msgid "Profile updated successfully."
+msgstr "Профиль успешно обновлён."
+
+# ---- user_live/confirmation.ex ----
+msgid "Welcome"
+msgstr "Добро пожаловать"
+
+msgid "Confirming..."
+msgstr "Подтверждение..."
+
+msgid "Confirm and stay logged in"
+msgstr "Подтвердить и остаться в системе"
+
+msgid "Confirm and log in only this time"
+msgstr "Подтвердить и войти только сейчас"
+
+msgid "Logging in..."
+msgstr "Вход..."
+
+msgid "Keep me logged in on this device"
+msgstr "Запомнить меня на этом устройстве"
+
+msgid "Log me in only this time"
+msgstr "Войти только сейчас"
+
+msgid "Tip: If you prefer passwords, you can enable them in the user settings."
+msgstr "Совет: если вы предпочитаете пароли, включите их в настройках пользователя."
+
+msgid "Magic link is invalid or it has expired."
+msgstr "Magic-ссылка недействительна или истекла."
+
+# ---- admin/animal_live ----
+msgid "Listing Animals"
+msgstr "Список животных"
+
+msgid "New Animal"
+msgstr "Новое животное"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Species"
+msgstr "Вид"
+
+msgid "Breed"
+msgstr "Порода"
+
+msgid "Date of birth"
+msgstr "Дата рождения"
+
+msgid "Microchip number"
+msgstr "Номер микрочипа"
+
+msgid "Color"
+msgstr "Окрас"
+
+msgid "Gender"
+msgstr "Пол"
+
+msgid "Use this form to manage animal records in your database."
+msgstr "Используйте эту форму для управления записями о животных в базе данных."
+
+msgid "Owner"
+msgstr "Владелец"
+
+msgid "Select an owner"
+msgstr "Выберите владельца"
+
+msgid "Save Animal"
+msgstr "Сохранить животное"
+
+msgid "Edit Animal"
+msgstr "Редактировать животное"
+
+msgid "Animal updated successfully"
+msgstr "Животное успешно обновлено"
+
+msgid "Animal created successfully"
+msgstr "Животное успешно создано"
+
+msgid "This is an animal record from your database."
+msgstr "Это запись о животном из вашей базы данных."
+
+msgid "Edit animal"
+msgstr "Редактировать животное"
+
+msgid "Owners"
+msgstr "Владельцы"
+
+msgid "Select User"
+msgstr "Выберите пользователя"
+
+msgid "Co-owner"
+msgstr "Совладелец"
+
+msgid "Guardian"
+msgstr "Опекун"
+
+msgid "Foster"
+msgstr "Передержка"
+
+msgid "Adding..."
+msgstr "Добавление..."
+
+msgid "Add Owner"
+msgstr "Добавить владельца"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Are you sure you want to remove this owner?"
+msgstr "Вы уверены, что хотите удалить этого владельца?"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Show Animal"
+msgstr "Просмотр животного"
+
+msgid "Owner added successfully"
+msgstr "Владелец успешно добавлен"
+
+msgid "Failed to add owner"
+msgstr "Не удалось добавить владельца"
+
+msgid "Owner removed successfully"
+msgstr "Владелец успешно удалён"
+
+msgid "Failed to remove owner"
+msgstr "Не удалось удалить владельца"
+
+msgid "The current animal was deleted."
+msgstr "Текущее животное было удалено."
+
+# ---- admin/organization_live ----
+msgid "Listing Organizations"
+msgstr "Список организаций"
+
+msgid "New Organization"
+msgstr "Новая организация"
+
+msgid "Registration number"
+msgstr "Регистрационный номер"
+
+msgid "Website"
+msgstr "Веб-сайт"
+
+msgid "Use this form to manage organization records in your database."
+msgstr "Используйте эту форму для управления записями об организациях в базе данных."
+
+msgid "Save Organization"
+msgstr "Сохранить организацию"
+
+msgid "Edit Organization"
+msgstr "Редактировать организацию"
+
+msgid "Organization updated successfully"
+msgstr "Организация успешно обновлена"
+
+msgid "Organization created successfully"
+msgstr "Организация успешно создана"
+
+msgid "Organization"
+msgstr "Организация"
+
+msgid "This is an organization record from your database."
+msgstr "Это запись об организации из вашей базы данных."
+
+msgid "Edit organization"
+msgstr "Редактировать организацию"
+
+msgid "Members"
+msgstr "Участники"
+
+msgid "Employee"
+msgstr "Сотрудник"
+
+msgid "Representative"
+msgstr "Представитель"
+
+msgid "Are you sure you want to remove this member?"
+msgstr "Вы уверены, что хотите удалить этого участника?"
+
+msgid "Add Member"
+msgstr "Добавить участника"
+
+msgid "Show Organization"
+msgstr "Просмотр организации"
+
+msgid "Member added successfully"
+msgstr "Участник успешно добавлен"
+
+msgid "Failed to add member"
+msgstr "Не удалось добавить участника"
+
+msgid "Member removed successfully"
+msgstr "Участник успешно удалён"
+
+msgid "Failed to remove member"
+msgstr "Не удалось удалить участника"
+
+msgid "The current organization was deleted."
+msgstr "Текущая организация была удалена."
+
+# ---- admin/user_live ----
+msgid "User Management"
+msgstr "Управление пользователями"
+
+msgid "Back to Home"
+msgstr "На главную"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Confirmed"
+msgstr "Подтверждён"
+
+msgid "Registered"
+msgstr "Зарегистрирован"
+
+msgid "Pending"
+msgstr "Ожидает"
+
+msgid "You"
+msgstr "Вы"
+
+msgid "Total Users"
+msgstr "Всего пользователей"
+
+msgid "Invalid parameters received"
+msgstr "Получены недопустимые параметры"
+
+msgid "You cannot delete your own account."
+msgstr "Вы не можете удалить свой аккаунт."
+
+msgid "User deleted successfully."
+msgstr "Пользователь успешно удалён."
+
+msgid "Failed to delete user."
+msgstr "Не удалось удалить пользователя."
+
+msgid "You cannot change your own role."
+msgstr "Вы не можете изменить свою роль."
+
+msgid "Invalid role."
+msgstr "Недопустимая роль."
+
+msgid "User already has this role."
+msgstr "Пользователь уже имеет эту роль."
+
+msgid "User role updated successfully."
+msgstr "Роль пользователя успешно обновлена."
+
+msgid "Failed to update user role. Please try again."
+msgstr "Не удалось обновить роль пользователя. Попробуйте снова."
+
+msgid "Are you sure you want to delete this user?"
+msgstr "Вы уверены, что хотите удалить этого пользователя?"
+
+msgid "Edit User"
+msgstr "Редактировать пользователя"
+
+msgid "Profile Info"
+msgstr "Информация профиля"
+
+msgid "Internal Notes"
+msgstr "Внутренние заметки"
+
+msgid "Save Profile"
+msgstr "Сохранить профиль"
+
+msgid "Owned Animals"
+msgstr "Животные пользователя"
+
+msgid "This user doesn't own any animals yet."
+msgstr "У этого пользователя пока нет животных."
+
+msgid "Microchip"
+msgstr "Микрочип"
+
+msgid "View details"
+msgstr "Подробнее"
+
+msgid "User profile updated successfully"
+msgstr "Профиль пользователя успешно обновлён"
+
+# ---- root.html.heex navigation ----
+msgid "Resources"
+msgstr "Ресурсы"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Users Management"
+msgstr "Управление пользователями"
+
+msgid "Permissions"
+msgstr "Разрешения"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Log out"
+msgstr "Выйти"
+
+msgid "Register"
+msgstr "Регистрация"
+
+# ---- home.html.heex hero ----
+msgid "Caring for every"
+msgstr "Забота о каждом"
+
+msgid "little tail"
+msgstr "хвостике"
+
+msgid "We unite veterinarians, shelters and compassionate people for the happiness of every animal"
+msgstr "Объединяем ветеринаров, приюты и неравнодушных людей ради счастья каждого животного"
+
+msgid "Join us"
+msgstr "Присоединиться"

@@ -9,7 +9,6 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
     users = Accounts.list_users()
     roles = Authorization.list_roles()
 
-    # Build a map of user_id => list of role names for efficient lookup
     user_roles_map =
       users
       |> Enum.map(fn user ->
@@ -23,7 +22,7 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
      |> assign(:users, users)
      |> assign(:roles, roles)
      |> assign(:user_roles_map, user_roles_map)
-     |> assign(:page_title, "User Management")}
+     |> assign(:page_title, gettext("User Management"))}
   end
 
   @impl true
@@ -38,7 +37,7 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
       update_user_role(socket, user, role_name)
     else
       _ ->
-        {:noreply, put_flash(socket, :error, "Invalid parameters received")}
+        {:noreply, put_flash(socket, :error, gettext("Invalid parameters received"))}
     end
   end
 
@@ -47,17 +46,17 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
     current_user = socket.assigns.current_scope.user
 
     if user.id == current_user.id do
-      {:noreply, put_flash(socket, :error, "You cannot delete your own account.")}
+      {:noreply, put_flash(socket, :error, gettext("You cannot delete your own account."))}
     else
       case Accounts.delete_user(user) do
         {:ok, _user} ->
           {:noreply,
            socket
-           |> put_flash(:info, "User deleted successfully.")
+           |> put_flash(:info, gettext("User deleted successfully."))
            |> refresh_users()}
 
         {:error, _changeset} ->
-          {:noreply, put_flash(socket, :error, "Failed to delete user.")}
+          {:noreply, put_flash(socket, :error, gettext("Failed to delete user."))}
       end
     end
   end
@@ -89,7 +88,7 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
     if user.id == current_user.id do
       {:noreply,
        socket
-       |> put_flash(:error, "You cannot change your own role.")
+       |> put_flash(:error, gettext("You cannot change your own role."))
        |> refresh_users()}
     else
       do_update_user_role(socket, user, role_name)
@@ -99,13 +98,13 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
   defp do_update_user_role(socket, user, role_name) do
     case Authorization.get_role_by_name(role_name) do
       nil ->
-        {:noreply, put_flash(socket, :error, "Invalid role.")}
+        {:noreply, put_flash(socket, :error, gettext("Invalid role."))}
 
       role ->
         if Authorization.user_has_role?(user, role_name) do
           {:noreply,
            socket
-           |> put_flash(:info, "User already has this role.")
+           |> put_flash(:info, gettext("User already has this role."))
            |> refresh_users()}
         else
           apply_role_update(socket, user, role)
@@ -118,18 +117,17 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
       :ok ->
         {:noreply,
          socket
-         |> put_flash(:info, "User role updated successfully.")
+         |> put_flash(:info, gettext("User role updated successfully."))
          |> refresh_users()}
 
       {:error, _error} ->
         {:noreply,
          socket
-         |> put_flash(:error, "Failed to update user role. Please try again.")
+         |> put_flash(:error, gettext("Failed to update user role. Please try again."))
          |> refresh_users()}
     end
   end
 
-  # Helper function to refresh users and their roles
   defp refresh_users(socket) do
     users = Accounts.list_users()
 
@@ -146,7 +144,6 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
     |> assign(:user_roles_map, user_roles_map)
   end
 
-  # Helper function to get role icon
   defp role_icon(role_name) do
     case role_name do
       "admin" -> "👑"
@@ -157,13 +154,12 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
     end
   end
 
-  # Helper function to get role display name
   defp role_display_name(role_name) do
     case role_name do
-      "admin" -> "Admin"
-      "manager" -> "Manager"
-      "user" -> "User"
-      "guest" -> "Guest"
+      "admin" -> gettext("Admin")
+      "manager" -> gettext("Manager")
+      "user" -> gettext("User")
+      "guest" -> gettext("Guest")
       _ -> String.capitalize(role_name)
     end
   end
@@ -173,13 +169,13 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">👥 User Management</h1>
+        <h1 class="text-3xl font-bold">👥 {gettext("User Management")}</h1>
         <div class="flex gap-2">
           <.link navigate={~p"/admin/permissions"} class="btn btn-primary">
-            <.icon name="hero-key" /> Permission Matrix
+            <.icon name="hero-key" /> {gettext("Permission Matrix")}
           </.link>
           <.link navigate={~p"/"} class="btn btn-ghost">
-            <.icon name="hero-arrow-left" /> Back to Home
+            <.icon name="hero-arrow-left" /> {gettext("Back to Home")}
           </.link>
         </div>
       </div>
@@ -190,12 +186,12 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
             <table class="table table-zebra w-full">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Confirmed</th>
-                  <th>Registered</th>
-                  <th>Actions</th>
+                  <th>{gettext("ID")}</th>
+                  <th>{gettext("Email")}</th>
+                  <th>{gettext("Role")}</th>
+                  <th>{gettext("Confirmed")}</th>
+                  <th>{gettext("Registered")}</th>
+                  <th>{gettext("Actions")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -234,9 +230,9 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
                     </td>
                     <td>
                       <%= if user.confirmed_at do %>
-                        <span class="badge badge-success badge-sm">✓ Confirmed</span>
+                        <span class="badge badge-success badge-sm">✓ {gettext("Confirmed")}</span>
                       <% else %>
-                        <span class="badge badge-warning badge-sm">⏳ Pending</span>
+                        <span class="badge badge-warning badge-sm">⏳ {gettext("Pending")}</span>
                       <% end %>
                     </td>
                     <td class="text-sm opacity-70">
@@ -244,20 +240,23 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
                     </td>
                     <td>
                       <div class="flex gap-2">
-                        <.link navigate={~p"/admin/users/#{user}/edit"} class="btn btn-primary btn-xs">
-                          <.icon name="hero-pencil-square" /> Edit
+                        <.link
+                          navigate={~p"/admin/users/#{user}/edit"}
+                          class="btn btn-primary btn-xs"
+                        >
+                          <.icon name="hero-pencil-square" /> {gettext("Edit")}
                         </.link>
                         <%= if user.id != @current_scope.user.id do %>
                           <button
                             phx-click="delete_user"
                             phx-value-user-id={user.id}
-                            data-confirm="Are you sure you want to delete this user?"
+                            data-confirm={gettext("Are you sure you want to delete this user?")}
                             class="btn btn-error btn-xs"
                           >
-                            🗑️ Delete
+                            🗑️ {gettext("Delete")}
                           </button>
                         <% else %>
-                          <span class="text-xs opacity-50 self-center">(You)</span>
+                          <span class="text-xs opacity-50 self-center">({gettext("You")})</span>
                         <% end %>
                       </div>
                     </td>
@@ -269,7 +268,7 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
 
           <div class="stats stats-vertical lg:stats-horizontal shadow mt-6">
             <div class="stat">
-              <div class="stat-title">Total Users</div>
+              <div class="stat-title">{gettext("Total Users")}</div>
               <div class="stat-value">{length(@users)}</div>
             </div>
             <%= for role <- @roles do %>
@@ -279,7 +278,9 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
                   role.name in user_role_names
                 end) %>
               <div class="stat">
-                <div class="stat-title">{role_icon(role.name)} {role_display_name(role.name)}s</div>
+                <div class="stat-title">
+                  {role_icon(role.name)} {role_display_name(role.name)}s
+                </div>
                 <div class={[
                   "stat-value",
                   role.name == "admin" && "text-success",

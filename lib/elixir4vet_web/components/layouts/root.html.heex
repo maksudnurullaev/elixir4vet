@@ -96,19 +96,23 @@
                    Map.get(@current_scope.permissions, "photographs") in ["RO", "RW"] do %>
               <li>
                 <details class="submenu-details">
-                  <summary>Resources</summary>
+                  <summary>{gettext("Resources")}</summary>
                   <ul class="p-2 bg-base-100 z-50">
                     <%= if Map.get(@current_scope.permissions, "organizations") in ["RO", "RW"] do %>
-                      <li><.link navigate={~p"/admin/organizations"}>Organizations</.link></li>
+                      <li>
+                        <.link navigate={~p"/admin/organizations"}>
+                          {gettext("Organizations")}
+                        </.link>
+                      </li>
                     <% end %>
                     <%= if Map.get(@current_scope.permissions, "animals") in ["RO", "RW"] do %>
-                      <li><.link navigate={~p"/admin/animals"}>Animals</.link></li>
+                      <li><.link navigate={~p"/admin/animals"}>{gettext("Animals")}</.link></li>
                     <% end %>
                     <%= if Map.get(@current_scope.permissions, "events") in ["RO", "RW"] do %>
-                      <li><a href="#events">Events</a></li>
+                      <li><a href="#events">{gettext("Events")}</a></li>
                     <% end %>
                     <%= if Map.get(@current_scope.permissions, "photographs") in ["RO", "RW"] do %>
-                      <li><a href="#photographs">Photographs</a></li>
+                      <li><a href="#photographs">{gettext("Photographs")}</a></li>
                     <% end %>
                   </ul>
                 </details>
@@ -175,24 +179,24 @@
           <div class="flex items-center gap-3">
             <!-- User Info Display -->
             <div class="hidden md:flex items-center gap-2">
-              <div class="font-semibold text-sm bg-base-300 rounded-full px-2 py-1  ">
-                <u>You:</u> {@current_scope.user.email
+              <div class="font-semibold text-sm bg-base-300 rounded-full px-2 py-1">
+                <u>{gettext("You")}:</u> {@current_scope.user.email
                 |> String.split("@")
                 |> List.first()
                 |> String.slice(0, 3)
                 |> String.upcase()}
               </div>
               <%= if Elixir4vet.Accounts.admin?(@current_scope.user) do %>
-                <span class="badge badge-sm badge-success">Admin</span>
+                <span class="badge badge-sm badge-success">{gettext("Admin")}</span>
               <% else %>
-                <span class="badge badge-sm badge-ghost">User</span>
+                <span class="badge badge-sm badge-ghost">{gettext("User")}</span>
               <% end %>
             </div>
-            
+
 <!-- User Menu -->
             <div class="dropdown dropdown-end">
               <label tabindex="0" class="btn btn-ghost btn-sm">
-                Menu
+                {gettext("Menu")}
               </label>
               <ul
                 tabindex="0"
@@ -201,18 +205,22 @@
                 <%= if Elixir4vet.Accounts.admin?(@current_scope.user) do %>
                   <li>
                     <details>
-                      <summary class="text-warning font-semibold">Admin</summary>
+                      <summary class="text-warning font-semibold">{gettext("Admin")}</summary>
                       <ul>
-                        <li><.link navigate={~p"/admin/users"}>Users Management</.link></li>
-                        <li><.link navigate={~p"/admin/permissions"}>Permissions</.link></li>
+                        <li>
+                          <.link navigate={~p"/admin/users"}>{gettext("Users Management")}</.link>
+                        </li>
+                        <li>
+                          <.link navigate={~p"/admin/permissions"}>{gettext("Permissions")}</.link>
+                        </li>
                       </ul>
                     </details>
                   </li>
                 <% end %>
-                <li><.link navigate={~p"/users/settings"}>Settings</.link></li>
+                <li><.link navigate={~p"/users/settings"}>{gettext("Settings")}</.link></li>
                 <li>
                   <.link href={~p"/users/log-out"} method="delete" class="text-error">
-                    Log out
+                    {gettext("Log out")}
                   </.link>
                 </li>
               </ul>
@@ -222,10 +230,10 @@
           <!-- Logged Out: Auth Buttons -->
           <div class="flex items-center gap-2">
             <.link navigate={~p"/users/register"} class="btn btn-ghost btn-sm">
-              Register
+              {gettext("Register")}
             </.link>
             <.link navigate={~p"/login"} class="btn btn-primary btn-sm">
-              Log in
+              {gettext("Log in")}
             </.link>
           </div>
         <% end %>

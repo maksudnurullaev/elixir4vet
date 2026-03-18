@@ -11,7 +11,7 @@ defmodule Elixir4vetWeb.Admin.UserLive.Form do
 
     {:ok,
      socket
-     |> assign(:page_title, "Edit User")
+     |> assign(:page_title, gettext("Edit User"))
      |> assign(:user, user)
      |> assign(:animals, animals)
      |> assign(:active_tab, :profile)
@@ -30,7 +30,7 @@ defmodule Elixir4vetWeb.Admin.UserLive.Form do
         {@page_title} {@user.email}
         <:actions>
           <.button navigate={~p"/admin/users"}>
-            <.icon name="hero-arrow-left" /> Back to Users
+            <.icon name="hero-arrow-left" /> {gettext("Back to Users")}
           </.button>
         </:actions>
       </.header>
@@ -42,14 +42,14 @@ defmodule Elixir4vetWeb.Admin.UserLive.Form do
             phx-click="set_tab"
             phx-value-tab="profile"
           >
-            👤 Profile Info
+            👤 {gettext("Profile Info")}
           </button>
           <button
             class={["tab", @active_tab == :animals && "tab-active"]}
             phx-click="set_tab"
             phx-value-tab="animals"
           >
-            🐾 Animals ({@animals |> length()})
+            🐾 {gettext("Animals")} ({@animals |> length()})
           </button>
         </div>
 
@@ -58,16 +58,16 @@ defmodule Elixir4vetWeb.Admin.UserLive.Form do
             <div class="card-body">
               <.form for={@form} id="user-form" phx-change="validate" phx-submit="save">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <.input field={@form[:first_name]} type="text" label="First Name" />
-                  <.input field={@form[:last_name]} type="text" label="Last Name" />
-                  <.input field={@form[:phone]} type="text" label="Phone" />
-                  <.input field={@form[:address]} type="text" label="Address" />
+                  <.input field={@form[:first_name]} type="text" label={gettext("First Name")} />
+                  <.input field={@form[:last_name]} type="text" label={gettext("Last Name")} />
+                  <.input field={@form[:phone]} type="text" label={gettext("Phone")} />
+                  <.input field={@form[:address]} type="text" label={gettext("Address")} />
                 </div>
-                <.input field={@form[:notes]} type="textarea" label="Internal Notes" />
+                <.input field={@form[:notes]} type="textarea" label={gettext("Internal Notes")} />
 
                 <div class="mt-6 flex gap-2">
-                  <.button phx-disable-with="Saving..." variant="primary">
-                    <.icon name="hero-check" /> Save Profile
+                  <.button phx-disable-with={gettext("Saving...")} variant="primary">
+                    <.icon name="hero-check" /> {gettext("Save Profile")}
                   </.button>
                 </div>
               </.form>
@@ -76,21 +76,21 @@ defmodule Elixir4vetWeb.Admin.UserLive.Form do
         <% else %>
           <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
-              <h2 class="card-title mb-4">Owned Animals</h2>
+              <h2 class="card-title mb-4">{gettext("Owned Animals")}</h2>
               <%= if Enum.empty?(@animals) do %>
                 <div class="alert alert-info">
                   <.icon name="hero-information-circle" />
-                  <span>This user doesn't own any animals yet.</span>
+                  <span>{gettext("This user doesn't own any animals yet.")}</span>
                 </div>
               <% else %>
                 <.table id="user-animals" rows={@animals}>
-                  <:col :let={animal} label="Name">{animal.name}</:col>
-                  <:col :let={animal} label="Species">{animal.species}</:col>
-                  <:col :let={animal} label="Breed">{animal.breed}</:col>
-                  <:col :let={animal} label="Microchip">{animal.microchip_number}</:col>
+                  <:col :let={animal} label={gettext("Name")}>{animal.name}</:col>
+                  <:col :let={animal} label={gettext("Species")}>{animal.species}</:col>
+                  <:col :let={animal} label={gettext("Breed")}>{animal.breed}</:col>
+                  <:col :let={animal} label={gettext("Microchip")}>{animal.microchip_number}</:col>
                   <:action :let={animal}>
                     <.link navigate={~p"/admin/animals/#{animal}"} class="btn btn-ghost btn-xs">
-                      View details
+                      {gettext("View details")}
                     </.link>
                   </:action>
                 </.table>
@@ -124,7 +124,7 @@ defmodule Elixir4vetWeb.Admin.UserLive.Form do
       {:ok, user} ->
         {:noreply,
          socket
-         |> put_flash(:info, "User profile updated successfully")
+         |> put_flash(:info, gettext("User profile updated successfully"))
          |> assign(:user, user)
          |> assign_form(Accounts.change_user_profile(user))}
 

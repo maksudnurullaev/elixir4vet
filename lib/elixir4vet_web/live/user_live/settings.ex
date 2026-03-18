@@ -18,8 +18,8 @@ defmodule Elixir4vetWeb.UserLive.Settings do
 
       <div class="text-center">
         <.header>
-          Account Settings
-          <:subtitle>Manage your account email address and password settings</:subtitle>
+          {gettext("Account Settings")}
+          <:subtitle>{gettext("Manage your account email address and password settings")}</:subtitle>
         </.header>
       </div>
 
@@ -28,7 +28,7 @@ defmodule Elixir4vetWeb.UserLive.Settings do
           name="email"
           value={@current_email}
           type="email"
-          label="Email (cannot be changed)"
+          label={gettext("Email (cannot be changed)")}
           readonly
           disabled
         />
@@ -43,13 +43,15 @@ defmodule Elixir4vetWeb.UserLive.Settings do
         phx-change="validate_profile"
       >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <.input field={@profile_form[:first_name]} type="text" label="First Name" />
-          <.input field={@profile_form[:last_name]} type="text" label="Last Name" />
+          <.input field={@profile_form[:first_name]} type="text" label={gettext("First Name")} />
+          <.input field={@profile_form[:last_name]} type="text" label={gettext("Last Name")} />
         </div>
-        <.input field={@profile_form[:phone]} type="tel" label="Phone" />
-        <.input field={@profile_form[:address]} type="text" label="Address" />
-        <.input field={@profile_form[:notes]} type="textarea" label="Notes" />
-        <.button variant="primary" phx-disable-with="Updating...">Update Profile</.button>
+        <.input field={@profile_form[:phone]} type="tel" label={gettext("Phone")} />
+        <.input field={@profile_form[:address]} type="text" label={gettext("Address")} />
+        <.input field={@profile_form[:notes]} type="textarea" label={gettext("Notes")} />
+        <.button variant="primary" phx-disable-with={gettext("Updating...")}>
+          {gettext("Update Profile")}
+        </.button>
       </.form>
 
       <div class="divider" />
@@ -73,7 +75,7 @@ defmodule Elixir4vetWeb.UserLive.Settings do
         <.input
           field={@password_form[:current_password]}
           type="password"
-          label="Current password"
+          label={gettext("Current password")}
           id="current_password_for_password"
           autocomplete="current-password"
           required
@@ -81,18 +83,18 @@ defmodule Elixir4vetWeb.UserLive.Settings do
         <.input
           field={@password_form[:password]}
           type="password"
-          label="New password"
+          label={gettext("New password")}
           autocomplete="new-password"
           required
         />
         <.input
           field={@password_form[:password_confirmation]}
           type="password"
-          label="Confirm new password"
+          label={gettext("Confirm new password")}
           autocomplete="new-password"
         />
-        <.button variant="primary" phx-disable-with="Saving...">
-          Save Password
+        <.button variant="primary" phx-disable-with={gettext("Saving...")}>
+          {gettext("Save Password")}
         </.button>
       </.form>
     </Layouts.app>
@@ -104,10 +106,10 @@ defmodule Elixir4vetWeb.UserLive.Settings do
     socket =
       case Accounts.update_user_email(socket.assigns.current_scope.user, token) do
         {:ok, _user} ->
-          put_flash(socket, :info, "Email changed successfully.")
+          put_flash(socket, :info, gettext("Email changed successfully."))
 
         {:error, _} ->
-          put_flash(socket, :error, "Email change link is invalid or it has expired.")
+          put_flash(socket, :error, gettext("Email change link is invalid or it has expired."))
       end
 
     {:ok, push_navigate(socket, to: ~p"/users/settings")}
@@ -170,15 +172,12 @@ defmodule Elixir4vetWeb.UserLive.Settings do
 
     case Accounts.update_user_profile(user, user_params) do
       {:ok, updated_user} ->
-        put_flash(socket, :info, "Profile updated successfully.")
-
-        # update the user in current_scope if it's stored there
         current_scope = socket.assigns.current_scope
         new_scope = %{current_scope | user: updated_user}
 
         {:noreply,
          socket
-         |> put_flash(:info, "Profile updated successfully.")
+         |> put_flash(:info, gettext("Profile updated successfully."))
          |> assign(:current_scope, new_scope)
          |> assign(:profile_form, to_form(Accounts.change_user_profile(updated_user)))}
 
