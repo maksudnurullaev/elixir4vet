@@ -106,7 +106,7 @@ if config_env() == :prod do
   # and Finch out-of-the-box. This configuration is typically done at
   # compile-time in your config/prod.exs:
   #
-  #     config :swoosh, :api_client, Swoosh.ApiClient.Req
+  config :swoosh, :api_client, Swoosh.ApiClient.Req
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end
