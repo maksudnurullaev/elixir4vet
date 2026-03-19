@@ -50,15 +50,15 @@ defmodule Elixir4vetWeb.EventLiveTest do
     test "lists all events", %{conn: conn, event: _event} do
       {:ok, _index_live, html} = live(conn, ~p"/admin/events")
 
-      assert html =~ "Список событий"
-      assert html =~ "Осмотр"
+      assert html =~ "Listing Events"
+      assert html =~ "Examination"
     end
 
     test "displays event type translated", %{conn: conn} do
       {:ok, _index_live, html} = live(conn, ~p"/admin/events")
 
       # Event types should be capitalized and displayed
-      assert html =~ "Осмотр"
+      assert html =~ "Examination"
     end
 
     test "displays animal name", %{conn: conn, animal: animal} do
@@ -84,16 +84,16 @@ defmodule Elixir4vetWeb.EventLiveTest do
 
       assert {:ok, form_live, _} =
                index_live
-               |> element("a", "Новое событие")
+               |> element("a", "New Event")
                |> render_click()
                |> follow_redirect(conn, ~p"/admin/events/new")
 
-      assert render(form_live) =~ "Новое событие"
+      assert render(form_live) =~ "New Event"
 
       # Test validation
       assert form_live
              |> form("#event-form", event: @invalid_attrs)
-             |> render_change() =~ "не может быть пустым"
+             |> render_change() =~ "can&#39;t be blank"
 
       # Create event successfully
       assert {:ok, index_live, _html} =
@@ -103,8 +103,8 @@ defmodule Elixir4vetWeb.EventLiveTest do
                |> follow_redirect(conn, ~p"/admin/events")
 
       html = render(index_live)
-      assert html =~ "Событие успешно создано"
-      assert html =~ "Вакцинация"
+      assert html =~ "Event created successfully"
+      assert html =~ "Vaccination"
     end
 
     test "updates event in listing", %{conn: conn, event: event, animal: animal} do
@@ -112,16 +112,16 @@ defmodule Elixir4vetWeb.EventLiveTest do
 
       assert {:ok, form_live, _html} =
                index_live
-               |> element("#events-#{event.id} a", "Редактировать")
+               |> element("#events-#{event.id} a", "Edit")
                |> render_click()
                |> follow_redirect(conn, ~p"/admin/events/#{event}/edit")
 
-      assert render(form_live) =~ "Редактировать событие"
+      assert render(form_live) =~ "Edit Event"
 
       # Test validation
       assert form_live
              |> form("#event-form", event: @invalid_attrs)
-             |> render_change() =~ "не может быть пустым"
+             |> render_change() =~ "can&#39;t be blank"
 
       # Update successfully
       assert {:ok, index_live, _html} =
@@ -131,7 +131,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
                |> follow_redirect(conn, ~p"/admin/events")
 
       html = render(index_live)
-      assert html =~ "Событие успешно обновлено"
+      assert html =~ "Event updated successfully"
       # The listing shows the event type, not the description
       assert html =~ "Branch Clinic"
     end
@@ -139,7 +139,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
     test "deletes event in listing", %{conn: conn, event: event} do
       {:ok, index_live, _html} = live(conn, ~p"/admin/events")
 
-      assert index_live |> element("#events-#{event.id} a", "Удалить") |> render_click()
+      assert index_live |> element("#events-#{event.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#events-#{event.id}")
     end
   end
@@ -150,14 +150,14 @@ defmodule Elixir4vetWeb.EventLiveTest do
     test "displays event", %{conn: conn, event: event} do
       {:ok, _show_live, html} = live(conn, ~p"/admin/events/#{event}")
 
-      assert html =~ "События"
-      assert html =~ "Осмотр"
+      assert html =~ "Event"
+      assert html =~ "Examination"
     end
 
     test "displays event type translated", %{conn: conn, event: event} do
       {:ok, _show_live, html} = live(conn, ~p"/admin/events/#{event}")
 
-      assert html =~ "Осмотр"
+      assert html =~ "Examination"
     end
 
     test "displays animal name with link", %{conn: conn, event: event, animal: animal} do
@@ -191,7 +191,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
       {:ok, _show_live, html} = live(conn, ~p"/admin/events/#{event}")
 
       # Cost field should be present (format may vary for Decimal)
-      assert html =~ "Стоимость"
+      assert html =~ "Cost"
       assert html =~ "50"
     end
 
@@ -203,7 +203,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
       event = event_fixture(scope, %{animal: animal, performed_by_user_id: nil, cost: nil})
       {:ok, _show_live, html} = live(conn, ~p"/admin/events/#{event}")
 
-      assert html =~ "Н/Д"
+      assert html =~ "N/A"
     end
 
     test "displays performed by user when present", %{
@@ -239,16 +239,16 @@ defmodule Elixir4vetWeb.EventLiveTest do
 
       assert {:ok, form_live, _} =
                show_live
-               |> element("a", "Редактировать событие")
+               |> element("a", "Edit event")
                |> render_click()
                |> follow_redirect(conn, ~p"/admin/events/#{event}/edit?return_to=show")
 
-      assert render(form_live) =~ "Редактировать событие"
+      assert render(form_live) =~ "Edit Event"
 
       # Test validation
       assert form_live
              |> form("#event-form", event: @invalid_attrs)
-             |> render_change() =~ "не может быть пустым"
+             |> render_change() =~ "can&#39;t be blank"
 
       # Update successfully
       assert {:ok, show_live, _html} =
@@ -258,7 +258,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
                |> follow_redirect(conn, ~p"/admin/events/#{event}")
 
       html = render(show_live)
-      assert html =~ "Событие успешно обновлено"
+      assert html =~ "Event updated successfully"
       # Check for updated location or description
       assert html =~ "Branch Clinic"
     end
@@ -281,32 +281,32 @@ defmodule Elixir4vetWeb.EventLiveTest do
     test "renders new event form", %{conn: conn} do
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/new")
 
-      assert html =~ "Новое событие"
-      assert html =~ "Используйте эту форму"
+      assert html =~ "New Event"
+      assert html =~ "Use this form"
     end
 
     test "displays animal dropdown", %{conn: conn, animal: animal} do
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/new")
 
-      assert html =~ "Выберите животное"
+      assert html =~ "Select an animal"
       assert html =~ animal.name
     end
 
     test "displays event type dropdown with all types", %{conn: conn} do
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/new")
 
-      assert html =~ "Выберите тип события"
+      assert html =~ "Select event type"
       # Check some event types are present
-      assert html =~ "Регистрация"
-      assert html =~ "Вакцинация"
-      assert html =~ "Осмотр"
-      assert html =~ "Операция"
+      assert html =~ "Registration"
+      assert html =~ "Vaccination"
+      assert html =~ "Examination"
+      assert html =~ "Surgery"
     end
 
     test "displays user dropdown", %{conn: conn, user: user} do
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/new")
 
-      assert html =~ "Выберите пользователя (необязательно)"
+      assert html =~ "Select a user (optional)"
       assert html =~ user.email
     end
 
@@ -317,7 +317,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
       organization = organization_fixture(scope)
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/new")
 
-      assert html =~ "Выберите организацию (необязательно)"
+      assert html =~ "Select an organization (optional)"
       assert html =~ organization.name
     end
 
@@ -326,7 +326,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
 
       assert form_live
              |> form("#event-form", event: @invalid_attrs)
-             |> render_change() =~ "не может быть пустым"
+             |> render_change() =~ "can&#39;t be blank"
     end
 
     test "creates event with all fields", %{conn: conn, animal: animal, user: user} do
@@ -343,8 +343,8 @@ defmodule Elixir4vetWeb.EventLiveTest do
                |> render_submit()
                |> follow_redirect(conn, ~p"/admin/events")
 
-      assert html =~ "Событие успешно создано"
-      assert html =~ "Вакцинация"
+      assert html =~ "Event created successfully"
+      assert html =~ "Vaccination"
     end
 
     test "creates event with only required fields", %{conn: conn, animal: animal} do
@@ -362,7 +362,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
                |> render_submit()
                |> follow_redirect(conn, ~p"/admin/events")
 
-      assert html =~ "Событие успешно создано"
+      assert html =~ "Event created successfully"
     end
 
     # Note: Invalid event types are prevented by the select dropdown,
@@ -379,14 +379,14 @@ defmodule Elixir4vetWeb.EventLiveTest do
 
       assert form_live
              |> form("#event-form", event: negative_cost_attrs)
-             |> render_change() =~ "должно быть больше или равно"
+             |> render_change() =~ "must be greater than or equal to"
     end
 
     test "cancel button navigates back to index", %{conn: conn} do
       {:ok, form_live, _html} = live(conn, ~p"/admin/events/new")
 
       assert form_live
-             |> element("a[href=\"/admin/events\"]", "Отмена")
+             |> element("a[href=\"/admin/events\"]", "Cancel")
              |> has_element?()
     end
   end
@@ -397,8 +397,8 @@ defmodule Elixir4vetWeb.EventLiveTest do
     test "renders edit event form", %{conn: conn, event: event} do
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/#{event}/edit")
 
-      assert html =~ "Редактировать событие"
-      assert html =~ "Используйте эту форму"
+      assert html =~ "Edit Event"
+      assert html =~ "Use this form"
     end
 
     test "pre-fills form with event data", %{conn: conn, event: event} do
@@ -417,7 +417,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
                |> render_submit()
                |> follow_redirect(conn, ~p"/admin/events")
 
-      assert html =~ "Событие успешно обновлено"
+      assert html =~ "Event updated successfully"
       # The listing shows the location, not the description
       assert html =~ "Branch Clinic"
     end
@@ -435,7 +435,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
                |> render_submit()
                |> follow_redirect(conn, ~p"/admin/events/#{event}")
 
-      assert html =~ "Событие успешно обновлено"
+      assert html =~ "Event updated successfully"
     end
 
     test "validates required fields on update", %{conn: conn, event: event} do
@@ -443,7 +443,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
 
       assert form_live
              |> form("#event-form", event: @invalid_attrs)
-             |> render_change() =~ "не может быть пустым"
+             |> render_change() =~ "can&#39;t be blank"
     end
   end
 
@@ -459,7 +459,7 @@ defmodule Elixir4vetWeb.EventLiveTest do
 
     test "allows admin users to access events", %{conn: conn} do
       assert {:ok, _live, html} = live(conn, ~p"/admin/events")
-      assert html =~ "Список событий"
+      assert html =~ "Listing Events"
     end
   end
 
@@ -470,19 +470,19 @@ defmodule Elixir4vetWeb.EventLiveTest do
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/new")
 
       event_types = [
-        "Регистрация",
-        "Чипирование",
-        "Стерилизация",
-        "Кастрация",
-        "Вакцинация",
-        "Осмотр",
-        "Операция",
-        "Менеджер",
-        "Капельница",
-        "Потеряно",
-        "Найдено",
-        "Умерло",
-        "Другое"
+        "Registration",
+        "Microchipping",
+        "Sterilization",
+        "Neutering",
+        "Vaccination",
+        "Examination",
+        "Surgery",
+        "Bandage",
+        "IV",
+        "Lost",
+        "Found",
+        "RIP",
+        "Other"
       ]
 
       Enum.each(event_types, fn type ->

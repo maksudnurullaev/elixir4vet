@@ -1005,3 +1005,49 @@ msgstr "Объединяем ветеринаров, приюты и нерав�
 
 msgid "Join us"
 msgstr "Присоединиться"
+
+# ---- Voices of Compassion quotes ----
+msgid "\"The question is not, Can they reason? nor, Can they talk? but, Can they suffer?\""
+msgstr "«Вопрос не в том, могут ли они рассуждать, и не в том, могут ли они говорить, а в том, могут ли они страдать?»"
+
+msgid "\"Our task must be to free ourselves by widening our circle of compassion to embrace all living creatures and the whole of nature and its beauty.\""
+msgstr "«Наша задача — освободить себя, расширив круг сострадания, чтобы он охватил всех живых существ и всю природу во всей её красоте.»"
+
+msgid "\"The time will come when men such as I will look upon the murder of animals as they now look upon the murder of men.\""
+msgstr "«Придёт время, когда такие люди, как я, будут смотреть на убийство животных так же, как сейчас смотрят на убийство людей.»"
+
+msgid "\"Humanity's true moral test consists of its attitude towards those who are at its mercy: animals.\""
+msgstr "«Истинная нравственная проверка человечества состоит в его отношении к тем, кто находится в его власти: к животным.»"
+
+msgid "\"Until we extend our circle of compassion to all living things, humanity will not find peace.\""
+msgstr "«Пока мы не распространим круг нашего сострадания на все живые существа, человечество не найдёт мира.»"
+
+msgid "\"Life is as dear to a mute creature as it is to man. Just as one wants happiness and fears pain, just as one wants to live and not die, so do other creatures.\""
+msgstr "«Жизнь так же дорога немому существу, как и человеку. Так же, как человек хочет счастья и боится боли, хочет жить и не умирать, так и другие существа.»"
+
+msgid "\"If having a soul means being able to feel love and loyalty and gratitude, then animals are better off than a lot of humans.\""
+msgstr "«Если наличие души означает способность чувствовать любовь, преданность и благодарность, то животные превосходят многих людей.»"
+
+msgid "\"You cannot share your life with a dog or a cat and not know perfectly well that animals have personalities and minds and feelings.\""
+msgstr "«Нельзя разделить свою жизнь с собакой или кошкой и не знать совершенно точно, что у животных есть личность, разум и чувства.»"
+
+msgid "\"The love for all living creatures is the most noble attribute of man.\""
+msgstr "«Любовь ко всем живым существам — самое благородное свойство человека.»"
+
+msgid "\"It takes nothing away from a human to be kind to an animal.\""
+msgstr "«Доброта к животным ничего не отнимает у человека.»"
+
+msgid "\"If you pick up a starving dog and make him prosperous, he will not bite you. This is the principal difference between a dog and man.\""
+msgstr "«Если вы подберёте голодную собаку и сделаете её счастливой, она не укусит вас. В этом принципиальное отличие собаки от человека.»"
+
+msgid "\"We can judge the heart of a man by his treatment of animals.\""
+msgstr "«О сердце человека можно судить по его отношению к животным.»"
+
+msgid "\"Dogs are not our whole life, but they make our lives whole.\""
+msgstr "«Собаки — не вся наша жизнь, но они делают нашу жизнь полной.»"
+
+msgid "\"Animals can communicate quite well. And they do. And generally speaking, they are ignored.\""
+msgstr "«Животные умеют общаться очень хорошо. И они это делают. Но, как правило, их игнорируют.»"
+
+msgid "\"We must fight against the spirit of unconscious cruelty with which we treat the animals. True humanity does not allow us to impose such sufferings on them.\""
+msgstr "«Мы должны бороться с духом бессознательной жестокости, с которой мы обращаемся с животными. Истинное человеколюбие не позволяет причинять им такие страдания.»"

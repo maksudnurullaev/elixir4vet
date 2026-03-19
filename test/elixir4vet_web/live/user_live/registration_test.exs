@@ -62,7 +62,7 @@ defmodule Elixir4vetWeb.UserLive.RegistrationTest do
         )
         |> render_submit()
 
-      assert result =~ "уже занято"
+      assert result =~ "has already been taken"
     end
   end
 

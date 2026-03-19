@@ -1005,3 +1005,49 @@ msgstr "Har bir hayvonning baxtliligi uchun veterinarlar, boshpanalar va mehr-sh
 
 msgid "Join us"
 msgstr "Qo'shiling"
+
+# ---- Voices of Compassion quotes ----
+msgid "\"The question is not, Can they reason? nor, Can they talk? but, Can they suffer?\""
+msgstr "«Savol shunda emas: ular fikr yurита oladimi? yoki gapira oladimi? — balki: ular azob cheka oladimi?»"
+
+msgid "\"Our task must be to free ourselves by widening our circle of compassion to embrace all living creatures and the whole of nature and its beauty.\""
+msgstr "«Bizning vazifamiz — barcha jonzotlarni va tabiatni o'z mehr doiramizga kiritib, o'zimizni ozod etishdir.»"
+
+msgid "\"The time will come when men such as I will look upon the murder of animals as they now look upon the murder of men.\""
+msgstr "«Mening singari odamlar hayvonlarni o'ldirishga hozir odamlarni o'ldirishga qaragandek qaraydigan vaqt keladi.»"
+
+msgid "\"Humanity's true moral test consists of its attitude towards those who are at its mercy: animals.\""
+msgstr "«Insoniyatning haqiqiy axloqiy sinovi uning o'z qo'l ostidagilarga — hayvonlarga munosabatida namoyon bo'ladi.»"
+
+msgid "\"Until we extend our circle of compassion to all living things, humanity will not find peace.\""
+msgstr "«Biz mehr doiramizni barcha tirik mavjudotlarga kengaytirmagunimizcha, insoniyat tinchlik topa olmaydi.»"
+
+msgid "\"Life is as dear to a mute creature as it is to man. Just as one wants happiness and fears pain, just as one wants to live and not die, so do other creatures.\""
+msgstr "«Hayot tilik qila olmaydigan jonzot uchun ham inson uchun kabi azizdir. Xuddi inson baxt tilab, azobdan qo'rqqani kabi, boshqa jonzotlar ham shunday.»"
+
+msgid "\"If having a soul means being able to feel love and loyalty and gratitude, then animals are better off than a lot of humans.\""
+msgstr "«Agar ruh borligini his qilish muhabbat, sadoqat va minnatdorlik demak bo'lsa, hayvonlar ko'p odamlardan ustundir.»"
+
+msgid "\"You cannot share your life with a dog or a cat and not know perfectly well that animals have personalities and minds and feelings.\""
+msgstr "«It yoki mushuk bilan hayot kechirib, hayvonlarning shaxsiyati, aql-idrok va his-tuyg'ulari borligini bilmaslik mumkin emas.»"
+
+msgid "\"The love for all living creatures is the most noble attribute of man.\""
+msgstr "«Barcha tirik mavjudotlarga muhabbat — insonning eng olijanob fazilatidir.»"
+
+msgid "\"It takes nothing away from a human to be kind to an animal.\""
+msgstr "«Hayvonga mehribon bo'lish insondan hech narsani olmaydi.»"
+
+msgid "\"If you pick up a starving dog and make him prosperous, he will not bite you. This is the principal difference between a dog and man.\""
+msgstr "«Agar och itni olib, uni to'ydirsangiz, u sizni tishlamaydi. Mana bu it bilan insonning asosiy farqi.»"
+
+msgid "\"We can judge the heart of a man by his treatment of animals.\""
+msgstr "«Insonning yuragini uning hayvonlarga munosabatiga qarab baholaymiz.»"
+
+msgid "\"Dogs are not our whole life, but they make our lives whole.\""
+msgstr "«Itlar bizning butun hayotimiz emas, lekin ular hayotimizni to'liq qiladi.»"
+
+msgid "\"Animals can communicate quite well. And they do. And generally speaking, they are ignored.\""
+msgstr "«Hayvonlar juda yaxshi muloqot qila oladi. Va ular muloqot qiladi. Umuman olganda, ular e'tibordan chetda qoladi.»"
+
+msgid "\"We must fight against the spirit of unconscious cruelty with which we treat the animals. True humanity does not allow us to impose such sufferings on them.\""
+msgstr "«Biz hayvonlarga nisbatan ongsiz shafqatsizlik ruhiga qarshi kurashishimiz kerak. Haqiqiy insonparvarlik ularga bunday azob berish imkonini bermaydi.»"

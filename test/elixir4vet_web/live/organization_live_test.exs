@@ -63,7 +63,7 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
 
       assert form_live
              |> form("#organization-form", organization: @invalid_attrs)
-             |> render_change() =~ "не может быть пустым"
+             |> render_change() =~ "can&#39;t be blank"
 
       assert {:ok, index_live, _html} =
                form_live
@@ -89,7 +89,7 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
 
       assert form_live
              |> form("#organization-form", organization: @invalid_attrs)
-             |> render_change() =~ "не может быть пустым"
+             |> render_change() =~ "can&#39;t be blank"
 
       assert {:ok, index_live, _html} =
                form_live
@@ -139,7 +139,7 @@ defmodule Elixir4vetWeb.OrganizationLiveTest do
 
       assert form_live
              |> form("#organization-form", organization: @invalid_attrs)
-             |> render_change() =~ "не может быть пустым"
+             |> render_change() =~ "can&#39;t be blank"
 
       assert {:ok, show_live, _html} =
                form_live

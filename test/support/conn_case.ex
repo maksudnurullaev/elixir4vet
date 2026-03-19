@@ -35,6 +35,7 @@ defmodule Elixir4vetWeb.ConnCase do
 
   setup tags do
     Elixir4vet.DataCase.setup_sandbox(tags)
+    Gettext.put_locale(Elixir4vetWeb.Gettext, "en")
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
