@@ -26,7 +26,7 @@ config :elixir4vet, Elixir4vetWeb.Endpoint,
 if config_env() == :prod do
   database_path =
     System.get_env("DATABASE_PATH") ||
-      Application.app_dir(:elixir4vet, "DATA/elixir4vet_prod.db")
+      Application.app_dir(:elixir4vet, "data/elixir4vet_prod.db")
 
   config :elixir4vet, Elixir4vet.Repo,
     database: database_path,
