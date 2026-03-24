@@ -56,7 +56,14 @@ jobs:
             MIX_ENV=prod mix ecto.migrate
 
             # Останавливаем текущий сервис (если запущен)
-            /opt/elixir4vet/bin/elixir4vet stop > /dev/null 2>&1 || true
+            if /opt/elixir4vet/bin/elixir4vet pid > /dev/null 2>&1; then
+              /opt/elixir4vet/bin/elixir4vet stop
+              for i in $(seq 1 30); do
+                /opt/elixir4vet/bin/elixir4vet pid > /dev/null 2>&1 || break
+                echo "Waiting for process to stop... ($i/30)"
+                sleep 1
+              done
+            fi
 
             # Запускаем сервис
             /opt/elixir4vet/bin/elixir4vet daemon
