@@ -22,7 +22,8 @@ config :elixir4vet, Elixir4vetWeb.Endpoint,
 # ]
 
 # Configure Swoosh API Client
-config :swoosh, api_client: Swoosh.ApiClient.Req
+# Swoosh.ApiClient.Req
+config :swoosh, api_client: false
 
 # Disable Swoosh Local Memory Storage
 config :swoosh, local: false
