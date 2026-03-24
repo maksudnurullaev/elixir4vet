@@ -41,6 +41,23 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
     end
   end
 
+  def handle_event("resend_confirmation", %{"user-id" => user_id}, socket) do
+    user = Accounts.get_user!(String.to_integer(user_id))
+
+    if user.confirmed_at do
+      {:noreply, put_flash(socket, :info, gettext("User is already confirmed."))}
+    else
+      Accounts.deliver_login_instructions(user, &url(~p"/users/log-in/#{&1}"))
+
+      {:noreply,
+       put_flash(
+         socket,
+         :info,
+         gettext("Confirmation email sent to %{email}.", email: user.email)
+       )}
+    end
+  end
+
   def handle_event("delete_user", %{"user-id" => user_id}, socket) do
     user = Accounts.get_user!(String.to_integer(user_id))
     current_user = socket.assigns.current_scope.user
@@ -246,6 +263,15 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
                         >
                           <.icon name="hero-pencil-square" /> {gettext("Edit")}
                         </.link>
+                        <%= if is_nil(user.confirmed_at) do %>
+                          <button
+                            phx-click="resend_confirmation"
+                            phx-value-user-id={user.id}
+                            class="btn btn-warning btn-xs"
+                          >
+                            ✉️ {gettext("Resend Confirmation")}
+                          </button>
+                        <% end %>
                         <%= if user.id != @current_scope.user.id do %>
                           <button
                             phx-click="delete_user"

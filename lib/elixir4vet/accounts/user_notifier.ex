@@ -11,7 +11,7 @@ defmodule Elixir4vet.Accounts.UserNotifier do
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do
-    Logger.info("[MagicLink] Composing email to=#{recipient} subject=#{inspect(subject)}")
+    Logger.debug("[MagicLink] Composing email to=#{recipient} subject=#{inspect(subject)}")
 
     email =
       new()
@@ -20,14 +20,14 @@ defmodule Elixir4vet.Accounts.UserNotifier do
       |> subject(subject)
       |> text_body(body)
 
-    Logger.info("[MagicLink] Calling Mailer.deliver/1 for to=#{recipient}")
+    Logger.debug("[MagicLink] Calling Mailer.deliver/1 for to=#{recipient}")
 
     result =
       with {:ok, _metadata} <- Mailer.deliver(email) do
         {:ok, email}
       end
 
-    Logger.info("[MagicLink] Mailer.deliver/1 result=#{inspect(result)}")
+    Logger.debug("[MagicLink] Mailer.deliver/1 result=#{inspect(result)}")
     result
   end
 
@@ -55,20 +55,20 @@ defmodule Elixir4vet.Accounts.UserNotifier do
   Deliver instructions to log in with a magic link.
   """
   def deliver_login_instructions(user, url) do
-    Logger.info(
+    Logger.debug(
       "[MagicLink] deliver_login_instructions for user id=#{user.id} confirmed_at=#{inspect(user.confirmed_at)}"
     )
 
     case user do
       %User{confirmed_at: nil} ->
-        Logger.info(
+        Logger.debug(
           "[MagicLink] User not confirmed, sending confirmation instructions to #{user.email}"
         )
 
         deliver_confirmation_instructions(user, url)
 
       _ ->
-        Logger.info("[MagicLink] User confirmed, sending magic link to #{user.email}")
+        Logger.debug("[MagicLink] User confirmed, sending magic link to #{user.email}")
         deliver_magic_link_instructions(user, url)
     end
   end
