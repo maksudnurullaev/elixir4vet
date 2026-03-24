@@ -1,6 +1,8 @@
 defmodule Elixir4vetWeb.UserLive.Login do
   use Elixir4vetWeb, :live_view
 
+  require Logger
+
   alias Elixir4vet.Accounts
 
   @impl true
@@ -108,11 +110,22 @@ defmodule Elixir4vetWeb.UserLive.Login do
 
   @impl true
   def handle_event("send_magic_link", %{"user" => %{"email" => email}}, socket) do
-    if user = Accounts.get_user_by_email(email) do
-      Accounts.deliver_login_instructions(
-        user,
-        &url(~p"/users/log-in/#{&1}")
-      )
+    Logger.info("[MagicLink] send_magic_link event received for email=#{email}")
+
+    case Accounts.get_user_by_email(email) do
+      nil ->
+        Logger.warning("[MagicLink] No user found for email=#{email}, skipping delivery")
+
+      user ->
+        Logger.info("[MagicLink] User found id=#{user.id} email=#{user.email}, delivering login instructions")
+
+        result =
+          Accounts.deliver_login_instructions(
+            user,
+            &url(~p"/users/log-in/#{&1}")
+          )
+
+        Logger.info("[MagicLink] deliver_login_instructions result=#{inspect(result)}")
     end
 
     info =

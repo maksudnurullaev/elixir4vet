@@ -3,6 +3,8 @@ defmodule Elixir4vet.Accounts do
   The Accounts context.
   """
 
+  require Logger
+
   import Ecto.Query, warn: false
   alias Elixir4vet.Accounts.{User, UserNotifier, UserToken}
   alias Elixir4vet.Repo
@@ -419,9 +421,19 @@ defmodule Elixir4vet.Accounts do
   """
   def deliver_login_instructions(%User{} = user, magic_link_url_fun)
       when is_function(magic_link_url_fun, 1) do
+    Logger.info("[MagicLink] Building email token for user id=#{user.id} email=#{user.email}")
     {encoded_token, user_token} = UserToken.build_email_token(user, "login")
+
+    Logger.info("[MagicLink] Inserting user token into DB for user id=#{user.id}")
     Repo.insert!(user_token)
-    UserNotifier.deliver_login_instructions(user, magic_link_url_fun.(encoded_token))
+
+    magic_url = magic_link_url_fun.(encoded_token)
+    Logger.info("[MagicLink] Generated magic URL for user id=#{user.id}: #{magic_url}")
+
+    Logger.info("[MagicLink] Calling UserNotifier.deliver_login_instructions for user id=#{user.id} confirmed_at=#{inspect(user.confirmed_at)}")
+    result = UserNotifier.deliver_login_instructions(user, magic_url)
+    Logger.info("[MagicLink] UserNotifier result=#{inspect(result)}")
+    result
   end
 
   @doc """
