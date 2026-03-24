@@ -16,7 +16,7 @@ defmodule Elixir4vet.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Elixir4vet", "contact@example.com"})
+      |> from({"Elixir4vet", "contact@vetvision.uz"})
       |> subject(subject)
       |> text_body(body)
 
