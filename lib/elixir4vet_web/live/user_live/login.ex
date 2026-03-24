@@ -117,7 +117,9 @@ defmodule Elixir4vetWeb.UserLive.Login do
         Logger.warning("[MagicLink] No user found for email=#{email}, skipping delivery")
 
       user ->
-        Logger.info("[MagicLink] User found id=#{user.id} email=#{user.email}, delivering login instructions")
+        Logger.info(
+          "[MagicLink] User found id=#{user.id} email=#{user.email}, delivering login instructions"
+        )
 
         result =
           Accounts.deliver_login_instructions(

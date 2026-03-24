@@ -430,7 +430,10 @@ defmodule Elixir4vet.Accounts do
     magic_url = magic_link_url_fun.(encoded_token)
     Logger.info("[MagicLink] Generated magic URL for user id=#{user.id}: #{magic_url}")
 
-    Logger.info("[MagicLink] Calling UserNotifier.deliver_login_instructions for user id=#{user.id} confirmed_at=#{inspect(user.confirmed_at)}")
+    Logger.info(
+      "[MagicLink] Calling UserNotifier.deliver_login_instructions for user id=#{user.id} confirmed_at=#{inspect(user.confirmed_at)}"
+    )
+
     result = UserNotifier.deliver_login_instructions(user, magic_url)
     Logger.info("[MagicLink] UserNotifier result=#{inspect(result)}")
     result

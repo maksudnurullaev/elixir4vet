@@ -55,11 +55,16 @@ defmodule Elixir4vet.Accounts.UserNotifier do
   Deliver instructions to log in with a magic link.
   """
   def deliver_login_instructions(user, url) do
-    Logger.info("[MagicLink] deliver_login_instructions for user id=#{user.id} confirmed_at=#{inspect(user.confirmed_at)}")
+    Logger.info(
+      "[MagicLink] deliver_login_instructions for user id=#{user.id} confirmed_at=#{inspect(user.confirmed_at)}"
+    )
 
     case user do
       %User{confirmed_at: nil} ->
-        Logger.info("[MagicLink] User not confirmed, sending confirmation instructions to #{user.email}")
+        Logger.info(
+          "[MagicLink] User not confirmed, sending confirmation instructions to #{user.email}"
+        )
+
         deliver_confirmation_instructions(user, url)
 
       _ ->
