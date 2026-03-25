@@ -32,6 +32,18 @@ defmodule Elixir4vet.Events do
   end
 
   @doc """
+  Returns the list of events for a specific animal.
+  """
+  def list_events_for_animal(%Scope{} = _scope, animal) do
+    Repo.all(
+      from e in Event,
+        where: e.animal_id == ^animal.id,
+        order_by: [desc: e.event_date, desc: e.inserted_at]
+    )
+    |> Repo.preload([:performed_by_user, :performed_by_organization])
+  end
+
+  @doc """
   Gets a single event.
   """
   def get_event!(%Scope{} = _scope, id) do

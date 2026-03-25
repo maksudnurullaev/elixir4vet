@@ -117,7 +117,7 @@ msgstr "Животные"
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:183
 #, elixir-autogen, elixir-format
 msgid "Events"
-msgstr "Мероприятия"
+msgstr "События"
 
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:191
 #, elixir-autogen, elixir-format

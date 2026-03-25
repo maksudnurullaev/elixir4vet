@@ -1,7 +1,7 @@
 # Data logic and definitions
 ```
 USERS can be representatives of ORGANIZATIONS.
-USER can be owner of ANIMAL.
+USER can be owner of ANIMALS.
 ANIMAL always has at least one owner who is USER.
 EVENT always belongs to ANIMAL:
     - Event types:
@@ -18,7 +18,8 @@ EVENT always belongs to ANIMAL:
         - Found - Animal found/recovered
         - RIP - Animal deceased
         - Other - Other event types not listed above
-EVENT may have PHOTOS attached to them.
+EVENT may have PHOTOS.
+PHOTOS always belongs to EVENT.
 ```
 
 ---

@@ -117,7 +117,7 @@ msgstr "Hayvonlar"
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:183
 #, elixir-autogen, elixir-format
 msgid "Events"
-msgstr "Tadbirlar"
+msgstr "Hodisalar"
 
 #: lib/elixir4vet_web/live/admin/permissions_live.ex:191
 #, elixir-autogen, elixir-format

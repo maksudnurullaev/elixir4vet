@@ -32,6 +32,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT || 22 }}
           script: |
             set -e
+            # Устанавливаем переменные окружения
             source ~/.profile
 
             # Перейти в директорию проекта
@@ -41,9 +42,6 @@ jobs:
             git fetch origin
             git checkout master
             git pull origin master
-
-            # Устанавливаем переменные окружения
-            # source /etc/elixir4vet/.env.prod
 
             # Устанавливаем зависимости и собираем релиз
             export PATH="/home/elixir4vet/.elixir-install/installs/elixir/1.19.5-otp-28/bin:$PATH"

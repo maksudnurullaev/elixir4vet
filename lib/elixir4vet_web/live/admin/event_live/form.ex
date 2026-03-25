@@ -35,8 +35,18 @@ defmodule Elixir4vetWeb.Admin.EventLive.Form do
           prompt={gettext("Select event type")}
         />
 
-        <.input field={@form[:event_date]} type="date" label={gettext("Event Date")} />
-        <.input field={@form[:event_time]} type="time" label={gettext("Event Time")} />
+        <.input
+          field={@form[:event_date]}
+          type="date"
+          label={gettext("Event Date")}
+          readonly={@lock_datetime}
+        />
+        <.input
+          field={@form[:event_time]}
+          type="time"
+          label={gettext("Event Time")}
+          readonly={@lock_datetime}
+        />
         <.input field={@form[:location]} type="text" label={gettext("Location")} />
 
         <.input
@@ -84,6 +94,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Form do
   end
 
   defp return_to("show"), do: "show"
+  defp return_to("show_animal"), do: "show_animal"
   defp return_to(_), do: "index"
 
   defp apply_action(socket, :edit, %{"id" => id}) do
@@ -92,15 +103,24 @@ defmodule Elixir4vetWeb.Admin.EventLive.Form do
     socket
     |> assign(:page_title, gettext("Edit Event"))
     |> assign(:event, event)
+    |> assign(:lock_datetime, false)
     |> assign(:form, to_form(Events.change_event(socket.assigns.current_scope, event)))
   end
 
-  defp apply_action(socket, :new, _params) do
-    event = %Event{}
+  defp apply_action(socket, :new, params) do
+    animal_id = params["animal_id"]
+    now = DateTime.utc_now() |> DateTime.add(5 * 3600)
+
+    event = %Event{
+      animal_id: animal_id && String.to_integer(animal_id),
+      event_date: DateTime.to_date(now),
+      event_time: DateTime.to_time(now) |> Time.truncate(:second)
+    }
 
     socket
     |> assign(:page_title, gettext("New Event"))
     |> assign(:event, event)
+    |> assign(:lock_datetime, true)
     |> assign(:form, to_form(Events.change_event(socket.assigns.current_scope, event)))
   end
 
@@ -149,6 +169,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Form do
 
   defp return_path(_scope, "index", _event), do: ~p"/admin/events"
   defp return_path(_scope, "show", event), do: ~p"/admin/events/#{event}"
+  defp return_path(_scope, "show_animal", event), do: ~p"/admin/animals/#{event.animal_id}"
 
   defp event_type_options do
     Enum.map(Event.event_types(), fn type ->

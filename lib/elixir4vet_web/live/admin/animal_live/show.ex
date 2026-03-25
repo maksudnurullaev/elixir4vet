@@ -3,6 +3,9 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
 
   alias Elixir4vet.Accounts
   alias Elixir4vet.Animals
+  alias Elixir4vet.Events
+
+  import Elixir4vetWeb.Admin.EventLive.Helpers
 
   @impl true
   def render(assigns) do
@@ -75,6 +78,61 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
           </.link>
         </:action>
       </.table>
+
+      <div class="divider"></div>
+
+      <.header>
+        {gettext("Events")}
+        <:actions>
+          <.button
+            variant="primary"
+            navigate={~p"/admin/events/new?animal_id=#{@animal.id}&return_to=show_animal"}
+          >
+            <.icon name="hero-plus" /> {gettext("New Event")}
+          </.button>
+        </:actions>
+      </.header>
+
+      <.table
+        id="animal-events"
+        rows={@streams.events}
+        row_click={fn {_id, event} -> JS.navigate(~p"/admin/events/#{event}") end}
+      >
+        <:col :let={{_id, event}} label={gettext("Type")}>
+          <span class="capitalize">{translate_event_type(event.event_type)}</span>
+        </:col>
+        <:col :let={{_id, event}} label={gettext("Date")}>{event.event_date}</:col>
+        <:col :let={{_id, event}} label={gettext("Location")}>{event.location}</:col>
+        <:col :let={{_id, event}} label={gettext("Performed By")}>
+          <%= cond do %>
+            <% event.performed_by_user -> %>
+              {event.performed_by_user.email}
+            <% event.performed_by_organization -> %>
+              {event.performed_by_organization.name}
+            <% true -> %>
+              —
+          <% end %>
+        </:col>
+        <:col :let={{_id, event}} label={gettext("Cost")}>
+          {if event.cost, do: event.cost, else: "—"}
+        </:col>
+        <:action :let={{_id, event}}>
+          <div class="sr-only">
+            <.link navigate={~p"/admin/events/#{event}"}>{gettext("Show")}</.link>
+          </div>
+          <.link navigate={~p"/admin/events/#{event}/edit?return_to=show_animal"}>
+            {gettext("Edit")}
+          </.link>
+        </:action>
+        <:action :let={{id, event}}>
+          <.link
+            phx-click={JS.push("delete_event", value: %{id: event.id}) |> hide("##{id}")}
+            data-confirm={gettext("Are you sure?")}
+          >
+            {gettext("Delete")}
+          </.link>
+        </:action>
+      </.table>
     </Layouts.app>
     """
   end
@@ -83,6 +141,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
   def mount(%{"id" => id}, _session, socket) do
     if connected?(socket) do
       Animals.subscribe_animals(socket.assigns.current_scope)
+      Events.subscribe_events(socket.assigns.current_scope)
     end
 
     animal = Animals.get_animal!(socket.assigns.current_scope, id)
@@ -94,7 +153,8 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
      |> assign(:page_title, gettext("Show Animal"))
      |> assign(:animal, animal)
      |> assign(:owners, owners)
-     |> assign(:users, users)}
+     |> assign(:users, users)
+     |> stream(:events, Events.list_events_for_animal(socket.assigns.current_scope, animal))}
   end
 
   @impl true
@@ -133,6 +193,30 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
       {:error, _reason} ->
         {:noreply, put_flash(socket, :error, gettext("Failed to remove owner"))}
     end
+  end
+
+  @impl true
+  def handle_event("delete_event", %{"id" => id}, socket) do
+    event = Events.get_event!(socket.assigns.current_scope, id)
+    {:ok, _} = Events.delete_event(socket.assigns.current_scope, event)
+    {:noreply, stream_delete(socket, :events, event)}
+  end
+
+  @impl true
+  def handle_info({type, %Elixir4vet.Events.Event{animal_id: animal_id}}, socket)
+      when type in [:created, :updated, :deleted] and animal_id == socket.assigns.animal.id do
+    {:noreply,
+     stream(
+       socket,
+       :events,
+       Events.list_events_for_animal(socket.assigns.current_scope, socket.assigns.animal),
+       reset: true
+     )}
+  end
+
+  def handle_info({type, %Elixir4vet.Events.Event{}}, socket)
+      when type in [:created, :updated, :deleted] do
+    {:noreply, socket}
   end
 
   @impl true
