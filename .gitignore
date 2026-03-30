@@ -50,3 +50,6 @@ npm-debug.log
 .DS_Store
 Thumbs.db
 /.vscode/   
+# Uploaded files
+/priv/static/uploads/photos/*/
+!/priv/static/uploads/photos/.gitkeep
