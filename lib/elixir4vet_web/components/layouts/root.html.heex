@@ -59,10 +59,26 @@
             <details class="submenu-details">
               <summary>{gettext("Services")}</summary>
               <ul class="p-2 bg-base-100 z-50">
-                <li><a class="whitespace-nowrap">{gettext("Veterinary Care")}</a></li>
-                <li><a class="whitespace-nowrap">{gettext("Animal Shelter")}</a></li>
-                <li><a class="whitespace-nowrap">{gettext("Adoption")}</a></li>
-                <li><a class="whitespace-nowrap">{gettext("Events")}</a></li>
+                <li>
+                  <.link navigate={~p"/services/veterinary"} class="whitespace-nowrap">
+                    {gettext("Veterinary Care")}
+                  </.link>
+                </li>
+                <li>
+                  <.link navigate={~p"/services/shelter"} class="whitespace-nowrap">
+                    {gettext("Animal Shelter")}
+                  </.link>
+                </li>
+                <li>
+                  <.link navigate={~p"/services/adoption"} class="whitespace-nowrap">
+                    {gettext("Adoption")}
+                  </.link>
+                </li>
+                <li>
+                  <.link navigate={~p"/services/events"} class="whitespace-nowrap">
+                    {gettext("Events")}
+                  </.link>
+                </li>
               </ul>
             </details>
           </li>
@@ -70,9 +86,9 @@
             <details class="submenu-details">
               <summary>{gettext("Company")}</summary>
               <ul class="p-2 bg-base-100 z-50">
-                <li><a>{gettext("About us")}</a></li>
-                <li><a>{gettext("Contact")}</a></li>
-                <li><a>{gettext("Jobs")}</a></li>
+                <li><.link navigate={~p"/about"}>{gettext("About us")}</.link></li>
+                <li><.link navigate={~p"/contact"}>{gettext("Contact")}</.link></li>
+                <li><.link navigate={~p"/jobs"}>{gettext("Jobs")}</.link></li>
               </ul>
             </details>
           </li>
@@ -109,10 +125,12 @@
                       <li><.link navigate={~p"/admin/animals"}>{gettext("Animals")}</.link></li>
                     <% end %>
                     <%= if Map.get(@current_scope.permissions, "events") in ["RO", "RW"] do %>
-                      <li><a href="#events">{gettext("Events")}</a></li>
+                      <li><.link navigate={~p"/admin/events"}>{gettext("Events")}</.link></li>
                     <% end %>
                     <%= if Map.get(@current_scope.permissions, "photographs") in ["RO", "RW"] do %>
-                      <li><a href="#photographs">{gettext("Photographs")}</a></li>
+                      <li>
+                        <.link navigate={~p"/admin/photographs"}>{gettext("Photographs")}</.link>
+                      </li>
                     <% end %>
                   </ul>
                 </details>
@@ -261,7 +279,12 @@
         </div>
       </div>
       <div class="grid grid-flow-col gap-4">
-        <a>
+        <a
+          href="https://twitter.com/vetvisionuz"
+          target="_blank"
+          rel="noopener"
+          aria-label="Twitter"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -273,7 +296,12 @@
             </path>
           </svg>
         </a>
-        <a>
+        <a
+          href="https://youtube.com/@vetvisionuz"
+          target="_blank"
+          rel="noopener"
+          aria-label="YouTube"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -285,7 +313,12 @@
             </path>
           </svg>
         </a>
-        <a>
+        <a
+          href="https://facebook.com/vetvisionuz"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

@@ -79,6 +79,8 @@ defmodule Elixir4vetWeb.Router do
       live "/events/new", EventLive.Form, :new
       live "/events/:id", EventLive.Show, :show
       live "/events/:id/edit", EventLive.Form, :edit
+
+      live "/photographs", PhotographLive.Index, :index
     end
   end
 
@@ -112,6 +114,13 @@ defmodule Elixir4vetWeb.Router do
       live "/users/log-in/:token", UserLive.Confirmation, :new
       live "/terms", PageLive.Terms, :index
       live "/privacy", PageLive.Privacy, :index
+      live "/about", PageLive.About, :index
+      live "/contact", PageLive.Contact, :index
+      live "/jobs", PageLive.Jobs, :index
+      live "/services/veterinary", PageLive.Veterinary, :index
+      live "/services/shelter", PageLive.Shelter, :index
+      live "/services/adoption", PageLive.Adoption, :index
+      live "/services/events", PageLive.PublicEvents, :index
     end
 
     post "/login", UserSessionController, :create
