@@ -15,6 +15,15 @@ defmodule Elixir4vetWeb.Endpoint do
     websocket: [connect_info: [session: @session_options]],
     longpoll: [connect_info: [session: @session_options]]
 
+  # Serve uploaded files from a persistent directory outside the release.
+  # In production this is /var/lib/elixir4vet/uploads (set in config/prod.exs)
+  # so uploads survive deploys. In dev it falls back to priv/static/uploads.
+  plug Plug.Static,
+    at: "/uploads",
+    from:
+      Application.compile_env(:elixir4vet, :uploads_path, Path.join("priv", "static/uploads")),
+    gzip: false
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # When code reloading is disabled (e.g., in production),

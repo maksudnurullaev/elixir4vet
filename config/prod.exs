@@ -23,6 +23,9 @@ config :elixir4vet, Elixir4vetWeb.Endpoint,
 
 # Configure Swoosh API Client
 # Swoosh.ApiClient.Req
+# Store user uploads outside the release so they survive deploys
+config :elixir4vet, :uploads_path, "/var/lib/elixir4vet/uploads"
+
 config :swoosh, api_client: false
 
 # Disable Swoosh Local Memory Storage

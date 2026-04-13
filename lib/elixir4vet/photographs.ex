@@ -228,13 +228,10 @@ defmodule Elixir4vet.Photographs do
   # ---------------------------------------------------------------------------
 
   defp build_dir(event_id, uuid) do
-    Path.join([
-      :code.priv_dir(:elixir4vet),
-      "static",
-      "uploads",
-      "photos",
-      to_string(event_id),
-      uuid
-    ])
+    base =
+      Application.get_env(:elixir4vet, :uploads_path) ||
+        Path.join([:code.priv_dir(:elixir4vet), "static", "uploads"])
+
+    Path.join([base, "photos", to_string(event_id), uuid])
   end
 end
