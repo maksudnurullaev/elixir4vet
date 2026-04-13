@@ -128,21 +128,36 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
       </.header>
 
       <%!-- Webcam capture modal --%>
-      <dialog id="webcam-modal" class="modal">
-        <div class="modal-box max-w-lg">
+      <dialog id="webcam-modal" class="modal sm:modal-middle">
+        <div class="modal-box w-full max-w-full rounded-none sm:rounded-box sm:max-w-lg h-full sm:h-auto flex flex-col">
           <h3 class="font-bold text-lg mb-3">{gettext("Take a Photo")}</h3>
           <video
             id="webcam-video"
-            class="w-full rounded-lg bg-black aspect-video"
+            class="w-full rounded-lg bg-black flex-1 sm:flex-none sm:aspect-video object-cover"
             autoplay
             playsinline
             muted
           >
           </video>
-          <div class="modal-action">
+          <div class="modal-action flex-wrap gap-2">
             <button type="button" id="webcam-capture-btn" class="btn btn-primary">
               <.icon name="hero-camera" /> {gettext("Capture")}
             </button>
+            <%!-- Flip front / back camera --%>
+            <button
+              type="button"
+              id="webcam-flip-btn"
+              class="btn btn-ghost tooltip"
+              data-tip={gettext("Flip camera")}
+            >
+              <.icon name="hero-arrow-path" />
+            </button>
+            <%!-- Resolution selector --%>
+            <select id="webcam-resolution" class="select select-bordered select-sm self-center">
+              <option value="480p">480p</option>
+              <option value="720p" selected>720p</option>
+              <option value="1080p">1080p</option>
+            </select>
             <button type="button" id="webcam-close-btn" class="btn">
               {gettext("Cancel")}
             </button>

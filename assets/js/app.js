@@ -87,12 +87,33 @@ const PhoneMask = {
 }
 
 const WebcamCapture = {
+  RESOLUTIONS: {
+    "480p":  { width: { ideal: 854  }, height: { ideal: 480  } },
+    "720p":  { width: { ideal: 1280 }, height: { ideal: 720  } },
+    "1080p": { width: { ideal: 1920 }, height: { ideal: 1080 } },
+  },
+
+  async startCamera() {
+    if (this.stream) {
+      this.stream.getTracks().forEach(t => t.stop())
+      this.stream = null
+    }
+    const res = this.RESOLUTIONS[this.resSelect.value] || this.RESOLUTIONS["720p"]
+    this.stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: this.facingMode }, ...res }
+    })
+    this.video.srcObject = this.stream
+    await this.video.play()
+  },
+
   mounted() {
     this.stream = null
-    const modal = document.getElementById("webcam-modal")
-    const video = document.getElementById("webcam-video")
+    this.facingMode = "environment"
 
-    // Stop the stream whenever the dialog closes (button or backdrop click)
+    const modal = document.getElementById("webcam-modal")
+    this.video = document.getElementById("webcam-video")
+    this.resSelect = document.getElementById("webcam-resolution")
+
     modal.addEventListener("close", () => {
       if (this.stream) {
         this.stream.getTracks().forEach(t => t.stop())
@@ -102,22 +123,27 @@ const WebcamCapture = {
 
     this.el.addEventListener("click", async () => {
       try {
-        this.stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 } }
-        })
-        video.srcObject = this.stream
-        await video.play()
+        await this.startCamera()
         modal.showModal()
       } catch (_e) {
         alert("Camera access denied or not available.")
       }
     })
 
+    document.getElementById("webcam-flip-btn").addEventListener("click", async () => {
+      this.facingMode = this.facingMode === "environment" ? "user" : "environment"
+      if (this.stream) await this.startCamera()
+    })
+
+    this.resSelect.addEventListener("change", async () => {
+      if (this.stream) await this.startCamera()
+    })
+
     document.getElementById("webcam-capture-btn").addEventListener("click", () => {
       const canvas = document.createElement("canvas")
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
-      canvas.getContext("2d").drawImage(video, 0, 0)
+      canvas.width = this.video.videoWidth
+      canvas.height = this.video.videoHeight
+      canvas.getContext("2d").drawImage(this.video, 0, 0)
       const dataUrl = canvas.toDataURL("image/jpeg", 0.9)
       this.pushEvent("webcam_capture", { data: dataUrl })
       modal.close()

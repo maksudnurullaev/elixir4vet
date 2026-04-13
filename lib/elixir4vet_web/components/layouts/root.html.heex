@@ -140,8 +140,8 @@
         </ul>
       </div>
       
-<!-- Language Switcher -->
-      <div class="flex-none mx-2">
+<!-- Language Switcher (desktop only — also in hamburger menu below) -->
+      <div class="flex-none mx-2 hidden md:block">
         <div class="dropdown dropdown-end">
           <label tabindex="0" class="btn btn-ghost btn-sm">
             <%= case assigns[:locale] || "en" do %>
@@ -190,8 +190,8 @@
         </div>
       </div>
       
-<!-- Auth Section -->
-      <div class="flex-none">
+<!-- Auth Section (desktop only — also in hamburger menu below) -->
+      <div class="flex-none hidden md:flex">
         <%= if @current_scope && @current_scope.user do %>
           <!-- Logged In: User Info + Menu -->
           <div class="flex items-center gap-3">
@@ -258,6 +258,139 @@
           </div>
         <% end %>
       </div>
+      <!-- Mobile hamburger menu (hidden on md+) -->
+      <div class="flex-1 flex justify-end md:hidden">
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-sm">
+            <.icon name="hero-bars-3" class="size-6" />
+          </label>
+          <ul
+            tabindex="0"
+            class="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-64 mt-3 border border-base-300 z-50"
+          >
+            <li><a href={~p"/"}>{gettext("Home")}</a></li>
+            <li>
+              <details>
+                <summary>{gettext("Services")}</summary>
+                <ul>
+                  <li>
+                    <.link navigate={~p"/services/veterinary"}>
+                      {gettext("Veterinary Care")}
+                    </.link>
+                  </li>
+                  <li>
+                    <.link navigate={~p"/services/shelter"}>{gettext("Animal Shelter")}</.link>
+                  </li>
+                  <li><.link navigate={~p"/services/adoption"}>{gettext("Adoption")}</.link></li>
+                  <li><.link navigate={~p"/services/events"}>{gettext("Events")}</.link></li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>{gettext("Company")}</summary>
+                <ul>
+                  <li><.link navigate={~p"/about"}>{gettext("About us")}</.link></li>
+                  <li><.link navigate={~p"/contact"}>{gettext("Contact")}</.link></li>
+                  <li><.link navigate={~p"/jobs"}>{gettext("Jobs")}</.link></li>
+                </ul>
+              </details>
+            </li>
+            <%= if @current_scope && @current_scope.user do %>
+              <%= if Map.get(@current_scope.permissions, "organizations") in ["RO", "RW"] or
+                     Map.get(@current_scope.permissions, "animals") in ["RO", "RW"] or
+                     Map.get(@current_scope.permissions, "events") in ["RO", "RW"] or
+                     Map.get(@current_scope.permissions, "photographs") in ["RO", "RW"] do %>
+                <li>
+                  <details>
+                    <summary>{gettext("Resources")}</summary>
+                    <ul>
+                      <%= if Map.get(@current_scope.permissions, "organizations") in ["RO", "RW"] do %>
+                        <li>
+                          <.link navigate={~p"/admin/organizations"}>
+                            {gettext("Organizations")}
+                          </.link>
+                        </li>
+                      <% end %>
+                      <%= if Map.get(@current_scope.permissions, "animals") in ["RO", "RW"] do %>
+                        <li>
+                          <.link navigate={~p"/admin/animals"}>{gettext("Animals")}</.link>
+                        </li>
+                      <% end %>
+                      <%= if Map.get(@current_scope.permissions, "events") in ["RO", "RW"] do %>
+                        <li>
+                          <.link navigate={~p"/admin/events"}>{gettext("Events")}</.link>
+                        </li>
+                      <% end %>
+                      <%= if Map.get(@current_scope.permissions, "photographs") in ["RO", "RW"] do %>
+                        <li>
+                          <.link navigate={~p"/admin/photographs"}>
+                            {gettext("Photographs")}
+                          </.link>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </details>
+                </li>
+              <% end %>
+            <% end %>
+            <div class="divider my-1"></div>
+            <li>
+              <a
+                href="#"
+                onclick="window.location.href = window.location.pathname + '?locale=en'; return false;"
+              >
+                English
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="window.location.href = window.location.pathname + '?locale=ru'; return false;"
+              >
+                Русский
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                onclick="window.location.href = window.location.pathname + '?locale=uz'; return false;"
+              >
+                O'zbekcha
+              </a>
+            </li>
+            <div class="divider my-1"></div>
+            <%= if @current_scope && @current_scope.user do %>
+              <%= if Elixir4vet.Accounts.admin?(@current_scope.user) do %>
+                <li>
+                  <details>
+                    <summary class="text-warning font-semibold">{gettext("Admin")}</summary>
+                    <ul>
+                      <li>
+                        <.link navigate={~p"/admin/users"}>{gettext("Users Management")}</.link>
+                      </li>
+                      <li>
+                        <.link navigate={~p"/admin/permissions"}>{gettext("Permissions")}</.link>
+                      </li>
+                    </ul>
+                  </details>
+                </li>
+              <% end %>
+              <li><.link navigate={~p"/users/settings"}>{gettext("Settings")}</.link></li>
+              <li>
+                <.link href={~p"/users/log-out"} method="delete" class="text-error">
+                  {gettext("Log out")}
+                </.link>
+              </li>
+            <% else %>
+              <li><.link navigate={~p"/users/register"}>{gettext("Register")}</.link></li>
+              <li>
+                <.link navigate={~p"/login"} class="font-semibold">{gettext("Log in")}</.link>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </header>
     
 <!-- Main Content -->
@@ -266,7 +399,7 @@
       {@inner_content}
     </main>
 
-    <footer class="footer px-10 py-4 border-t bg-base-200 text-base-content border-base-300 flex justify-between items-center">
+    <footer class="footer px-4 sm:px-10 py-6 border-t bg-base-200 text-base-content border-base-300 flex flex-col sm:flex-row gap-4 justify-between items-center">
       <div class="items-center grid-flow-col">
         <p>{gettext("© 2026 VetVision.UZ. All rights reserved.")}</p>
         <div class="flex gap-4 mt-1 text-sm">
