@@ -234,7 +234,10 @@ defmodule Elixir4vet.Photographs do
 
     with {:ok, image} <- tap_ok(Image.open(path), "open image"),
          font_size <- max(16, div(Image.width(image), 40)),
-         _ <- Logger.debug("[Watermark] Size: #{Image.width(image)}x#{Image.height(image)}, font: #{font_size}px"),
+         _ <-
+           Logger.debug(
+             "[Watermark] Size: #{Image.width(image)}x#{Image.height(image)}, font: #{font_size}px"
+           ),
          {:ok, label} <-
            tap_ok(
              Image.Text.simple_text("VetVision.Uz",
@@ -270,6 +273,7 @@ defmodule Elixir4vet.Photographs do
 
   defp tap_ok({:ok, val} = result, step) do
     Logger.debug("[Watermark] OK: #{step}")
+
     result
     |> then(fn _ -> {:ok, val} end)
   end
