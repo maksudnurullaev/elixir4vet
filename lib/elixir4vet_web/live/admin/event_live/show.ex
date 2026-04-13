@@ -98,16 +98,16 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
                 <.live_file_input upload={@uploads.photos} class="hidden" />
               </label>
 
-              <%!-- Camera capture (one shot, opens camera on mobile) --%>
-              <label for={@uploads.camera.ref} class="btn btn-secondary btn-sm cursor-pointer">
+              <%!-- Camera capture via webcam --%>
+              <button
+                type="button"
+                id="webcam-btn"
+                phx-hook="WebcamCapture"
+                class="btn btn-secondary btn-sm"
+              >
                 <.icon name="hero-camera" />
                 {gettext("Camera")}
-                <.live_file_input
-                  upload={@uploads.camera}
-                  class="hidden"
-                  capture="environment"
-                />
-              </label>
+              </button>
 
               <%= if @uploads.photos.entries != [] or @uploads.camera.entries != [] do %>
                 <button
@@ -126,6 +126,32 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
           <% end %>
         </:actions>
       </.header>
+
+      <%!-- Webcam capture modal --%>
+      <dialog id="webcam-modal" class="modal">
+        <div class="modal-box max-w-lg">
+          <h3 class="font-bold text-lg mb-3">{gettext("Take a Photo")}</h3>
+          <video
+            id="webcam-video"
+            class="w-full rounded-lg bg-black aspect-video"
+            autoplay
+            playsinline
+            muted
+          >
+          </video>
+          <div class="modal-action">
+            <button type="button" id="webcam-capture-btn" class="btn btn-primary">
+              <.icon name="hero-camera" /> {gettext("Capture")}
+            </button>
+            <button type="button" id="webcam-close-btn" class="btn">
+              {gettext("Cancel")}
+            </button>
+          </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+          <button>{gettext("close")}</button>
+        </form>
+      </dialog>
 
       <%!-- Upload errors (file picker + camera) --%>
       <%= for {upload, slot} <- [{@uploads.photos, "photos"}, {@uploads.camera, "camera"}],
@@ -299,6 +325,26 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
       end
 
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("webcam_capture", %{"data" => data_url}, socket) do
+    event = socket.assigns.event
+    user = socket.assigns.current_scope.user
+
+    case Photographs.upload_from_webcam(event, user, data_url) do
+      {:ok, _photo} ->
+        {:noreply,
+         socket
+         |> refresh_photos()
+         |> put_flash(:info, gettext("Photo captured successfully."))}
+
+      {:error, :limit_reached} ->
+        {:noreply, put_flash(socket, :error, gettext("Photo limit reached."))}
+
+      {:error, _reason} ->
+        {:noreply, put_flash(socket, :error, gettext("Camera capture failed."))}
+    end
   end
 
   @impl true

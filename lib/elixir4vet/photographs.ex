@@ -69,6 +69,40 @@ defmodule Elixir4vet.Photographs do
     end
   end
 
+  @doc """
+  Saves a webcam-captured photo for an event from a base64 data URL
+  (e.g. `"data:image/jpeg;base64,..."`).
+  """
+  def upload_from_webcam(event, user, data_url) do
+    if count_for_event(event.id) >= @max_per_event do
+      {:error, :limit_reached}
+    else
+      with {:ok, binary} <- decode_data_url(data_url),
+           tmp_path <-
+             Path.join(System.tmp_dir!(), "webcam_#{System.unique_integer([:positive])}.jpg"),
+           :ok <- File.write(tmp_path, binary) do
+        fake_entry = %{
+          client_name: "webcam_capture.jpg",
+          client_size: byte_size(binary),
+          client_type: "image/jpeg"
+        }
+
+        result = do_upload(event, user, tmp_path, fake_entry)
+        File.rm(tmp_path)
+        result
+      end
+    end
+  end
+
+  defp decode_data_url("data:" <> rest) do
+    case String.split(rest, ",", parts: 2) do
+      [_header, b64] -> Base.decode64(b64)
+      _ -> {:error, :invalid_data_url}
+    end
+  end
+
+  defp decode_data_url(_), do: {:error, :invalid_data_url}
+
   defp do_upload(event, user, tmp_path, upload_entry) do
     uuid = Ecto.UUID.generate()
     dest_dir = build_dir(event.id, uuid)

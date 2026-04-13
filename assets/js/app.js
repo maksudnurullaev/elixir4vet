@@ -86,11 +86,60 @@ const PhoneMask = {
   }
 }
 
+const WebcamCapture = {
+  mounted() {
+    this.stream = null
+    const modal = document.getElementById("webcam-modal")
+    const video = document.getElementById("webcam-video")
+
+    // Stop the stream whenever the dialog closes (button or backdrop click)
+    modal.addEventListener("close", () => {
+      if (this.stream) {
+        this.stream.getTracks().forEach(t => t.stop())
+        this.stream = null
+      }
+    })
+
+    this.el.addEventListener("click", async () => {
+      try {
+        this.stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 } }
+        })
+        video.srcObject = this.stream
+        await video.play()
+        modal.showModal()
+      } catch (_e) {
+        alert("Camera access denied or not available.")
+      }
+    })
+
+    document.getElementById("webcam-capture-btn").addEventListener("click", () => {
+      const canvas = document.createElement("canvas")
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+      canvas.getContext("2d").drawImage(video, 0, 0)
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.9)
+      this.pushEvent("webcam_capture", { data: dataUrl })
+      modal.close()
+    })
+
+    document.getElementById("webcam-close-btn").addEventListener("click", () => {
+      modal.close()
+    })
+  },
+
+  destroyed() {
+    if (this.stream) {
+      this.stream.getTracks().forEach(t => t.stop())
+    }
+  }
+}
+
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
-  hooks: { ...colocatedHooks, PhoneMask },
+  hooks: { ...colocatedHooks, PhoneMask, WebcamCapture },
 })
 
 // Show progress bar on live navigation and form submits
