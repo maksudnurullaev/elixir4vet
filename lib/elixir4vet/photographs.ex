@@ -14,6 +14,7 @@ defmodule Elixir4vet.Photographs do
   by convention: "/" <> file_path <> "/thumb_sm.jpg".
   """
 
+  require Logger
   import Ecto.Query, warn: false
 
   alias Elixir4vet.Photographs.Photograph
@@ -111,6 +112,7 @@ defmodule Elixir4vet.Photographs do
          {:ok, ext} <- validate_extension(upload_entry.client_name),
          original_path = Path.join(dest_dir, "original#{ext}"),
          :ok <- File.cp(tmp_path, original_path),
+         :ok <- apply_watermark(original_path),
          {:ok, {width, height}} <- read_dimensions(original_path),
          :ok <- generate_thumbnails(original_path, dest_dir),
          {:ok, photo} <- insert_record(event, user, upload_entry, uuid, ext, width, height) do
@@ -226,6 +228,61 @@ defmodule Elixir4vet.Photographs do
   # ---------------------------------------------------------------------------
   # Private helpers
   # ---------------------------------------------------------------------------
+
+  defp apply_watermark(path) do
+    Logger.debug("[Watermark] Starting for: #{path}")
+
+    with {:ok, image} <- tap_ok(Image.open(path), "open image"),
+         font_size <- max(16, div(Image.width(image), 40)),
+         _ <- Logger.debug("[Watermark] Size: #{Image.width(image)}x#{Image.height(image)}, font: #{font_size}px"),
+         {:ok, label} <-
+           tap_ok(
+             Image.Text.simple_text("VetVision.Uz",
+               text_fill_color: :white,
+               font_size: font_size,
+               padding: 8,
+               background_fill_color: :black,
+               background_fill_opacity: 0.55
+             ),
+             "render text label"
+           ),
+         x <- Image.width(image) - Image.width(label) - 12,
+         y <- Image.height(image) - Image.height(label) - 12,
+         _ <- Logger.debug("[Watermark] Composing label at x=#{x}, y=#{y}"),
+         {:ok, watermarked} <- tap_ok(Image.compose(image, label, x: x, y: y), "compose"),
+         result <- Image.write(watermarked, path),
+         _ <- Logger.debug("[Watermark] Write result: #{inspect(result)}") do
+      case result do
+        {:ok, _} ->
+          Logger.debug("[Watermark] Done: #{path}")
+          :ok
+
+        error ->
+          Logger.error("[Watermark] Write failed: #{inspect(error)}")
+          :ok
+      end
+    else
+      error ->
+        Logger.error("[Watermark] Failed: #{inspect(error)}")
+        :ok
+    end
+  end
+
+  defp tap_ok({:ok, val} = result, step) do
+    Logger.debug("[Watermark] OK: #{step}")
+    result
+    |> then(fn _ -> {:ok, val} end)
+  end
+
+  defp tap_ok({:error, reason} = result, step) do
+    Logger.error("[Watermark] FAILED at '#{step}': #{inspect(reason)}")
+    result
+  end
+
+  defp tap_ok(other, step) do
+    Logger.error("[Watermark] Unexpected result at '#{step}': #{inspect(other)}")
+    {:error, other}
+  end
 
   defp build_dir(event_id, uuid) do
     base =
