@@ -16,7 +16,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
+    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
       <.header>
         <div class="flex items-center gap-1 flex-wrap text-base font-semibold">
           <%= if @event.animal do %>
@@ -45,30 +45,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
 
       <.list>
         <:item title={gettext("Location")}>
-          <%= if @event.location && String.starts_with?(@event.location, "@") do %>
-            <% [lat, lon] = @event.location |> String.trim_leading("@") |> String.split(",", parts: 2) %>
-            <span class="flex flex-wrap items-center gap-2">
-              <span class="font-mono text-sm">{@event.location}</span>
-              <a
-                href={"https://maps.google.com/?q=#{lat},#{lon}"}
-                target="_blank"
-                rel="noopener"
-                class="badge badge-sm badge-outline hover:badge-primary"
-              >
-                Google Maps
-              </a>
-              <a
-                href={"https://yandex.com/maps/?ll=#{lon},#{lat}&z=15&pt=#{lon},#{lat}"}
-                target="_blank"
-                rel="noopener"
-                class="badge badge-sm badge-outline hover:badge-secondary"
-              >
-                Yandex Maps
-              </a>
-            </span>
-          <% else %>
-            {@event.location}
-          <% end %>
+          <.location_link location={@event.location} />
         </:item>
         <:item title={gettext("Performed By User")}>
           {if @event.performed_by_user, do: @event.performed_by_user.email, else: gettext("N/A")}

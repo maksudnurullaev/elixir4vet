@@ -7,7 +7,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Index do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
+    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
       <.header>
         {gettext("Listing Events")}
         <:actions>
@@ -30,7 +30,9 @@ defmodule Elixir4vetWeb.Admin.EventLive.Index do
         </:col>
         <:col :let={{_id, event}} label={gettext("Date")}>{event.event_date}</:col>
         <:col :let={{_id, event}} label={gettext("Time")}>{event.event_time}</:col>
-        <:col :let={{_id, event}} label={gettext("Location")}>{event.location}</:col>
+        <:col :let={{_id, event}} label={gettext("Location")}>
+          <.location_link location={event.location} />
+        </:col>
         <:col :let={{_id, event}} label={gettext("Performed By")}>
           <%= cond do %>
             <% event.performed_by_user -> %>

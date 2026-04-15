@@ -12,10 +12,9 @@ defmodule Elixir4vetWeb.Admin.EventLive.Form do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
+    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
       <.header>
         {@page_title}
-        <:subtitle>{gettext("Use this form to manage event records in your database.")}</:subtitle>
       </.header>
 
       <.form for={@form} id="event-form" phx-change="validate" phx-submit="save">

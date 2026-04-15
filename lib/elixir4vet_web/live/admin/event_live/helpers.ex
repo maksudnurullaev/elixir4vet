@@ -1,6 +1,49 @@
 defmodule Elixir4vetWeb.Admin.EventLive.Helpers do
   use Elixir4vetWeb, :html
 
+  attr :location, :string, default: nil
+
+  def location_link(assigns) do
+    {lat, lon} =
+      case assigns.location do
+        "@" <> rest ->
+          case String.split(rest, ",", parts: 2) do
+            [lat, lon] -> {lat, lon}
+            _ -> {nil, nil}
+          end
+
+        _ ->
+          {nil, nil}
+      end
+
+    assigns = assign(assigns, lat: lat, lon: lon)
+
+    ~H"""
+    <%= if @lat && @lon do %>
+      <span class="flex flex-wrap items-center gap-2">
+        <a
+          href={"https://maps.google.com/?q=#{@lat},#{@lon}"}
+          target="_blank"
+          rel="noopener"
+          class="badge badge-sm badge-outline hover:bg-primary hover:text-primary-content hover:border-primary"
+        >
+          Google Maps
+        </a>
+        <a
+          href={"https://yandex.com/maps/?ll=#{@lon},#{@lat}&z=15&pt=#{@lon},#{@lat}"}
+          target="_blank"
+          rel="noopener"
+          class="badge badge-sm badge-outline hover:bg-secondary hover:text-secondary-content hover:border-secondary"
+        >
+          Yandex Maps
+        </a>
+      </span>
+    <% else %>
+      {@location}
+    <% end %>
+    """
+  end
+
   def translate_event_type(type) do
     if medical?(type) do
       translate_medical(type)

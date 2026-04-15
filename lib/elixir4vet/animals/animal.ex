@@ -17,7 +17,6 @@ defmodule Elixir4vet.Animals.Animal do
     field :color, :string
     field :gender, :string, default: "male"
     field :description, :string
-    field :notes, :string
     field :owner_id, :integer, virtual: true
 
     many_to_many :owners, User, join_through: AnimalOwnership
@@ -42,7 +41,6 @@ defmodule Elixir4vet.Animals.Animal do
       :color,
       :gender,
       :description,
-      :notes,
       :owner_id
     ])
     |> validate_required([:name, :species])

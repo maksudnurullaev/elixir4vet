@@ -8,10 +8,9 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
+    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
       <.header>
         {@page_title}
-        <:subtitle>{gettext("Use this form to manage animal records in your database.")}</:subtitle>
       </.header>
 
       <.form for={@form} id="animal-form" phx-change="validate" phx-submit="save">
@@ -44,7 +43,6 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
         <% end %>
 
         <.input field={@form[:description]} type="text" label={gettext("Description")} />
-        <.input field={@form[:notes]} type="text" label={gettext("Notes")} />
         <footer>
           <.button phx-disable-with={gettext("Saving...")} variant="primary">
             {gettext("Save Animal")}

@@ -6,7 +6,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Index do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
+    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
       <.header>
         {gettext("Listing Animals")}
         <:actions>
@@ -31,7 +31,6 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Index do
         <:col :let={{_id, animal}} label={gettext("Color")}>{animal.color}</:col>
         <:col :let={{_id, animal}} label={gettext("Gender")}>{animal.gender}</:col>
         <:col :let={{_id, animal}} label={gettext("Description")}>{animal.description}</:col>
-        <:col :let={{_id, animal}} label={gettext("Notes")}>{animal.notes}</:col>
         <:action :let={{_id, animal}}>
           <div class="sr-only">
             <.link navigate={~p"/admin/animals/#{animal}"}>{gettext("Show")}</.link>

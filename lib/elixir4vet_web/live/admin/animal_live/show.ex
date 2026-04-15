@@ -10,10 +10,8 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
+    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
       <.header>
-        {gettext("Animal")} {@animal.id}
-        <:subtitle>{gettext("This is an animal record from your database.")}</:subtitle>
         <:actions>
           <.button navigate={~p"/admin/animals"}>
             <.icon name="hero-arrow-left" />
@@ -34,7 +32,6 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
         <:item title={gettext("Color")}>{@animal.color}</:item>
         <:item title={gettext("Gender")}>{@animal.gender}</:item>
         <:item title={gettext("Description")}>{@animal.description}</:item>
-        <:item title={gettext("Notes")}>{@animal.notes}</:item>
       </.list>
 
       <div class="divider"></div>
@@ -103,7 +100,9 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
           <span class="capitalize">{translate_event_type(event.event_type)}</span>
         </:col>
         <:col :let={{_id, event}} label={gettext("Date")}>{event.event_date}</:col>
-        <:col :let={{_id, event}} label={gettext("Location")}>{event.location}</:col>
+        <:col :let={{_id, event}} label={gettext("Location")}>
+          <.location_link location={event.location} />
+        </:col>
         <:col :let={{_id, event}} label={gettext("Performed By")}>
           <%= cond do %>
             <% event.performed_by_user -> %>
@@ -159,6 +158,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
   end
 
   @impl true
+  @spec handle_event(<<_::72, _::_*24>>, map(), Phoenix.LiveView.Socket.t()) :: {:noreply, map()}
   def handle_event("add_owner", %{"user_id" => user_id, "ownership_type" => type}, socket) do
     case Animals.add_animal_owner(
            socket.assigns.current_scope,
