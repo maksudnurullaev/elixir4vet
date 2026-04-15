@@ -161,11 +161,28 @@ const WebcamCapture = {
   }
 }
 
+const GeoLocation = {
+  mounted() {
+    // Only auto-fill on new events (empty field)
+    if (this.el.value || !navigator.geolocation) return
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        this.el.value = `@${latitude.toFixed(5)},${longitude.toFixed(5)}`
+        this.el.dispatchEvent(new Event("input", { bubbles: true }))
+        this.el.dispatchEvent(new Event("change", { bubbles: true }))
+      },
+      (_err) => { /* user denied or unavailable — leave field empty */ },
+      { timeout: 8000 }
+    )
+  }
+}
+
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
-  hooks: { ...colocatedHooks, PhoneMask, WebcamCapture },
+  hooks: { ...colocatedHooks, PhoneMask, WebcamCapture, GeoLocation },
 })
 
 // Show progress bar on live navigation and form submits
