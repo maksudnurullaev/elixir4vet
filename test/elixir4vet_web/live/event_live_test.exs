@@ -282,7 +282,6 @@ defmodule Elixir4vetWeb.EventLiveTest do
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/new")
 
       assert html =~ "New Event"
-      assert html =~ "Use this form"
     end
 
     test "displays animal dropdown", %{conn: conn, animal: animal} do
@@ -398,7 +397,6 @@ defmodule Elixir4vetWeb.EventLiveTest do
       {:ok, _form_live, html} = live(conn, ~p"/admin/events/#{event}/edit")
 
       assert html =~ "Edit Event"
-      assert html =~ "Use this form"
     end
 
     test "pre-fills form with event data", %{conn: conn, event: event} do

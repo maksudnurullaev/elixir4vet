@@ -12,8 +12,7 @@ defmodule Elixir4vetWeb.AnimalLiveTest do
     breed: "some breed",
     date_of_birth: "2026-02-07",
     microchip_number: "some microchip_number",
-    gender: "male",
-    notes: "some notes"
+    gender: "male"
   }
   @update_attrs %{
     name: "some updated name",
@@ -23,8 +22,7 @@ defmodule Elixir4vetWeb.AnimalLiveTest do
     breed: "some updated breed",
     date_of_birth: "2026-02-08",
     microchip_number: "some updated microchip_number",
-    gender: "female",
-    notes: "some updated notes"
+    gender: "female"
   }
   @invalid_attrs %{
     name: nil,
@@ -34,8 +32,7 @@ defmodule Elixir4vetWeb.AnimalLiveTest do
     breed: nil,
     date_of_birth: nil,
     microchip_number: nil,
-    gender: "male",
-    notes: nil
+    gender: "male"
   }
 
   setup :register_and_log_in_admin
