@@ -8,7 +8,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Form do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
         {@page_title}
       </.header>

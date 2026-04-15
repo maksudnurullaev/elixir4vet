@@ -16,7 +16,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
         <div class="flex items-center gap-1 flex-wrap text-base font-semibold">
           <%= if @event.animal do %>

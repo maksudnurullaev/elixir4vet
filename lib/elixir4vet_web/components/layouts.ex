@@ -31,7 +31,7 @@ defmodule Elixir4vetWeb.Layouts do
     default: nil,
     doc: "the current [scope](https://hexdocs.pm/phoenix/scopes.html)"
 
-  attr :wide, :boolean, default: false, doc: "whether to use a wider container"
+  attr :wide, :boolean, default: true, doc: "whether to use a wider container"
   slot :inner_block, required: true
 
   def app(assigns) do

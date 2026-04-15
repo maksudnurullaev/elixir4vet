@@ -6,7 +6,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Index do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
         {gettext("Listing Animals")}
         <:actions>

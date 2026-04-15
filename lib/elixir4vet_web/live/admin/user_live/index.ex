@@ -184,7 +184,7 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope} wide={true}>
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">👥 {gettext("User Management")}</h1>
         <div class="flex gap-2">
