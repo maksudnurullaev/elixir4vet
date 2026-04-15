@@ -1,8 +1,7 @@
 defmodule Elixir4vetWeb.Live.Hooks.Locale do
-  @moduledoc false
-
-  import Phoenix.LiveView
   import Phoenix.Component
+
+  @moduledoc false
 
   @default_locale "ru"
 
