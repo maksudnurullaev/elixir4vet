@@ -189,10 +189,12 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
         <h1 class="text-3xl font-bold">👥 {gettext("User Management")}</h1>
         <div class="flex gap-2">
           <.link navigate={~p"/admin/permissions"} class="btn btn-primary">
-            <.icon name="hero-key" /> {gettext("Permission Matrix")}
+            <.icon name="hero-key" />
+            <span class="hidden sm:inline">{gettext("Permission Matrix")}</span>
           </.link>
           <.link navigate={~p"/"} class="btn btn-ghost">
-            <.icon name="hero-arrow-left" /> {gettext("Back to Home")}
+            <.icon name="hero-arrow-left" />
+            <span class="hidden sm:inline">{gettext("Back to Home")}</span>
           </.link>
         </div>
       </div>
@@ -261,7 +263,8 @@ defmodule Elixir4vetWeb.Admin.UserLive.Index do
                           navigate={~p"/admin/users/#{user}/edit"}
                           class="btn btn-primary btn-xs"
                         >
-                          <.icon name="hero-pencil-square" /> {gettext("Edit")}
+                          <.icon name="hero-pencil-square" />
+                          <span class="hidden sm:inline">{gettext("Edit")}</span>
                         </.link>
                         <%= if is_nil(user.confirmed_at) do %>
                           <button

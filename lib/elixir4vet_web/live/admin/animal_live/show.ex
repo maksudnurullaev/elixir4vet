@@ -19,7 +19,8 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
             <.icon name="hero-arrow-left" />
           </.button>
           <.button variant="primary" navigate={~p"/admin/animals/#{@animal}/edit?return_to=show"}>
-            <.icon name="hero-pencil-square" /> {gettext("Edit animal")}
+            <.icon name="hero-pencil-square" />
+            <span class="hidden sm:inline">{gettext("Edit animal")}</span>
           </.button>
         </:actions>
       </.header>
@@ -88,7 +89,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Show do
             variant="primary"
             navigate={~p"/admin/events/new?animal_id=#{@animal.id}&return_to=show_animal"}
           >
-            <.icon name="hero-plus" /> {gettext("New Event")}
+            <.icon name="hero-plus" /> <span class="hidden sm:inline">{gettext("New Event")}</span>
           </.button>
         </:actions>
       </.header>

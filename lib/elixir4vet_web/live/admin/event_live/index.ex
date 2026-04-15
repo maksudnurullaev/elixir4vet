@@ -12,7 +12,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Index do
         {gettext("Listing Events")}
         <:actions>
           <.button variant="primary" navigate={~p"/admin/events/new"}>
-            <.icon name="hero-plus" /> {gettext("New Event")}
+            <.icon name="hero-plus" /> <span class="hidden sm:inline">{gettext("New Event")}</span>
           </.button>
         </:actions>
       </.header>

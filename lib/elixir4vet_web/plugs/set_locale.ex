@@ -11,7 +11,6 @@ defmodule Elixir4vetWeb.Plugs.SetLocale do
     locale =
       get_locale_from_params(conn) ||
         get_locale_from_session(conn) ||
-        get_locale_from_header(conn) ||
         Gettext.get_locale(Elixir4vetWeb.Gettext)
 
     if locale in @supported_locales do
@@ -31,36 +30,5 @@ defmodule Elixir4vetWeb.Plugs.SetLocale do
 
   defp get_locale_from_session(conn) do
     get_session(conn, :locale)
-  end
-
-  defp get_locale_from_header(conn) do
-    case get_req_header(conn, "accept-language") do
-      [value | _] ->
-        value
-        |> String.split(",")
-        |> Enum.map(&parse_language_option/1)
-        |> Enum.sort(&(&1.quality > &2.quality))
-        |> Enum.find(%{tag: nil, quality: 1.0}, fn %{tag: tag} ->
-          tag in @supported_locales
-        end)
-        |> Map.get(:tag)
-
-      _ ->
-        nil
-    end
-  end
-
-  defp parse_language_option(string) do
-    captures =
-      ~r/^(?<tag>[\w\-]+)(?:;q=(?<quality>[\d\.]+))?$/i
-      |> Regex.named_captures(String.trim(string))
-
-    quality =
-      case Float.parse(captures["quality"] || "1.0") do
-        {val, _} -> val
-        _ -> 1.0
-      end
-
-    %{tag: captures["tag"], quality: quality}
   end
 end

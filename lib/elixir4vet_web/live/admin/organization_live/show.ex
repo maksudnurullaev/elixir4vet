@@ -19,7 +19,8 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Show do
             variant="primary"
             navigate={~p"/admin/organizations/#{@organization}/edit?return_to=show"}
           >
-            <.icon name="hero-pencil-square" /> {gettext("Edit organization")}
+            <.icon name="hero-pencil-square" />
+            <span class="hidden sm:inline">{gettext("Edit organization")}</span>
           </.button>
         </:actions>
       </.header>

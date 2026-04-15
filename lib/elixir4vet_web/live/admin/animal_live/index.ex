@@ -11,7 +11,7 @@ defmodule Elixir4vetWeb.Admin.AnimalLive.Index do
         {gettext("Listing Animals")}
         <:actions>
           <.button variant="primary" navigate={~p"/admin/animals/new"}>
-            <.icon name="hero-plus" /> {gettext("New Animal")}
+            <.icon name="hero-plus" /> <span class="hidden sm:inline">{gettext("New Animal")}</span>
           </.button>
         </:actions>
       </.header>

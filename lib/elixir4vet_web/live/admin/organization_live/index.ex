@@ -11,7 +11,8 @@ defmodule Elixir4vetWeb.Admin.OrganizationLive.Index do
         {gettext("Listing Organizations")}
         <:actions>
           <.button variant="primary" navigate={~p"/admin/organizations/new"}>
-            <.icon name="hero-plus" /> {gettext("New Organization")}
+            <.icon name="hero-plus" />
+            <span class="hidden sm:inline">{gettext("New Organization")}</span>
           </.button>
         </:actions>
       </.header>

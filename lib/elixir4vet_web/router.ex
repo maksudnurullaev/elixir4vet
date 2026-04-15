@@ -60,7 +60,10 @@ defmodule Elixir4vetWeb.Router do
     pipe_through [:browser, :require_authenticated_user, :admin]
 
     live_session :require_admin,
-      on_mount: [{Elixir4vetWeb.UserAuth, :require_admin}] do
+      on_mount: [
+        {Elixir4vetWeb.Live.Hooks.Locale, :set_locale},
+        {Elixir4vetWeb.UserAuth, :require_admin}
+      ] do
       live "/users", UserLive.Index, :index
       live "/users/:id/edit", UserLive.Form, :edit
       live "/permissions", PermissionsLive, :index
@@ -98,7 +101,10 @@ defmodule Elixir4vetWeb.Router do
     get "/", PageController, :home
 
     live_session :require_authenticated_user,
-      on_mount: [{Elixir4vetWeb.UserAuth, :require_authenticated}] do
+      on_mount: [
+        {Elixir4vetWeb.Live.Hooks.Locale, :set_locale},
+        {Elixir4vetWeb.UserAuth, :require_authenticated}
+      ] do
       live "/users/settings", UserLive.Settings, :edit
       live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
     end
@@ -108,7 +114,10 @@ defmodule Elixir4vetWeb.Router do
     pipe_through [:browser]
 
     live_session :current_user,
-      on_mount: [{Elixir4vetWeb.UserAuth, :mount_current_scope}] do
+      on_mount: [
+        {Elixir4vetWeb.Live.Hooks.Locale, :set_locale},
+        {Elixir4vetWeb.UserAuth, :mount_current_scope}
+      ] do
       live "/users/register", UserLive.Registration, :new
       live "/login", UserLive.Login, :new
       live "/users/log-in/:token", UserLive.Confirmation, :new

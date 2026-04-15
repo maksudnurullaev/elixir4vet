@@ -47,7 +47,12 @@ defmodule Elixir4vetWeb.Admin.EventLive.Form do
           label={gettext("Event Time")}
           readonly={@lock_datetime}
         />
-        <.input field={@form[:location]} type="text" label={gettext("Location")} />
+        <.input
+          field={@form[:location]}
+          type="text"
+          label={gettext("Location")}
+          phx-hook="GeoLocation"
+        />
 
         <.input
           field={@form[:performed_by_user_id]}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang={assigns[:locale] || "ru"}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -144,7 +144,7 @@
       <div class="flex-none mx-2 hidden md:block">
         <div class="dropdown dropdown-end">
           <label tabindex="0" class="btn btn-ghost btn-sm">
-            <%= case assigns[:locale] || "en" do %>
+            <%= case assigns[:locale] || "ru" do %>
               <% "en" -> %>
                 EN
               <% "ru" -> %>

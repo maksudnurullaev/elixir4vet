@@ -18,34 +18,58 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.header>
-        {gettext("Event")} {@event.id}
-        <:subtitle>{gettext("This is an event record from your database.")}</:subtitle>
+        <div class="flex items-center gap-1 flex-wrap text-base font-semibold">
+          <%= if @event.animal do %>
+            <.link navigate={~p"/admin/animals/#{@event.animal}"} class="link link-primary">
+              {@event.animal.name}
+            </.link>
+            <span class="text-base-content/40">/</span>
+          <% end %>
+          <span class="capitalize">{translate_event_type(@event.event_type)}</span>
+          <span class="text-base-content/40">/</span>
+          <span class="font-normal text-base-content/70">
+            {@event.event_date} {@event.event_time}
+          </span>
+        </div>
+        <:subtitle></:subtitle>
         <:actions>
           <.button navigate={~p"/admin/events"}>
             <.icon name="hero-arrow-left" />
           </.button>
           <.button variant="primary" navigate={~p"/admin/events/#{@event}/edit?return_to=show"}>
-            <.icon name="hero-pencil-square" /> {gettext("Edit event")}
+            <.icon name="hero-pencil-square" />
+            <span class="hidden sm:inline">{gettext("Edit event")}</span>
           </.button>
         </:actions>
       </.header>
 
       <.list>
-        <:item title={gettext("Event Type")}>
-          <span class="capitalize">{translate_event_type(@event.event_type)}</span>
-        </:item>
-        <:item title={gettext("Animal")}>
-          <%= if @event.animal do %>
-            <.link navigate={~p"/admin/animals/#{@event.animal}"} class="link link-primary">
-              {@event.animal.name}
-            </.link>
+        <:item title={gettext("Location")}>
+          <%= if @event.location && String.starts_with?(@event.location, "@") do %>
+            <% [lat, lon] = @event.location |> String.trim_leading("@") |> String.split(",", parts: 2) %>
+            <span class="flex flex-wrap items-center gap-2">
+              <span class="font-mono text-sm">{@event.location}</span>
+              <a
+                href={"https://maps.google.com/?q=#{lat},#{lon}"}
+                target="_blank"
+                rel="noopener"
+                class="badge badge-sm badge-outline hover:badge-primary"
+              >
+                Google Maps
+              </a>
+              <a
+                href={"https://yandex.com/maps/?ll=#{lon},#{lat}&z=15&pt=#{lon},#{lat}"}
+                target="_blank"
+                rel="noopener"
+                class="badge badge-sm badge-outline hover:badge-secondary"
+              >
+                Yandex Maps
+              </a>
+            </span>
           <% else %>
-            {gettext("N/A")}
+            {@event.location}
           <% end %>
         </:item>
-        <:item title={gettext("Event Date")}>{@event.event_date}</:item>
-        <:item title={gettext("Event Time")}>{@event.event_time}</:item>
-        <:item title={gettext("Location")}>{@event.location}</:item>
         <:item title={gettext("Performed By User")}>
           {if @event.performed_by_user, do: @event.performed_by_user.email, else: gettext("N/A")}
         </:item>
@@ -94,7 +118,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
               <%!-- File picker (multiple) --%>
               <label for={@uploads.photos.ref} class="btn btn-primary btn-sm cursor-pointer">
                 <.icon name="hero-paper-clip" />
-                {gettext("Add Photos")}
+                <span class="hidden sm:inline">{gettext("Add Photos")}</span>
                 <.live_file_input upload={@uploads.photos} class="hidden" />
               </label>
 
@@ -106,7 +130,7 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
                 class="btn btn-secondary btn-sm"
               >
                 <.icon name="hero-camera" />
-                {gettext("Camera")}
+                <span class="hidden sm:inline">{gettext("Camera")}</span>
               </button>
 
               <%= if @uploads.photos.entries != [] or @uploads.camera.entries != [] do %>
@@ -115,7 +139,8 @@ defmodule Elixir4vetWeb.Admin.EventLive.Show do
                   class="btn btn-success btn-sm"
                   phx-disable-with={gettext("Uploading...")}
                 >
-                  <.icon name="hero-cloud-arrow-up" /> {gettext("Upload")}
+                  <.icon name="hero-cloud-arrow-up" />
+                  <span class="hidden sm:inline">{gettext("Upload")}</span>
                 </button>
               <% end %>
             </form>
