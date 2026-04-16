@@ -1,70 +1,119 @@
-# Elixir4vet - Project TODO
+# PROJECT TODO — VetVision.UZ
 
-## Missing / Incomplete Features
+## Приоритет 1 — Критично
 
----
+### Фотографии
+- [ ] Реализовать загрузку фотографий через Phoenix LiveView uploads (форма события)
+- [ ] Показывать галерею фото на странице события (`/admin/events/:id`)
+- [ ] Показывать фото животного на странице животного (`/admin/animals/:id`)
+- [ ] Реализовать удаление фотографий с диска и из БД
+- [ ] Добавить thumbnail-preview в список (`/admin/photographs`)
+- [ ] Убрать "Coming Soon" заглушку со страницы `/admin/photographs`
 
-### High Priority
+### Поиск и фильтрация
+- [ ] Добавить поиск по имени/микрочипу на `/admin/animals`
+- [ ] Добавить фильтр по типу события и дате на `/admin/events`
+- [ ] Добавить поиск по названию/номеру на `/admin/organizations`
+- [ ] Добавить поиск по email на `/admin/users`
 
-#### 1. Photograph Upload — Backend Only, No UI
-- Schema, context (`Elixir4vet.Photographs`), and DB migration all exist
-- **Missing:**
-  - LiveView file upload handler for photograph processing
-  - Upload form on event show/form pages
-  - Photo display on event show page
-  - Routes for photograph management endpoints
-- **Files to update:**
-  - `lib/elixir4vet_web/live/admin/event_live/show.ex`
-  - `lib/elixir4vet_web/live/admin/event_live/form.ex`
-  - `lib/elixir4vet_web/router.ex`
-
-#### 2. Fine-Grained Permission Enforcement Not Wired Into LiveViews
-- The RBAC system (`can?/3`, RO/RW/NA levels) is fully built in `lib/elixir4vet/authorization.ex`
-- The permissions matrix UI exists for admins to configure it
-- **Missing:** `handle_event` callbacks in LiveView modules do not call `can?/3` — only route-level admin/non-admin check is enforced
-- A user with RO access could still submit write actions via the socket
-- **Files to update:**
-  - `lib/elixir4vet_web/live/admin/animal_live/form.ex`
-  - `lib/elixir4vet_web/live/admin/event_live/form.ex`
-  - `lib/elixir4vet_web/live/admin/user_live/form.ex`
-  - `lib/elixir4vet_web/live/admin/organization_live/form.ex`
+### Пагинация
+- [ ] Добавить пагинацию на `/admin/animals` (при росте данных)
+- [ ] Добавить пагинацию на `/admin/events`
+- [ ] Добавить пагинацию на `/admin/organizations`
 
 ---
 
-### Medium Priority
+## Приоритет 2 — Важно
 
-#### 3. Animal Owner Reassignment — Creation Only
-- Adding an owner works during animal creation via the `owner_id` virtual field
-- The owner select dropdown is hidden on the edit form (`if @live_action == :new` condition in form template)
-- Context functions `add_animal_owner/4` and `remove_animal_owner/4` exist but are not surfaced in the UI
-- **Missing:**
-  - Owner management UI on the animal edit form (add/remove owners)
-  - Support for ownership types ("owner", "co-owner", "guardian", "foster") in the UI
-- **Files to update:**
-  - `lib/elixir4vet_web/live/admin/animal_live/form.ex`
-  - `lib/elixir4vet_web/live/admin/animal_live/show.ex`
+### Медицинские данные животного
+- [ ] Добавить поле `health_status` в схему Animal (здоров / болен / на лечении)
+- [ ] Добавить поле `last_vaccination_date` или связать через Events
+- [ ] Добавить поле `allergies` / `special_needs` в форму животного
+- [ ] Добавить поле `weight` (вес, кг) в схему Animal
 
----
+### Организации
+- [ ] Добавить поле `organization_type` (clinic / shelter / rescue / other)
+- [ ] Добавить поле `city` / `region`
+- [ ] Добавить поле `working_hours` (режим работы)
+- [ ] Добавить поле `specializations` (специализации клиники)
 
-### Low Priority
+### События
+- [ ] Добавить поле `outcome` / `result` (результат приёма)
+- [ ] Добавить поле `follow_up_date` (дата следующего визита)
+- [ ] Добавить поле `medication` (назначенные препараты)
+- [ ] Показывать общую стоимость событий по животному на странице `/admin/animals/:id`
 
-#### 4. Profile Changeset Has No Validation
-- `profile_changeset/2` in `lib/elixir4vet/accounts/user.ex` only calls `cast/3`
-- **Missing:** `validate_required`, `validate_length`, and phone format validation
-- Registration validates phone format but profile updates bypass these checks
-- **Files to update:**
-  - `lib/elixir4vet/accounts/user.ex`
+### Дашборд / Статистика
+- [ ] Создать страницу `/admin/dashboard` с ключевыми метриками:
+  - Всего животных / организаций / событий
+  - Последние зарегистрированные животные
+  - Последние события
+  - Животные без владельца
 
-#### 5. Email Notifications Beyond Authentication
-- `UserNotifier` only handles magic link login and email confirmation
-- Swoosh is set up and working — just underutilized
-- **Missing notifications for:**
-  - Event creation / updates
-  - Animal ownership changes
-  - Role assignment changes
-- **Files to update:**
-  - `lib/elixir4vet/accounts/user_notifier.ex`
+### Уведомления по email
+- [ ] Отправлять email при создании события (владельцу животного)
+- [ ] Отправлять напоминание о follow-up дате визита
+- [ ] Настроить email-шаблоны (Swoosh)
 
 ---
 
-*Last Updated: 2026-02-23*
+## Приоритет 3 — Публичная часть сайта
+
+### Страницы-заглушки (убрать "Coming Soon")
+- [ ] `/about` — написать контент: команда, миссия, партнёры
+- [ ] `/contact` — реализовать форму обратной связи с отправкой email
+- [ ] `/jobs` — добавить актуальные вакансии
+- [ ] `/services/veterinary` — каталог ветеринарных клиник из БД (организации)
+- [ ] `/services/shelter` — список приютов и животных из БД
+- [ ] `/services/adoption` — каталог животных для усыновления
+- [ ] `/services/events` — публичный календарь ветеринарных событий
+
+### Публичный каталог животных
+- [ ] Добавить флаг `is_available_for_adoption` в схему Animal
+- [ ] Показывать животных на странице `/services/adoption` с фото
+- [ ] Добавить фильтр по виду, возрасту, городу
+
+---
+
+## Приоритет 4 — UX и интерфейс
+
+### Удобство использования
+- [ ] Добавить подтверждение при удалении животного (с именем животного в тексте)
+- [ ] Добавить возможность создания события прямо со страницы животного
+- [ ] Добавить сортировку колонок в таблицах (animals, events)
+- [ ] Добавить breadcrumbs (хлебные крошки) на страницах show/edit
+- [ ] Показывать возраст животного (вычислять из `date_of_birth`) вместо/рядом с датой рождения
+
+### Переводы
+- [ ] Завершить перевод оставшихся 2 пустых строк в `ru/LC_MESSAGES/default.po`
+- [ ] Заполнить переводы на узбекском (`uz/LC_MESSAGES/default.po`) — сейчас частично
+- [ ] Перевести flash-сообщения об успехе/ошибке на русский язык
+
+### Мобильная версия
+- [ ] Проверить и улучшить таблицы на мобильных устройствах (горизонтальный скролл)
+- [ ] Адаптировать форму события для мобильных
+
+---
+
+## Приоритет 5 — Технический долг
+
+### Тесты
+- [ ] Добавить тесты для `PermissionsLive`
+- [ ] Добавить тесты для публичных страниц (page_live/)
+- [ ] Добавить тесты для `photograph` контекста после реализации загрузки
+
+### Безопасность и надёжность
+- [ ] Настроить rate limiting на форму логина
+- [ ] Добавить audit log (кто, что, когда изменил) для критичных операций
+- [ ] Настроить CSP (Content-Security-Policy) заголовки
+- [ ] Добавить валидацию MIME-типа при загрузке фотографий
+
+### Производительность
+- [ ] Добавить индексы БД на часто используемые поля (`event_date`, `species`, `animal_id`)
+- [ ] Использовать `Ecto.Query.preload` точечно (избежать N+1 запросов в списках)
+- [ ] Настроить кеширование для публичных страниц
+
+### DevOps
+- [ ] Настроить автоматическое резервное копирование SQLite БД
+- [ ] Добавить мониторинг ошибок (Sentry или аналог)
+- [ ] Настроить CI/CD pipeline
