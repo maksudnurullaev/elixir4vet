@@ -31,7 +31,7 @@ defmodule Elixir4vetWeb.HealthController do
       end
 
     health_status = %{
-      status: "ok-v2",
+      status: "ok",
       timestamp: DateTime.utc_now() |> DateTime.to_iso8601(),
       app: :elixir4vet,
       version: version
